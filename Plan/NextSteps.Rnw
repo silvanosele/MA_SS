@@ -1,0 +1,27 @@
+\documentclass[11pt, a4paper]{article}
+
+
+
+\begin{document}
+
+\title{Next Steps and Comments}
+\author{Silvano}
+\maketitle
+
+\section{26.03.18}
+
+Problem: For mixed models the marginal likelihood is optimized. It is not clear whether 
+we can use the marginal likelihood in a meaningful way to construct $R^2$ in mixed models.
+It would have some nice properties, because it is then nondecreasing and the true 
+random effects structure gets the highest likelihood. \\
+
+\textbf{The Focus is first on models without random effects:}
+\begin{enumerate}
+\item \textbf{Baysian relative importance implementation for LM and GLM}
+\item \textbf{Implementation of Likelihood based measures for GLM}
+\end{enumerate}
+
+The Baysian $R^2$ can then easily be extended to include random effects. The model is
+conditional on these effects anyway.
+
+\end{document}
