@@ -1,0 +1,244 @@
+\documentclass[11pt, a4paper]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+
+\usepackage{verbatim}
+\usepackage[vmargin=3cm, hmargin=2cm]{geometry}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{amsmath, amssymb}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{natbib}
+\usepackage{xspace}
+\usepackage[title,toc,titletoc,page]{appendix}
+
+% Use Palatino (URW Palladio) for most of the text\ldots
+%\usepackage[sc]{mathpazo}
+\linespread{1.05} 
+
+% And Arial for the rest
+%\usepackage[scaled]{helvet}
+
+% sans serif caption (added by sina)
+\usepackage[font=sf, labelfont={sf}, margin=1cm]{caption}
+
+% DEUTSCH
+%\usepackage[german]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\section{$R^2$ definitions} \label{sec:data}
+% =======================================
+\subsection{SSE based}
+
+Classical definition (as in linear model):\begin{equation} R^2 = 1 - \frac{SSE(X)}{SST} \end{equation}
+ \begin{equation}SSE(X) = \sum_{n=1}^{n}(y_{i} - \hat{y}(x))^2  \end{equation}
+ \begin{equation} SST = \sum_{n=1}^{n}(y_{i} - \hat{y})^2 \end{equation}
+
+Advantge:
+\begin {enumerate}
+\item clear interpretation, although only in mathematical terms
+\item free in used model fitting methods 
+\end{enumerate}
+
+Disadvantage:
+\begin {enumerate}
+\item is not optimized by by the fitting process (maxiumum likelihood) (Mittelböck 1996), therfore
+\item  it is possible that $R^2$ decreases when more predictors are added.
+\item can be negative when predictor has no explanatory power
+\item predictors on poison with log link are not additivly added. E.g. when a model is completly specified by two predictors(Treatment (0 or 1) + Habitat(0 or 1)), including only one predictor explaines the $R^2$ only by $\frac{1}{3}$ and not $\frac{1}{2}$. Because for person with both Treatment = 1 and Habitat = 1, the expected value will be multiplied on the data scale.
+\end{enumerate}
+
+
+\subsection{Likelihood based measures:} 
+
+Likelihood based $R^2$ measures do not decrease when predictors are added when using maximum likelihood estimation.
+
+
+\begin{enumerate}
+
+\item[-] Likelihood ratio: \begin{equation} R^2_{LR} = 1 -  \left( \frac{L_{intercept}}{L_{full}} \right)^\frac{2}{n} \end{equation}, where $L$ = Likelihood
+
+Advantage: 
+\begin {enumerate}
+ \item[-] measures gemoetric mean improvement per observation
+ \item[-] in linear models equals $R^2_{OLS}$
+ \item[-] for linear mixed model this definition is interesting. It was also recommended by Kramer(2005). Nakagawa(2013) argue against likelihood based statistic by 1. REML can not be used, 2. it is not clear which is the Null model and 3. it can decrease when adding predictors. To point 1: i think the simple $R^2$ in simple linear regression is also based on maxiumum likelihood and not on REML estimation when specified this way, otherwise it wouln't be guaranteed that $R^2$ increases when predictors are added. To point 3: I'm not sure if this is true when using maximum likelihood on mixed models instead of REML. I think the loglikelhood should always increase or stay the same when adding fixed predictors.  I think the same also holds when adding random effects when fitted by ML. To point 2: The parameter estimates of the fixed effects can change when adding random effects. When comparing against a Null-model including the intercept and the random effects the $R-2$ tells us how much of the remaining variance is explained by fixed effects. E.g. a random intercept (only) model has an $R^2$ of 0.94 comparing against an intercept only model. Including time as fixed effects changes the $R^2$ to 0.97. Comparing this model against the random intercept model the $R^2$ would be 0.5. Dummy coded predictors do not contribuite as much because they also can be compensated by random effects. However, the question is also whether we divide by N or by the number of independent observations. Depending on the denominator similar $R^2$ are obtained as in the wald test approach with different degrees of freedom possibilities by Eduards(2008). When deviding by the number of independent observations for dummy coded fixed effects, it is then similar to comparing the model without random intercept to intercept only model. The question is also wether we use the marginal or the conditional likelihood. $R^2$ on the conditional likelihood has an easier interpretation and is then very similar to the classical $R^2$. However, in the mixed model approach the marginal likelihood is optimized. 
+ 
+The non decreasing $R^2$ property should then only hold with the marginal likelihood (for glmms for sure, but i think also for linear mixed models). The marginal likelihood $R^2$ is also better suited for comparing more than one random effect. A further question is whether we assume the same covariance structure for the intercept model. Compound symmetry may only hold when all predictors are included. Otherwise an unstructured covariance matrix may be prefered. The likelihood ratio test results may differ depending on this.
+
+In the linear mixed model the regression coefficients are the same, no matter, whether we use the marginal or person specific model. The marginal model only includes the population average, wheras the mixed model in addtion includes the person specific effects. 
+I'm not sure if we can interpret the $R^2$ increase when adding a random intercept to an intercept only model on the marginal scale. I think we can interpret it somehow as a change of pattern. The conditional likelihood really is about the subjects we observed. In general, the $R^2$ is based on the observations we observed
+ 
+I'm not sure if for glmms when we use the marginal likelihood $R^2$ if this can then be interpreted as the population average based $R^2$.
+\end {enumerate}
+
+Disadvantage
+
+\begin {enumerate}
+ \item[-] in logistic regression upper bound is 0.75, even if the model predicts perfectly (p=0 and p=1). Because of this Nagelkerke proposes the correction factor $ R^2_{N} = R^2_{LR}/U $, where $ U = 1 - L(0)^{\frac{2}{n}} $ is the maximum value that can be obtained by $ R^2_{LR} $ .
+
+\end {enumerate}
+
+\end{enumerate}
+
+
+\begin{enumerate}
+
+
+\item[-] Eduards (2008) focus on REML estimation and propose for fixed effects $R^2_{k} =  \frac{(q-1) v^-1 F(\hat{B}, \hat{\sum})}{1 + (q-1) v^-1 F(\hat{B}, \hat{\sum}) } $, where v is denominator d.f. 
+\item[-] $ F(\hat{B}, \hat{\sum}) = \frac{(C\hat{B}^T){\left[C(X^T\hat{\sum}^{-1}C^T)\right]}^{-1}(C\hat{B})}{rank(C)} $
+
+
+\item[-] Approximations for $v$ include Kenward-rodger Satterhwaithe and residuals methods. The choise of residual d.f. can substantiall affect the value of $ R^2_{k}$  They recommend to use the Kenward-Rodger approach.
+
+\item[-] The $R^2$ can decrease when adding predictors
+
+\item[-]  This formula is only for fixed effects.  They mention in the limitation section, that $R^2$ on a marginal statistics means it cannot be used to determine person-specific goodnes-of-fit. The statistic is for fixed effects given the covariance structure. It assumes, that the covariance structure holds for both the model of interest and the implied null model. The $R^2$ is somehow similar to comparing a model with random intercept to a model with random intercept and predictors, with adjusted dedgrees of freedom depending on the chosen approach. For dummy coded predictors the $R^2$ is similar to comparing the model to a model with only an intercept. It does not get eaten up by the random effects. What i do not like so much, is that it increases, when random slopes are added. The model then fits better, but the $R2$ only is for the fitted effects which then usually have a larger p-value and are less "significant". The $R^2$ can increase alot even when the random slope model is not preffered over the random intercept model. I think it makes then more sense to say that the whole model has a bigger $R^2$, but the fixed effects contribution is lower ($R_{LI}$ changes this way). It also depends on if we really believe the random slopes (or unstructed covariance matrix) is inherent in the data structure or the result of missing information. 
+
+\item[-] The authors do not compare their $R^2$ to the maximum likelihood approach, which i think would also be interesting. They only say that they focus on REML estimation.
+
+
+\item[-] This approach is extended to GLMMs in jaeger (2016). The formula is the same. GLMMs can be expressed by Penalized quasi likelihood(PQL) as an approximate LMM.
+
+\item[-] PQL needs to be used. The authors note that for small sample binomial distribution PQL can give biased estimates.
+
+\item[-] again only for fixed effects
+
+\item[-] They compare their $R^2$ only to the one proposed by Nakagawa (2013).
+
+
+\end{enumerate}
+
+
+\begin {enumerate}
+
+\item[-] McFadden's:\begin{equation} R^2_{LRI} = 1 - \frac{l_{full}}{l_{intercept}} \end{equation}, where l=loglikelihood
+\item[-] From Paul Allison: What is the Best $R^2$ for Logistic Regression? "So, with some reluctance, I ve decided to cross over to the McFadden camp. As Menard (2000) argued, it satisfies almost all of Kvalseth s (1985) eight criteria for a good R2. When the marginal proportion is around .5, the McFadden R2 tends to be a little smaller than the uncorrected Cox-Snell R2. When the marginal proportion is nearer to 0 or 1, the McFadden R2 tends to be larger".
+
+\end{enumerate}
+
+
+
+\begin {enumerate}
+
+\item[-] Kullback-Leibler-divergence:\begin{equation} R^2_{KL} = 1 - \frac{D_{full}}{D_{intercept}} \end{equation}, where $D$ = Deviance = $ 2[l(y,y) - l(\hat{y},y)] = K(y, \hat{u}) $ Cameron (1997). 
+
+\begin {enumerate}
+\item[+] measures the proportionate reduction in uncertainty due to the inclusion of regressors
+\item[+] for bernoulli reduces to McFadden's $R^2$
+\item[+] $ R^2_{KL} $ equals the likelihood ratio index $ (1 - l_{full}/l_{intercept}) $ only if $ l(y,y) = 0 $. 
+
+\item[+] $R^2_{LRI}$ is a scalar multiple of  $R^2_{KL}$ for poisson.
+\item[+] For models with canonical link function, $R^2$ can additionally be interpreted as the fraction of uncertainty explained by the fitted model. \begin{equation} R^2_{KL} = \frac{K(\hat{u}, \hat{u}_{0}}{K(y, \hat{u}_{0})}) \end{equation}
+\item[+] for other links it can be interpreted as  measuring the fraction of empirical uncertainty explained by the model.
+\item[+] For quasipoisson models assuming Negbin 1 variance function $ var(y_{i}|X_{i}) = u_{i} + \alpha * u_{i}$ the same formula can be used du to cancellation of the common factor (1+$\hat{\alpha}$) (Cameron 1995).
+\item[+] The same should then also hold for quasibinomial models?
+\item[+] another expression using maximum likelihood estimation $ R^2_{KL} = 1 - \frac{l_{max} - l_{fit}}{l_{max}-l_{0}} = \frac{l_{fit}-l_{0}}{l_{max}-l_{0}}$.
+\item[+] The measure can be used for fitted means obtained by any estimation method. However, most of the nice properties do not hold then any longer.
+
+\end{enumerate}
+
+\item[-] In mixed models the marginal likelihood is otpimized. The deviance function in R returns the deviance of the conditional estimates for GLMMs, which is not optimized by the fitting process. I think for fixed effects the $R^2$ based on likelihood should not decrease when using $ 1 - \frac{D_{full}}{D_{intercept}} $. But it is possible that the conditional deviance with less random effects is smaller than with more random effects. I think the main importance is in fixed effects anyway. However, defined this way: $ R^2_{KL} = 1 - \frac{l_{max} - l_{fit}}{l_{max}-l_{0}} = \frac{l_{fit}-l_{0}}{l_{max}-l_{0}}$ the non decreasing property should also work for random effects. $l_{max}$ would then just be the estimate with a predictor per observation, but no random effects.  
+
+\item[-]{$R^2$ for mixed models}
+
+
+\item[-]{$R^2_{Nakagawa}$}
+\item[-]{$R^2_{Ng} = \frac{\sigma^2_{f}}{\sigma^2_{f}*\sum_{l=1}^{u}\sigma^2_{l}*\sigma^2_{e}*\sigma^2_{d}} $, \\ where $\sigma^2_{f}$ is the fixed effects variance, $\sigma^2_{l}$ are the random effects variance component, $\sigma^2_{e}$ is the additive overdispersion variance term and $\sigma^2_{d}$ is the distibution spefific variance (e.g. $\frac{pi^2}{3}$ for latent scale bernoulli. In LME $\sigma^2_{E}$ replaces the last two variance components.  The observation level variance $\sigma^2_{E} = \sigma^2_{d} + \sigma^2_{e}$ can be derived by the Delta method.}
+
+\item[+] They wrote 2018 (in their rptR package). We have previously adviced to estimate the distribution specific variance for the link scale approximation as $\frac{pi^2}{3}$, While this gives a reasonable approximation, it is preferable to estimate the link scale variance as$ 1/(p*(1-p))$, where $p$ is the expected probability of success. For poisson they recommend 2018 to use the mean of the observations in the sample.
+
+\item advantage
+
+\begin{enumerate}
+
+\item[+] simple formula for lots of GLMs
+
+\item[+] when for binomials the distribution variance $\frac{\pi^2}{3}$ is used we assume a latent scale variable $y$, but we observe only discrete values. I am not sure how useful this latent scale is. Even if the process is in reality interval scaled and we only see discrete values, we do not know the interval range.
+
+\item[+] on the link sale for poisson the predictors are additivly added
+
+\item[+] free in fitting process of variance components
+
+\end{enumerate}
+
+\item Disadvantage
+
+\item [+] When not assuming a latent scale variable the measure from other $R^2$ measures differs substantially for the bernoulli distribution. The $R^2_{Ng}$ can be much higher or lower. We are interested in the variance that is still left in the model after predictors are included and not in the variance of the intercept only model, which for binomial makes a big difference. E.g a model that estimates p = 1 for y=1 and p = 0 for y= 0 has no variance. On the logit link scale the variance would explode. 
+
+\item[+] can decrease when adding predictors.
+
+\item  a similar formula is proposed for baysian models
+
+
+\item[+] Baysian $R^2_{s} = \frac{V(\sum_{n=1}^{N}\hat{y}^s_{n})}{V(\sum_{n=1}^{N}\hat{y}^s_{n}+V(\sum_{n=1}^{N}e^s_{n}}$, where $\theta^s, s = 1, ... , S$ are draws from the posterior paramter distribution. For each $\theta^s$ we can compute the vector of predicted values $\hat{y}^s_{n}  = E \left({y \mid X_{n}, \theta^s}\right) $ and the vector of errors $e^s_{n} = y_{n} - \hat{y}^s_{n}$.
+
+\item[+] This $R^2$ can be interpreted as  a data-based estimate of the proportion of variance explained for new data.
+
+\item[+] The argue, a new issue then arises,when fitting a set of a models to a single dataset. Now that the denominator of $R^2$ is no longer fixed, we can no longer interpret an increase in $R^2$ as a improved fit to a fixed target.
+
+\item[+] By default the random terms $Zb$ are included when computing $\hat{y}$, because we condition on Z when fitting the model.
+
+\item[-] the variance components are not added additivly in poisson model. 
+
+
+\end{enumerate}
+
+
+
+\end{document}
