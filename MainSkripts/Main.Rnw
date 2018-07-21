@@ -69,6 +69,8 @@ June 2018
 
 <<'child-chapter05', child='chapter05.Rnw'>>=
 @
+
+
 \cleardoublepage
 \phantomsection
 \addtocontents{toc}{\protect \vspace*{10mm}}

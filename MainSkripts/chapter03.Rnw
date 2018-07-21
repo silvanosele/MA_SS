@@ -1,11 +1,193 @@
 % LaTeX file for Chapter 03
+
+<<set-parent, echo=FALSE, cache=FALSE>>=
+set_parent('main.Rnw')
+@
+
 <<'preamble03',include=FALSE>>=
-library(knitr)
+library(knitr); library(hier.part); library(rstanarm);  library(GGally); library(ggplot2); library(relaimpo)
+
 opts_chunk$set(
     fig.path='figure/ch03_fig', 
     self.contained=FALSE,
     cache=FALSE
 ) 
+
+
+#function to calculate R2 data frame
+rtwos<-function(X, post.sample){
+  # X: Predictor data as data frame
+  # post.sample: posterior sample as matrix (M[sample_i,]), last position should be sigma paramater. 
+  
+  X <- cov(X) #covariance matrix
+  
+  #Prepare data frame and rownames by using the combn() function
+  
+  lst <- list()
+  
+  pcan <- dim(X)[2]
+  n <- (2^pcan)-1
+  
+  for (i in 1:pcan){
+    lst[[i]] <- combn(pcan,i)
+  }
+  
+  var.names <- character(length = 0)
+  
+  v<- 1:length(lst)
+  
+  for(i in 1:length(lst))
+  {
+    
+    for (j in 1:ncol(lst[[i]])){
+      cur<- lst[[i]][,j]
+      name <- paste0('x',v[-cur])
+      name <- paste(name, collapse = " ")
+      var.names <- c(var.names, name)
+    }
+  }
+  
+  var.names<-c(rev(var.names), 'all')
+  
+  var.names[1]<-'none'
+  
+  size <- nrow(post.sample)  # how many samples
+  
+  sig.posi <- ncol(post.sample)
+  
+  df.Rtwos<-data.frame(matrix(0,n+1,size))
+  
+  row.names(df.Rtwos) <- var.names
+  
+  ########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+  
+  for (s in 1:size){
+    
+    sample.s <- post.sample[s,-sig.posi]
+    
+    Vtot <- sample.s%*%X%*%sample.s  #total explained variance
+    
+    count=n  
+    
+    for(i in 1:(length(lst)-1))
+    {
+      
+      for (j in 1:ncol(lst[[i]])){
+        cur <- lst[[i]][,j]
+        set <- v[-cur]
+        matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
+        var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+        df.Rtwos[count,s] <- Vtot - var.explain  
+        count=count-1
+      }
+    }
+    
+    df.Rtwos[n+1,s] <- Vtot
+    
+    df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot+post.sample[s,sig.posi]^2) #total variance + sigma^2 (post sample[s])
+  }
+  
+  return(df.Rtwos)
+}
+
 @
 
-\chapter{Results}
+
+\chapter{Examples}
+
+In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses real data.
+
+Lets assume a simple model: 
+
+\begin{align} 
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1)&
+\end{align} 
+
+
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obatin the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
+
+The following Code was used to simulate the data :
+
+<<'simudata.example'>>=
+
+x1 <- rnorm(50, 0, 1); x2 <- rnorm(50, 0, 1)
+x3 <- rnorm(50, 0, 1); x4 <- rnorm(50, 0, 1)
+b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0
+
+y <- b1*x1 + x2*b2 + b3*x3 + b4*x4 + rnorm(50, 0, 1) 
+
+df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
+
+@
+
+
+The model is fitted using the rstanarm package with the default priors for the regression and $\sigma^2$ parameter. For computational reasons a small burning periode of 1000 and a sample size of 1000 were chosen. For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample.
+
+
+<<'simdata.postsample, echo = FALSE'>>=
+post2 <- stan_glm(y ~ 1 + x1 + x2 + x3 + x4,
+                  data = df,
+                  chains = 1, cores = 1)
+
+#posterior sample
+post.sample <- as.matrix(post2)
+
+#example of the first 10 posterior samples
+post.sample[1:10,]
+
+#no need for the intercept, last parameter is sigma
+post.sample <- post.sample[,-1]
+
+
+#data frame with all submodels
+df.rtwos <-rtwos(df[,2:5], post.sample)
+
+df.rtwos[,1:5]
+@
+
+After the $\Rtwo$ for each posterior sample and their corresponding submodels is calculated, the package hier.part is used to calculate the LMG value for each posterior sample.
+
+<<'simdata.LMG, echo = FALSE'>>=
+
+# prepare data frame for LMG values
+
+LMG.Vals<-matrix(0, 4, dim(df.rtwos)[2])
+
+for(i in 1:dim(df.rtwos)[2]){
+  
+  gofn<-df.rtwos[,i]
+  
+  obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
+  
+  LMG.Vals[,i]=obj.Gelman$IJ[,1]
+}
+
+
+# posterior LMG distribution of each variable
+quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
+
+
+# Comparison to relaimpo package
+
+fit <- lm(y~., data=df)
+
+######## compare to relimp package
+
+run<-boot.relimp(fit, fixed=TRUE)
+
+booteval.relimp(run, bty = "perc", level = 0.95,
+                sort = FALSE, norank = FALSE, nodiff = FALSE,
+                typesel = c("lmg", "pmvd", "last", "first", "betasq", "pratt", "genizi", "car"))
+
+@
+
+
+Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. G recommends in general to use the non fixed regressor optin when calculating bootstrap confidence intervals. The confidence intervals will then be in general a bit larger.  
+
+
+The first example data are taken from the book Bayesian Regression Modeling with INLA. The data were about air pollution in 41 cities in the United States originally published in Everitt (2006). The data consits of the SO2 level as the dependent variable and six explanatory variables 
+Two of the explanatory variables are are related to human ecology (pop, manuf) and four others are related to climate (negtemp, wind, precip, days).
+
