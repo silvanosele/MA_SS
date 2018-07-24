@@ -7,6 +7,7 @@
 \contentsline {chapter}{\numberline {2}Data}{9}{chapter.2}
 \contentsline {chapter}{\numberline {3}Examples}{11}{chapter.3}
 \contentsline {section}{\numberline {3.1}Simulated Data}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}Real World Data}{20}{section.3.2}
-\contentsline {chapter}{\numberline {4}Discussion and Outlook}{21}{chapter.4}
-\contentsline {chapter}{\numberline {5}Conclusions}{23}{chapter.5}
+\contentsline {section}{\numberline {3.2}Real World Data}{25}{section.3.2}
+\contentsline {chapter}{\numberline {4}Discussion and Outlook - Some extenstions}{33}{chapter.4}
+\contentsline {section}{\numberline {4.1}random intercept model}{33}{section.4.1}
+\contentsline {chapter}{\numberline {5}Conclusions}{35}{chapter.5}
