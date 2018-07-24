@@ -288,12 +288,67 @@ In the Bayesian setting we do have a whole probability distribution for each reg
 A further of fitting one full model only  is that we only need to fit one Bayesian model including all predictors. This makes it possible to calculate the LMG values also in the Bayesian framework in a reasonable amount of time. 
 
 
+\section{Bayesian Regression}
+This Section provides a short introduction Bayesian regression and about some assumptions. It is summarized from the book (Bayesian Analysis for the Social Sciences, 2009). 
+In regression analysis we are interested in the dependence of $\y$ on $\X$. The conditional mean of a continuous response variable $\y = (y_{1}, \dots, y_{n})^\top)$ is related to a $n \times k$ predictor matrix $\X$ via a linear model, 
 
+       \begin{align} 
+\E(\y \mid \X , \bbeta) = \X \bbeta ,
+   \end{align}
+where $\bbeta$ is a $k \times 1$ vector of unknown regression coefficients.
 
+Under some assumptions about the density, conditional independence and homoskedastic variances, the regression can be written as
 
+       \begin{align} 
+\y \mid \X , \bbeta, \sigma^2 \sim \mathcal{N}(\X \bbeta , \sigma^2 \I_{n})
+   \end{align}
 
-Besides taking the dependence of the models into account, this 
+Under the assumption of weak exogeneity and conditional indepdendence the joint density of the data can be written as
 
+       \begin{align} 
+p(\y, \X \mid \btheta) = p(\y \mid \X, \btheta_{y \mid x}) \, p(\X \mid \btheta_{x}),
+   \end{align}
+
+where $\btheta = (\btheta_{y \mid x}, \btheta_{x})^\top$. The weak exogeneity assumption implicates that the whole information about $\y_{i}$ is contained in $x_{i}$ and $\btheta_{y \mid x}$. Knowledge of the parameters $\btheta_{x_{i}}$ provides no additional information about $\y_{i}$.
+The interest of regression is mostly in the posterior parameters $\btheta_{y \mid x}$. These posterior densities are proportional to  likelihood of the data  multiplied by the prior densitiy. The joint density $p(\y, \X \mid  \btheta)$ is used to learn about the posterior parameters, via Bayes Rule
+
+       \begin{align} 
+p(\btheta \mid \y, \X) \propto p(\y, \X \mid  \btheta) \, p(\btheta).
+   \end{align}
+   
+   The dependence of $\y$ on $\X$ is captured in the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$. Under the assumption of indepdentent prior densities about $\btheta_{y \mid x}$ and $\btheta_{x}$ the posterior distribution of the parameters can be written as
+   
+          \begin{align} 
+p(\bbeta, \sigma^2, \btheta_{x} \mid \y, \X) = \frac{p(\y \mid \X, \bbeta, \sigma^2) \, p(\bbeta, \sigma^2)}{p(\y \mid \X)} \times \frac{p(\X \mid \btheta_{x}) \, p(\btheta_{x})}{p(\X)}
+   \end{align}
+   
+  This factorization shows that under the above mentioned assumptions the posterior inference about the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$ is indepdendent from the inference about $\btheta_{x}$ given data $\X$. This also means that the assumptions about $\X$ being fixed or stochastic result in the same posterior density of  $\btheta_{y \mid x}$. In the case of fixed regressors $p(\X)$ and $\btheta_{x}$ drop out of the calculations. For stochastic predictors it means that given $\X$ nothing more can be gained about $\theta_{y \mid x} = (\bbeta, \sigma^2)$ from knowing $\btheta_{x}$. 
+  
+  In regression the focus is on $\btheta_{y \mid x} = (\bbeta, \sigma^2)$, for which under some assumptions it does not matter whether we assume fixed or stochastic predictors. For the LMG formula the variance of the predictors is also incorporated. The LMG formula may be especially interesting for continuous predictors, which in most cases are stochastic. For stochastic predictors the information about $\btheta_{x}$ would therefore also be relevant.  As seen in equation ... inference about $\btheta_{x}$  is independent from inference about $\btheta_{y \mid x}$. If we have stochastic predictors and ignore dependence we just use an estimate of the covariance matrix and do not incorporate this uncertainty. If we know the distribution of the $p(\X)$ the $\btheta_{x}$ could easily be estimated. However, the computation times are then much higher. We would need to do the whole LMG calculation for each posterior covariance sample of the predictors. Depending on the number of predictors this would quite take some time.  In most cases the problem is that we do not know the distribution of the $\X$. As a practical solution we could then use nonparametric bootstrapping to include the uncertainty of the stochastic predictors in the LMG formula. We would then also need to do the whole LMG caclulations for each bootstrap sample of the covariance matrix. There exist also different covariance estimator. The shrinkage method may be an interesting estimator with some interesting properties. 
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
@@ -386,7 +441,569 @@ Notice how in Figure~\ref{f02:1} everything is properly scaled.
 % LaTeX file for Chapter 03
 
 
-\chapter{Results}
+
+
+
+
+\chapter{Examples}
+
+In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses real data.
+
+\section{Simulated Data}
+
+Lets assume a simple model: 
+
+\begin{align} 
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1)&
+\end{align} 
+
+
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obatin the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
+
+The following Code was used to simulate the data :
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x1} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{); x2} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{x3} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{); x4} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{b1} \hlkwb{<-} \hlnum{0.5}\hlstd{; b2} \hlkwb{<-} \hlnum{1}\hlstd{; b3} \hlkwb{<-} \hlnum{2}\hlstd{; b4} \hlkwb{<-} \hlnum{0}
+
+\hlstd{y} \hlkwb{<-} \hlstd{b1}\hlopt{*}\hlstd{x1} \hlopt{+} \hlstd{x2}\hlopt{*}\hlstd{b2} \hlopt{+} \hlstd{b3}\hlopt{*}\hlstd{x3} \hlopt{+} \hlstd{b4}\hlopt{*}\hlstd{x4} \hlopt{+} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
+
+\hlstd{df} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwc{y} \hlstd{= y,} \hlkwc{x1} \hlstd{= x1,} \hlkwc{x2} \hlstd{= x2,} \hlkwc{x3} \hlstd{= x3,} \hlkwc{x4} \hlstd{= x4)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+The model is fitted using the rstanarm package with the default priors for the regression and $\sigma^2$ parameter. For computational reasons a small burning periode of 1000 and a sample size of 1000 were chosen. For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample.
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{post2} \hlkwb{<-} \hlkwd{stan_glm}\hlstd{(y} \hlopt{~} \hlnum{1} \hlopt{+} \hlstd{x1} \hlopt{+} \hlstd{x2} \hlopt{+} \hlstd{x3} \hlopt{+} \hlstd{x4,}
+                  \hlkwc{data} \hlstd{= df,}
+                  \hlkwc{chains} \hlstd{=} \hlnum{1}\hlstd{,} \hlkwc{cores} \hlstd{=} \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
+## 
+## Gradient evaluation took 0.00014 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 1.4 seconds.
+## Adjust your expectations accordingly!
+## 
+## 
+## Iteration:    1 / 2000 [  0%]  (Warmup)
+## Iteration:  200 / 2000 [ 10%]  (Warmup)
+## Iteration:  400 / 2000 [ 20%]  (Warmup)
+## Iteration:  600 / 2000 [ 30%]  (Warmup)
+## Iteration:  800 / 2000 [ 40%]  (Warmup)
+## Iteration: 1000 / 2000 [ 50%]  (Warmup)
+## Iteration: 1001 / 2000 [ 50%]  (Sampling)
+## Iteration: 1200 / 2000 [ 60%]  (Sampling)
+## Iteration: 1400 / 2000 [ 70%]  (Sampling)
+## Iteration: 1600 / 2000 [ 80%]  (Sampling)
+## Iteration: 1800 / 2000 [ 90%]  (Sampling)
+## Iteration: 2000 / 2000 [100%]  (Sampling)
+## 
+##  Elapsed Time: 0.106443 seconds (Warm-up)
+##                0.095401 seconds (Sampling)
+##                0.201844 seconds (Total)
+\end{verbatim}
+\begin{alltt}
+\hlcom{#posterior sample}
+\hlstd{post.sample} \hlkwb{<-} \hlkwd{as.matrix}\hlstd{(post2)}
+
+\hlcom{#example of the first 10 posterior samples}
+\hlstd{post.sample[}\hlnum{1}\hlopt{:}\hlnum{10}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+##           parameters
+## iterations  (Intercept)        x1        x2       x3           x4    sigma
+##       [1,] -0.101061497 0.6464692 1.4203977 1.567228 -0.013463405 1.427376
+##       [2,]  0.729423353 0.1269642 0.9296482 1.725145  0.316319540 1.455287
+##       [3,] -0.337739217 0.3915697 0.7950949 2.149583 -0.239681882 1.246679
+##       [4,]  0.482474971 0.2309337 1.0410638 1.794058 -0.168029887 1.247510
+##       [5,]  0.019825347 0.3277414 0.9448875 1.894077  0.446177739 1.578720
+##       [6,] -0.073101987 0.4061123 1.1804594 1.945951  0.506279069 1.382208
+##       [7,] -0.002408074 0.4392766 1.2944369 2.035032  0.275318026 1.488053
+##       [8,]  0.152406755 0.1896388 0.5236299 1.903953  0.102809721 1.170741
+##       [9,]  0.203303276 0.2620990 1.6004949 1.884942  0.002669557 1.405035
+##      [10,]  0.114411702 0.2979145 0.2690324 2.040325  0.046150325 1.219224
+\end{verbatim}
+\begin{alltt}
+\hlcom{#no need for the intercept, last parameter is sigma}
+\hlstd{post.sample} \hlkwb{<-} \hlstd{post.sample[,}\hlopt{-}\hlnum{1}\hlstd{]}
+
+
+\hlcom{#data frame with all submodels}
+\hlstd{df.rtwos} \hlkwb{<-}\hlkwd{rtwos}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{], post.sample)}
+
+\hlstd{df.rtwos[,}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+##                  X1           X2          X3           X4          X5
+## none     0.00000000 0.0000000000 0.000000000 0.0000000000 0.000000000
+## x1       0.02567063 0.0003883346 0.008332609 0.0004194017 0.002799643
+## x2       0.37499577 0.2878203944 0.218711365 0.3163059832 0.260857553
+## x3       0.49346934 0.5748306425 0.715779982 0.6377194514 0.574501886
+## x4       0.01454130 0.0477263374 0.001120327 0.0042618750 0.059842600
+## x1 x2    0.44135888 0.2918758901 0.246030300 0.3280552921 0.278590261
+## x1 x3    0.52545819 0.5748307566 0.728705277 0.6394504803 0.579827271
+## x1 x4    0.04132154 0.0479118352 0.009630819 0.0047595379 0.063413403
+## x2 x3    0.66968951 0.6788610690 0.765286896 0.7512406056 0.661879926
+## x2 x4    0.37527198 0.3044740070 0.220901264 0.3172592868 0.286472390
+## x3 x4    0.49690101 0.5979008005 0.717514627 0.6377495904 0.606248254
+## x1 x2 x3 0.73024968 0.6813970802 0.787652835 0.7601428568 0.676204880
+## x1 x2 x4 0.44165002 0.3085578300 0.248193683 0.3289971223 0.304278529
+## x1 x3 x4 0.52945108 0.5979187389 0.730206487 0.6394700529 0.612265565
+## x2 x3 x4 0.66971330 0.6897545185 0.771082329 0.7544932551 0.680126327
+## all      0.73026771 0.6923175992 0.793390010 0.7633679635 0.694534489
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+After the $\Rtwo$ for each posterior sample and their corresponding submodels is calculated, the package hier.part is used to calculate the LMG value for each posterior sample.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# prepare data frame for LMG values}
+
+\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])\{}
+
+  \hlstd{gofn}\hlkwb{<-}\hlstd{df.rtwos[,i]}
+
+  \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
+
+  \hlstd{LMG.Vals[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+\hlstd{\}}
+
+
+\hlcom{# posterior LMG distribution of each variable}
+\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##        2.5%         50%       97.5% 
+## 0.001054662 0.009252353 0.046734452
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.09685989 0.18609855 0.29128403
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.4265602 0.5617594 0.6741636
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##        2.5%         50%       97.5% 
+## 0.002125654 0.006330311 0.039490634
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Comparison to relaimpo package}
+
+\hlstd{fit} \hlkwb{<-} \hlkwd{lm}\hlstd{(y}\hlopt{~}\hlstd{.,} \hlkwc{data}\hlstd{=df)}
+
+\hlcom{######## compare to relimp package}
+
+\hlstd{run}\hlkwb{<-}\hlkwd{boot.relimp}\hlstd{(fit,} \hlkwc{fixed}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+
+\hlkwd{booteval.relimp}\hlstd{(run,} \hlkwc{bty} \hlstd{=} \hlstr{"perc"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{,}
+                \hlkwc{sort} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{norank} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{nodiff} \hlstd{=} \hlnum{FALSE}\hlstd{,}
+                \hlkwc{typesel} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"lmg"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## Response variable: y 
+## Total response variance: 7.124277 
+## Analysis based on 50 observations 
+## 
+## 4 Regressors: 
+## x1 x2 x3 x4 
+## Proportion of variance explained by model: 79.37%
+## Metrics are not normalized (rela=FALSE). 
+## 
+## Relative importance metrics: 
+## 
+##            lmg
+## x1 0.009158799
+## x2 0.194263755
+## x3 0.584416677
+## x4 0.005875504
+## 
+## Average coefficients for different model sizes: 
+## 
+##           1X       2Xs        3Xs        4Xs
+## x1 0.1203568 0.2143376 0.27252676 0.30023575
+## x2 1.5489532 1.3516097 1.15741809 0.96633384
+## x3 2.2370658 2.1479920 2.05868850 1.96946043
+## x4 0.3783595 0.2140481 0.09440546 0.01844585
+## 
+##  
+##  Confidence interval information ( 1000 bootstrap replicates, bty= perc ): 
+## Relative Contributions with confidence intervals: 
+##  
+##                        Lower  Upper
+##        percentage 0.95 0.95   0.95  
+## x1.lmg 0.0092     __CD 0.0012 0.0460
+## x2.lmg 0.1943     _B__ 0.1110 0.3036
+## x3.lmg 0.5844     A___ 0.4875 0.6946
+## x4.lmg 0.0059     __CD 0.0024 0.0358
+## 
+## Letters indicate the ranks covered by bootstrap CIs. 
+## (Rank bootstrap confidence intervals always obtained by percentile method) 
+## CAUTION: Bootstrap confidence intervals can be somewhat liberal. 
+## NOTE: X-matrix has been considered as fixed for bootstrapping. 
+## 
+##  
+##  Differences between Relative Contributions: 
+##  
+##                           Lower   Upper
+##           difference 0.95 0.95    0.95   
+## x1-x2.lmg -0.1851     *   -0.2957 -0.0930
+## x1-x3.lmg -0.5753     *   -0.6867 -0.4645
+## x1-x4.lmg  0.0033         -0.0284  0.0394
+## x2-x3.lmg -0.3902     *   -0.5673 -0.1860
+## x2-x4.lmg  0.1884     *    0.1009  0.2930
+## x3-x4.lmg  0.5785     *    0.4713  0.6882
+## 
+## * indicates that CI for difference does not include 0. 
+## CAUTION: Bootstrap confidence intervals can be somewhat liberal. 
+## NOTE: X-matrix has been considered as fixed for bootstrapping.
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. In the example above the predictors were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. As noted in ... under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for fixed and stochastic predictors. Inference about the covariance matrix can be seen as an independent problem. G recommends in most cases to use the non fixed regressor option when calculating bootstrap confidence intervals. The confidence intervals will then in general be a bit larger. If we want to include this uncertainty in the Bayesian framework, we would need some ideas about the distribution of the predictor variables $\X$. It is then possible to obtain poserior distributions of their corresponding covariance matrix. As a practical solution nonparametric bootstrap may be used to include the uncertainty of the covariance matrix. The following code includes the uncertainty of the stochastic predictors. 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#Code assuming stochastic predictors}
+\hlstd{run.stochastic}\hlkwb{<-}\hlkwd{boot.relimp}\hlstd{(fit,} \hlkwc{fixed}\hlstd{=}\hlnum{FALSE}\hlstd{)}
+
+\hlkwd{booteval.relimp}\hlstd{(run.stochastic,} \hlkwc{bty} \hlstd{=} \hlstr{"perc"}\hlstd{,} \hlkwc{level} \hlstd{=} \hlnum{0.95}\hlstd{,}
+                \hlkwc{sort} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{norank} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{nodiff} \hlstd{=} \hlnum{FALSE}\hlstd{,}
+                \hlkwc{typesel} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"lmg"}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+## Response variable: y 
+## Total response variance: 7.124277 
+## Analysis based on 50 observations 
+## 
+## 4 Regressors: 
+## x1 x2 x3 x4 
+## Proportion of variance explained by model: 79.37%
+## Metrics are not normalized (rela=FALSE). 
+## 
+## Relative importance metrics: 
+## 
+##            lmg
+## x1 0.009158799
+## x2 0.194263755
+## x3 0.584416677
+## x4 0.005875504
+## 
+## Average coefficients for different model sizes: 
+## 
+##           1X       2Xs        3Xs        4Xs
+## x1 0.1203568 0.2143376 0.27252676 0.30023575
+## x2 1.5489532 1.3516097 1.15741809 0.96633384
+## x3 2.2370658 2.1479920 2.05868850 1.96946043
+## x4 0.3783595 0.2140481 0.09440546 0.01844585
+## 
+##  
+##  Confidence interval information ( 1000 bootstrap replicates, bty= perc ): 
+## Relative Contributions with confidence intervals: 
+##  
+##                        Lower  Upper
+##        percentage 0.95 0.95   0.95  
+## x1.lmg 0.0092     __CD 0.0012 0.0649
+## x2.lmg 0.1943     _B__ 0.0652 0.3402
+## x3.lmg 0.5844     A___ 0.4192 0.7123
+## x4.lmg 0.0059     __CD 0.0012 0.0592
+## 
+## Letters indicate the ranks covered by bootstrap CIs. 
+## (Rank bootstrap confidence intervals always obtained by percentile method) 
+## CAUTION: Bootstrap confidence intervals can be somewhat liberal. 
+## 
+##  
+##  Differences between Relative Contributions: 
+##  
+##                           Lower   Upper
+##           difference 0.95 0.95    0.95   
+## x1-x2.lmg -0.1851     *   -0.3285 -0.0402
+## x1-x3.lmg -0.5753     *   -0.6961 -0.3930
+## x1-x4.lmg  0.0033         -0.0471  0.0522
+## x2-x3.lmg -0.3902     *   -0.6257 -0.1002
+## x2-x4.lmg  0.1884     *    0.0500  0.3232
+## x3-x4.lmg  0.5785     *    0.3833  0.7029
+## 
+## * indicates that CI for difference does not include 0. 
+## CAUTION: Bootstrap confidence intervals can be somewhat liberal.
+\end{verbatim}
+\begin{alltt}
+\hlcom{#----------------------------------------------------------------------------------------}
+
+
+\hlcom{# Because of computation costs only 100 bootstrap samples were used.}
+
+\hlstd{df.rtwos.boot} \hlkwb{<-}\hlkwd{rtwos.boot}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{], post.sample,} \hlnum{10}\hlstd{)}
+
+\hlstd{n.boot} \hlkwb{=} \hlnum{10}
+
+\hlstd{LMG.Vals.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+
+\hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
+
+\hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{])\{}
+
+        \hlstd{gofn}\hlkwb{<-}\hlstd{df.rtwos.boot[,i,b]}
+
+        \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
+
+        \hlstd{LMG.Vals.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+\hlstd{\}}
+
+\hlstd{\}}
+
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##         2.5%          50%        97.5% 
+## 0.0007374671 0.0164608341 0.0685237828
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.02422421 0.11811507 0.26714321
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.4065817 0.5877179 0.7350949
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##        2.5%         50%       97.5% 
+## 0.001636329 0.011863881 0.066337173
+\end{verbatim}
+\begin{alltt}
+\hlcom{#very similar values as in the confidence intervals for stochastic predictors}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in a Bayesian way. The package Jags is used.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{zy} \hlkwb{=} \hlstd{df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]}
+
+\hlcom{#----------------------------------------------------------------------------}
+\hlcom{# The rest can remain unchanged, except for the specification of difference of}
+\hlcom{# correlations at the very end.}
+\hlcom{#----------------------------------------------------------------------------}
+
+\hlcom{# Load some functions used below:}
+\hlcom{# Install the ellipse package if not already:}
+\hlcom{# Standardize the data:}
+
+\hlcom{#zy = apply(y,2,function(yVec)\{(yVec-mean(yVec))/sd(yVec)\})}
+\hlcom{# Assemble data for sending to JAGS:}
+\hlstd{dataList} \hlkwb{=} \hlkwd{list}\hlstd{(}
+        \hlkwc{zy} \hlstd{= zy ,}
+        \hlkwc{Ntotal} \hlstd{=}  \hlkwd{nrow}\hlstd{(zy) ,}
+        \hlkwc{Nvar} \hlstd{=} \hlkwd{ncol}\hlstd{(zy) ,}
+        \hlcom{# Include original data info for transforming to original scale:}
+        \hlcom{# For wishart (dwish) prior on inverse covariance matrix:}
+        \hlkwc{zRscal} \hlstd{=} \hlkwd{ncol}\hlstd{(zy) ,}  \hlcom{# for dwish prior}
+        \hlkwc{zRmat} \hlstd{=} \hlkwd{diag}\hlstd{(}\hlkwc{x}\hlstd{=}\hlnum{1}\hlstd{,}\hlkwc{nrow}\hlstd{=}\hlkwd{ncol}\hlstd{(zy))}  \hlcom{# Rmat = diag(apply(y,2,var))}
+\hlstd{)}
+
+\hlcom{# Define the model:}
+\hlstd{modelString} \hlkwb{=} \hlstr{"
+model \{
+for ( i in 1:Ntotal ) \{
+zy[i,1:Nvar] ~ dmnorm( zMu[1:Nvar] , zInvCovMat[1:Nvar,1:Nvar] ) 
+\}
+for ( varIdx in 1:Nvar ) \{ zMu[varIdx] ~ dnorm( 0 , 1/2^2 ) \}
+zInvCovMat ~ dwish( zRmat[1:Nvar,1:Nvar] , zRscal )
+# Convert invCovMat to sd and correlation:
+zCovMat <- inverse( zInvCovMat )
+
+\}
+"} \hlcom{# close quote for modelString}
+\hlkwd{writeLines}\hlstd{( modelString ,} \hlkwc{con}\hlstd{=}\hlstr{"Jags-MultivariateNormal-model.txt"} \hlstd{)}
+
+\hlcom{# Run the chains:}
+\hlstd{nChain} \hlkwb{=} \hlnum{3}
+\hlstd{nAdapt} \hlkwb{=} \hlnum{500}
+\hlstd{nBurnIn} \hlkwb{=} \hlnum{500}
+\hlstd{nThin} \hlkwb{=} \hlnum{10}
+\hlstd{nStepToSave} \hlkwb{=} \hlnum{20000}
+\hlkwd{require}\hlstd{(rjags)}
+\hlstd{jagsModel} \hlkwb{=} \hlkwd{jags.model}\hlstd{(} \hlkwc{file}\hlstd{=}\hlstr{"Jags-MultivariateNormal-model.txt"} \hlstd{,}
+                                                                                                \hlkwc{data}\hlstd{=dataList ,} \hlkwc{n.chains}\hlstd{=nChain ,} \hlkwc{n.adapt}\hlstd{=nAdapt )}
+\end{alltt}
+\begin{verbatim}
+## Compiling model graph
+##    Resolving undeclared variables
+##    Allocating nodes
+## Graph information:
+##    Observed stochastic nodes: 50
+##    Unobserved stochastic nodes: 5
+##    Total graph size: 82
+## 
+## Initializing model
+\end{verbatim}
+\begin{alltt}
+\hlkwd{update}\hlstd{( jagsModel ,} \hlkwc{n.iter}\hlstd{=nBurnIn )}
+\hlstd{codaSamples} \hlkwb{=} \hlkwd{coda.samples}\hlstd{( jagsModel ,}
+                                                                                                                \hlkwc{variable.names}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{'zCovMat'}\hlstd{) ,}
+                                                                                                                \hlkwc{n.iter}\hlstd{=nStepToSave}\hlopt{/}\hlstd{nChain}\hlopt{*}\hlstd{nThin ,} \hlkwc{thin}\hlstd{=nThin )}
+
+
+\hlcom{# Convergence diagnostics:}
+\hlstd{parameterNames} \hlkwb{=} \hlkwd{varnames}\hlstd{(codaSamples)} \hlcom{# get all parameter names}
+
+
+\hlcom{# Examine the posterior distribution:}
+\hlstd{mcmcMat} \hlkwb{=} \hlkwd{as.matrix}\hlstd{(codaSamples)}
+\hlstd{chainLength} \hlkwb{=} \hlkwd{nrow}\hlstd{(mcmcMat)}
+
+\hlstd{covMat} \hlkwb{<-} \hlkwd{array}\hlstd{(}\hlnum{NA}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlnum{4}\hlstd{,chainLength))}
+
+\hlkwa{for} \hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{chainLength)\{}
+\hlstd{covMat[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,i]}\hlkwb{<-}\hlkwd{matrix}\hlstd{(mcmcMat[i,],} \hlnum{4}\hlstd{,} \hlnum{4}\hlstd{)}
+\hlstd{\}}
+
+\hlstd{covMat} \hlkwb{<-} \hlstd{covMat[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{20000}\hlstd{,} \hlkwc{replace}\hlstd{=F)]}
+
+
+\hlstd{df.rtwos} \hlkwb{<-}\hlkwd{rtwos.covm}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{], post.sample, covMat,} \hlnum{10}\hlstd{)}
+
+
+\hlstd{n.boot} \hlkwb{=} \hlnum{10}
+
+\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{], n.boot))}
+
+\hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
+
+        \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])\{}
+
+                \hlstd{gofn}\hlkwb{<-}\hlstd{df.rtwos[,i,b]}
+
+                \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
+
+                \hlstd{LMG.Vals[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+        \hlstd{\}}
+
+\hlstd{\}}
+
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##        2.5%         50%       97.5% 
+## 0.001368996 0.017082351 0.084935432
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.02315168 0.09884204 0.24200257
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.4100702 0.6101544 0.7625057
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##         2.5%          50%        97.5% 
+## 0.0009099177 0.0140786805 0.0689601823
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. 
+
+Another interesting option in some cases would be to use the shrinkage estimate of the covariance matrix. 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#Comparison of sample covariance and shrink covariance matrix}
+
+\hlkwd{cov}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+##             x1          x2          x3          x4
+## x1  1.12137071  0.03454679 -0.01519685  0.07751439
+## x2  0.03454679  0.99051856 -0.10391167 -0.17378691
+## x3 -0.01519685 -0.10391167  1.18650978 -0.03185110
+## x4  0.07751439 -0.17378691 -0.03185110  0.79873941
+\end{verbatim}
+\begin{alltt}
+\hlkwd{cov.shrink}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{])}
+\end{alltt}
+\begin{verbatim}
+## Estimating optimal shrinkage intensity lambda.var (variance vector): 1 
+## 
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 1
+##          x1       x2       x3       x4
+## x1 1.055945 0.000000 0.000000 0.000000
+## x2 0.000000 1.055945 0.000000 0.000000
+## x3 0.000000 0.000000 1.055945 0.000000
+## x4 0.000000 0.000000 0.000000 1.055945
+## attr(,"lambda")
+## [1] 1
+## attr(,"lambda.estimated")
+## [1] TRUE
+## attr(,"class")
+## [1] "shrinkage"
+## attr(,"lambda.var")
+## [1] 1
+## attr(,"lambda.var.estimated")
+## [1] TRUE
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Real World Data}
+
+
+The first example data are taken from the book Bayesian Regression Modeling with INLA. The data were about air pollution in 41 cities in the United States originally published in Everitt (2006). The data consits of the SO2 level as the dependent variable and six explanatory variables 
+Two of the explanatory variables are are related to human ecology (pop, manuf) and four others are related to climate (negtemp, wind, precip, days).
+
 
 
 % LaTeX file for Chapter 04
@@ -400,6 +1017,8 @@ Notice how in Figure~\ref{f02:1} everything is properly scaled.
 
 
 \chapter{Conclusions}
+
+
 \cleardoublepage
 \phantomsection
 \addtocontents{toc}{\protect \vspace*{10mm}}

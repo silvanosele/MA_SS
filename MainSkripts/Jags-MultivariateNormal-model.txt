@@ -1,0 +1,12 @@
+
+model {
+for ( i in 1:Ntotal ) {
+zy[i,1:Nvar] ~ dmnorm( zMu[1:Nvar] , zInvCovMat[1:Nvar,1:Nvar] ) 
+}
+for ( varIdx in 1:Nvar ) { zMu[varIdx] ~ dnorm( 0 , 1/2^2 ) }
+zInvCovMat ~ dwish( zRmat[1:Nvar,1:Nvar] , zRscal )
+# Convert invCovMat to sd and correlation:
+zCovMat <- inverse( zInvCovMat )
+
+}
+

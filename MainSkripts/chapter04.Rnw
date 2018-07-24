@@ -1,4 +1,9 @@
 % LaTeX file for Chapter 04
+
+<<set-parent04, echo=FALSE, cache=FALSE>>=
+set_parent('Main.Rnw')
+@
+
 <<'preamble04',include=FALSE>>=
 library(knitr)
 opts_chunk$set(
@@ -8,5 +13,41 @@ opts_chunk$set(
 ) 
 @
 
-\chapter{Discussion and Outlook}
+\chapter{Discussion and Outlook - Some extenstions}
+
+In the following chapter some extenstions of the LMG formula in the Bayesian framework beyond the simple linear regression model are shown. The focus is on repeated measurements models. These models extend the simple linear regression be allowing intra subject correlation between repeated measures. 
+
+The dependence within subjects can be modeled by including random effects (mixed model) or by assuming correlated errors within a subject (marginal model). Using a random intercept model or a compound symmetry matrix for the error will result in the same model for the fixed predictors. A mixed model can be extended by including a random slope per subject, allowing for less restrictive longitudinal shapes. The marginal approach can get more freedom by different specified covariance matrices of the error terms. An unstructured covariance matrix, where no restriction are imposed, allows for the most freedom. However, depending on the number of repeated measuresments and the sample size the covariance matrix can get too large to make reasonable inference about it. 
+
+
+The extenstion of the LMG formula in the Bayesian framework presented in chapter is restricted to models where the conditional variance formula can easily be applied to get the explained variance of the submodel from the regression parameters of the full model. The focus is on the fixed predictors and not on the random effects. Using the conditional variance formula to get the explained variance of the fixed predictors of the submodels should be applicable in the marginal models, where only the fixed effects are modelled anyway. In the mixed model framework the conditional variance formula is applicable to models including only random intercepts and the focus lies in the explained variance of the fixed predictors. For random-slope models there are atleast some difficulties involved, if it is possible at all the get the expalined variance of the submodel. This chapter shows a  random intercept model and a repeated measurement model with an unstructured covariance matrix.  
+
+The first example concerns a simple random intercept model with time varying predictors.  
+
+\section{random intercept model}
+
+Different $\Rtwo$ metrics exist for linear mixed models. The variance of a random intercept model with regression parameter $\bbeta$ can be written as
+
+      \begin{align} 
+        \var(y) = \sigma_{f}^2  + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2, 
+        \end{align}
+
+where $\sigma_{f}^2 = \var(\bbeta^\top \X) = \bbeta^\top \bSigma_{\X \X}  \bbeta$ , $\sigma_{\alpha}^2 $ is the random intercept and $\sigma_{\epsilon}^2$ is the error term. The random terms $\sigma_{\alpha}^2 $ and $\sigma_{\epsilon}^2$ are assumed to come from a normal distribution.
+
+An $\Rtwo$ that is guaranteed to be positive can be defined as
+
+   \begin{align} 
+\Rtwo_{\text{LMM}} = \frac{\sigma_{f}^2}{\sigma_{f}^2 + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2},
+\end{align}
+
+Referenz Naka, Snyder...
+
+
+
+
+
+
+
+
+
 
