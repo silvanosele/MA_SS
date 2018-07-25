@@ -1,4 +1,10 @@
 % LaTeX file for Chapter 05
+
+<<set-parent05, echo=FALSE, cache=FALSE>>=
+set_parent('Main.Rnw')
+@
+
+
 <<'preamble05',include=FALSE>>=
 library(knitr)
 opts_chunk$set(
@@ -8,4 +14,15 @@ opts_chunk$set(
 ) 
 @
 
-\chapter{Conclusions}
+\chapter{Other variable importance metrics in the Bayesian framework}
+
+Different variable importance metrics exist. The conditional variance formula allowed us to calculate the $\Rtwo$ of the submodels from the posterior sample of the full model. The focus of this master thesis was on the LMG formula. For each posterior sample the LMG formula can be applied for the submodels of each posterior sample. A lot of the variable importance metrics are based on the $\Rtwo$ of the full model compared to the submodels. Instead of the LMG formula we could as well have used another variable importance metric after we have calculated the $\Rtwo$ of all the submodels. Commonality and dominance analysis seem to be interesting. Both provide besides the LMG information some other information about the variance decomposition of the predictors. 
+
+ Calculating the $\Rtwo$ of all the submodels with the conditional variance formula  seems to be restricted to the linear model. Although this may be a topic of further research. 
+ 
+\section{Conclusion}
+ 
+ 
+
+
+. 

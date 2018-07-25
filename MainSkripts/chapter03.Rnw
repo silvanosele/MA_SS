@@ -291,7 +291,7 @@ In the following section the Bayesian LMG implementation is presented on two exa
 Lets assume a simple model: 
 
 \begin{align} 
-&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1)&
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),
 \end{align} 
 
 
@@ -783,6 +783,10 @@ pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = 
 pairs.chart
 
 @
+
+
+
+
 
 
 

@@ -1,12 +1,21 @@
+model{
 
-model {
-for ( i in 1:Ntotal ) {
-zy[i,1:Nvar] ~ dmnorm( zMu[1:Nvar] , zInvCovMat[1:Nvar,1:Nvar] ) 
+# Likelihood
+for(i in 1:N){
+Y[i,1:M] ~ dmnorm(mu[i,1:M],Omega[1:M,1:M])
+for(j in 1:M){
+mu[i,j] <- beta0 + beta1*x1[i,j]+ beta2*x2[i,j]+ beta3*x3[i,j] + beta4*x4[i,j]  
+}}
+
+# Priors
+
+Omega[1:M, 1:M] ~dwish(zRmat[1:M,1:M] , zRscal)
+Sigma[1:M, 1:M] <- inverse(Omega)
+
+beta0      ~ dnorm(0,0.001)
+beta1      ~ dnorm(0,0.001)
+beta2      ~ dnorm(0,0.001)
+beta3      ~ dnorm(0,0.001)
+beta4      ~ dnorm(0,0.001)
+
 }
-for ( varIdx in 1:Nvar ) { zMu[varIdx] ~ dnorm( 0 , 1/2^2 ) }
-zInvCovMat ~ dwish( zRmat[1:Nvar,1:Nvar] , zRscal )
-# Convert invCovMat to sd and correlation:
-zCovMat <- inverse( zInvCovMat )
-
-}
-
