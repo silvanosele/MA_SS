@@ -1,0 +1,21 @@
+\begin{thebibliography}{}
+
+\bibitem[Gr{\"{o}}mping, 2007]{Gromping2007}
+Gr{\"{o}}mping, U. (2007).
+\newblock {Estimators of relative importance in linear regression based on
+  variance decomposition}.
+\newblock {\em American Statistician}, {\bf61},  139--147.
+
+\bibitem[Gr{\"{o}}mping, 2015]{Gromping2015}
+Gr{\"{o}}mping, U. (2015).
+\newblock {Variable importance in regression models}.
+\newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
+  {\bf7},  137--152.
+
+\bibitem[Nimon and Oswald, 2013]{Nimon2013}
+Nimon, K.~F. and Oswald, F.~L. (2013).
+\newblock {Understanding the Results of Multiple Linear Regression: Beyond
+  Standardized Regression Coefficients}.
+\newblock {\em Organizational Research Methods}, {\bf00},  1--25.
+
+\end{thebibliography}

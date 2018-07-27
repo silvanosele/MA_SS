@@ -70,6 +70,8 @@ June 2018
 <<'child-chapter05', child='chapter05.Rnw'>>=
 @
 
+<<'child-chapter06', child='chapter06.Rnw'>>=
+@
 
 \cleardoublepage
 \phantomsection

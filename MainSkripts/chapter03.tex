@@ -114,8 +114,8 @@ The model is fitted using the rstanarm package with the default priors for the r
 ## 
 ## SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 ## 
-## Gradient evaluation took 0.000137 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 1.37 seconds.
+## Gradient evaluation took 0.000127 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 1.27 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -132,15 +132,15 @@ The model is fitted using the rstanarm package with the default priors for the r
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.07019 seconds (Warm-up)
-##                0.064703 seconds (Sampling)
-##                0.134893 seconds (Total)
+##  Elapsed Time: 0.074254 seconds (Warm-up)
+##                0.065907 seconds (Sampling)
+##                0.140161 seconds (Total)
 ## 
 ## 
 ## SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 ## 
-## Gradient evaluation took 1.5e-05 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 0.15 seconds.
+## Gradient evaluation took 1.3e-05 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0.13 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -157,9 +157,9 @@ The model is fitted using the rstanarm package with the default priors for the r
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.078599 seconds (Warm-up)
-##                0.072947 seconds (Sampling)
-##                0.151546 seconds (Total)
+##  Elapsed Time: 0.074243 seconds (Warm-up)
+##                0.066928 seconds (Sampling)
+##                0.141171 seconds (Total)
 \end{verbatim}
 \begin{alltt}
 \hlcom{#posterior sample}
@@ -170,17 +170,17 @@ The model is fitted using the rstanarm package with the default priors for the r
 \end{alltt}
 \begin{verbatim}
 ##           parameters
-## iterations (Intercept)        x1        x2       x3        x4    sigma
-##       [1,]  0.25146161 0.8120795 0.9876217 1.055278 0.7568951 1.014648
-##       [2,] -0.25162203 1.1284339 0.8604222 1.770105 1.2114690 1.131450
-##       [3,]  0.20280485 1.0829865 1.0009234 1.576368 1.1886219 1.072287
-##       [4,]  0.10389384 1.0563978 1.0562895 1.579383 1.1433637 1.004666
-##       [5,] -0.19671469 0.9334791 0.8991408 1.039873 0.7894007 1.078298
-##       [6,]  0.02623394 1.0352149 1.2775867 1.740727 1.0874321 1.143698
-##       [7,] -0.14006697 1.0400488 0.5799490 1.257080 1.0452126 1.023704
-##       [8,]  0.06589059 0.9446801 0.7583340 1.569386 1.2945990 1.144864
-##       [9,] -0.27616382 1.0443262 1.0203259 1.404316 0.6486706 0.924302
-##      [10,] -0.02227921 1.2252321 1.1855809 1.204604 0.7119914 1.063315
+## iterations (Intercept)        x1       x2        x3        x4     sigma
+##       [1,]  0.35178659 0.8655954 1.142714 0.8983258 0.9083553 0.9562517
+##       [2,]  0.06255488 0.8535117 1.049424 0.7477095 0.8104561 1.0594685
+##       [3,]  0.31597084 0.7650021 1.340354 0.9362496 1.1261895 1.2277133
+##       [4,]  0.06533558 1.0942983 0.951873 0.8730962 0.7628246 1.0079768
+##       [5,]  0.28055153 1.0896500 1.150824 0.9820826 0.8198639 1.4869377
+##       [6,]  0.40788418 0.9904042 1.312746 0.9577036 0.7945795 1.6462027
+##       [7,]  0.54576471 0.8962367 1.204006 0.9703716 1.0254554 1.3898373
+##       [8,]  0.28610365 0.8699938 1.110565 0.7824389 0.9131850 0.8861995
+##       [9,]  0.18966765 0.8408969 1.076889 0.8853991 0.8885238 1.2108844
+##      [10,] -0.04572765 1.0818832 1.255911 0.5915038 1.0709531 0.9675569
 \end{verbatim}
 \begin{alltt}
 \hlcom{#no need for the intercept, last parameter is sigma}
@@ -193,23 +193,23 @@ The model is fitted using the rstanarm package with the default priors for the r
 \hlstd{df.rtwos[,}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{]}
 \end{alltt}
 \begin{verbatim}
-##                 X1        X2        X3        X4        X5
-## none     0.0000000 0.0000000 0.0000000 0.0000000 0.0000000
-## x1       0.1467998 0.1846805 0.1791542 0.1712197 0.1913004
-## x2       0.2483680 0.1188297 0.1708345 0.1911564 0.1963248
-## x3       0.2204477 0.3571245 0.3020489 0.3119271 0.2044250
-## x4       0.1802315 0.1943277 0.2196437 0.2137950 0.1841791
-## x1 x2    0.4417630 0.3396232 0.3925358 0.4063801 0.4347560
-## x1 x3    0.3638336 0.5369329 0.4767891 0.4787622 0.3919718
-## x1 x4    0.2827283 0.3273623 0.3447681 0.3329124 0.3243058
-## x2 x3    0.4749532 0.4813682 0.4788446 0.5094907 0.4060045
-## x2 x4    0.3522687 0.2586075 0.3204942 0.3317824 0.3116590
-## x3 x4    0.4487135 0.6151917 0.5838086 0.5880307 0.4353470
-## x1 x2 x3 0.6649319 0.6975455 0.6962816 0.7204433 0.6407866
-## x1 x2 x4 0.5013984 0.4242556 0.4849256 0.4923512 0.4985243
-## x1 x3 x4 0.5425040 0.7358258 0.6977385 0.6960826 0.5656068
-## x2 x3 x4 0.6160094 0.6758613 0.6804402 0.7013900 0.5588807
-## all      0.7539647 0.8267264 0.8311791 0.8482520 0.7336243
+##                 X1        X2         X3        X4         X5
+## none     0.0000000 0.0000000 0.00000000 0.0000000 0.00000000
+## x1       0.1155161 0.1265817 0.05861261 0.2214549 0.14825388
+## x2       0.2743602 0.2539277 0.30650867 0.1766879 0.19380243
+## x3       0.3583408 0.2997988 0.30910601 0.3549040 0.30995688
+## x4       0.1549655 0.1350313 0.18054621 0.1127693 0.09532595
+## x1 x2    0.4652522 0.4560452 0.42407258 0.4808169 0.41292796
+## x1 x3    0.4251260 0.3791724 0.33656876 0.5076723 0.40604211
+## x1 x4    0.2878599 0.2785842 0.25263665 0.3548052 0.25903292
+## x2 x3    0.5829040 0.5098845 0.56668905 0.4920195 0.46490367
+## x2 x4    0.4267990 0.3866899 0.48417204 0.2877273 0.28746299
+## x3 x4    0.4514269 0.3819125 0.42701257 0.4159155 0.36089513
+## x1 x2 x3 0.7078564 0.6499467 0.63719154 0.7115499 0.61751520
+## x1 x2 x4 0.6397839 0.6100421 0.62046964 0.6158245 0.52523325
+## x1 x3 x4 0.5327627 0.4761689 0.46519159 0.5866294 0.46992805
+## x2 x3 x4 0.6781015 0.5939166 0.68714028 0.5543666 0.51713991
+## all      0.8239334 0.7547871 0.77532252 0.7966452 0.68703340
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -221,7 +221,12 @@ After the $\Rtwo$ for each posterior sample and their corresponding submodels is
 \begin{alltt}
 \hlcom{# prepare data frame for LMG values}
 
-\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+\hlstd{LMG.Vals.I}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+
+\hlstd{LMG.Vals.J}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+
+\hlstd{LMG.Vals.T}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{4}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+
 
 \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])\{}
 
@@ -229,41 +234,101 @@ After the $\Rtwo$ for each posterior sample and their corresponding submodels is
 
   \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
 
-  \hlstd{LMG.Vals[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+  \hlstd{LMG.Vals.I[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+  \hlstd{LMG.Vals.J[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{2}\hlstd{]}
+        \hlstd{LMG.Vals.T[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{3}\hlstd{]}
 \hlstd{\}}
+
+\hlstd{varnames} \hlkwb{<-} \hlkwd{row.names}\hlstd{(obj.Gelman}\hlopt{$}\hlstd{IJ)}
 
 
 \hlcom{# posterior LMG distribution of each variable}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.09166948 0.17637113 0.27580559
+## 0.06083054 0.14395976 0.24118322
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.08274643 0.16225299 0.25941496
-\end{verbatim}
-\begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##      2.5%       50%     97.5% 
-## 0.1941646 0.3021694 0.4103921
+## 0.1447740 0.2572612 0.3774172
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.1319720 0.2334742 0.3435360
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.07724791 0.15951723 0.24966424
+## 0.06183814 0.13457410 0.23772626
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.J[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##         2.5%          50%        97.5% 
+## -0.029947641 -0.017765115 -0.006019912
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.J[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##         2.5%          50%        97.5% 
+## -0.025073063 -0.012040967  0.002017762
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.J[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.06025121 0.07776257 0.09024082
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.J[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##        2.5%         50%       97.5% 
+## 0.009420845 0.018006878 0.027944757
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.T[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.04794251 0.12584522 0.22163041
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.T[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.1343851 0.2455826 0.3661442
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.T[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.1936227 0.3106018 0.4305216
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.T[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##       2.5%        50%      97.5% 
+## 0.07340494 0.15240129 0.26038850
 \end{verbatim}
 \begin{alltt}
 \hlcom{# some example how it could be displayed}
-\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals))}
+\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals.I))}
 
 \hlstd{pairs.chart} \hlkwb{<-} \hlkwd{ggpairs}\hlstd{(dat,} \hlkwc{lower} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{combo} \hlstd{=} \hlstr{"facetdensity"}\hlstd{)),} \hlkwc{upper} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{continuous} \hlstd{=} \hlstr{"cor"}\hlstd{)))} \hlopt{+} \hlstd{ggplot2}\hlopt{::}\hlkwd{theme}\hlstd{(}\hlkwc{axis.text} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{size} \hlstd{=} \hlnum{6}\hlstd{))}
 \hlstd{pairs.chart}
@@ -285,29 +350,29 @@ After the $\Rtwo$ for each posterior sample and their corresponding submodels is
 \end{alltt}
 \begin{verbatim}
 ## Response variable: y 
-## Total response variance: 5.552254 
+## Total response variance: 5.207532 
 ## Analysis based on 50 observations 
 ## 
 ## 4 Regressors: 
 ## x1 x2 x3 x4 
-## Proportion of variance explained by model: 82.41%
+## Proportion of variance explained by model: 80.7%
 ## Metrics are not normalized (rela=FALSE). 
 ## 
 ## Relative importance metrics: 
 ## 
 ##          lmg
-## x1 0.1811296
-## x2 0.1666997
-## x3 0.3132778
-## x4 0.1629547
+## x1 0.1682618
+## x2 0.1052344
+## x3 0.2570110
+## x4 0.2765038
 ## 
 ## Average coefficients for different model sizes: 
 ## 
-##          1X       2Xs       3Xs       4Xs
-## x1 1.074823 1.0625800 1.0486902 1.0286499
-## x2 1.013182 0.9951801 0.9758422 0.9506321
-## x3 1.293776 1.3391547 1.3728345 1.3889366
-## x4 1.250949 1.1850119 1.0992265 0.9949324
+##           1X       2Xs       3Xs       4Xs
+## x1 1.0374575 1.0292667 1.0085588 0.9715225
+## x2 0.7930673 0.7587584 0.7155455 0.6624706
+## x3 1.1681569 1.1317494 1.0891532 1.0440098
+## x4 1.2582913 1.2410188 1.2174703 1.1894942
 ## 
 ##  
 ##  Confidence interval information ( 1000 bootstrap replicates, bty= perc ): 
@@ -315,16 +380,35 @@ After the $\Rtwo$ for each posterior sample and their corresponding submodels is
 ##  
 ##                   Lower  Upper
 ##        percentage 0.95   0.95  
-## x1.lmg 0.1811     0.1009 0.2782
-## x2.lmg 0.1667     0.0922 0.2607
-## x3.lmg 0.3133     0.2169 0.4317
-## x4.lmg 0.1630     0.0949 0.2506
+## x1.lmg 0.1683     0.0854 0.2798
+## x2.lmg 0.1052     0.0494 0.1946
+## x3.lmg 0.2570     0.1579 0.3588
+## x4.lmg 0.2765     0.1789 0.3920
 ## 
 ## CAUTION: Bootstrap confidence intervals can be somewhat liberal. 
 ## NOTE: X-matrix has been considered as fixed for bootstrapping.
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+x1 & 0.144 (0.061, 0.241)  & -0.018 (-0.03, -0.006)   & 0.126 (0.048, 0.222)  \\ 
+x2 & 0.257 (0.145, 0.377)  & -0.012 (-0.025, 0.002)   & 0.246 (0.134, 0.366)  \\ 
+x3 & 0.233 (0.132, 0.344)  & 0.078 (0.06, 0.09)   & 0.311 (0.194, 0.431)  \\ 
+x4 & 0.135 (0.062, 0.238)  & 0.018 (0.009, 0.028)   & 0.152 (0.073, 0.26)  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition for stochastic predictors using bootstrap. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO}
+\end{table}
+
+
 
 
 Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. In the example above the predictors were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. As noted in ... under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for fixed and stochastic predictors. Inference about the covariance matrix can be seen as an independent problem. G recommends in most cases to use the non fixed regressor option when calculating bootstrap confidence intervals. The confidence intervals will then in general be a bit larger. If we want to include this uncertainty in the Bayesian framework, we would need some ideas about the distribution of the predictor variables $\X$. It is then possible to obtain poserior distributions of their corresponding covariance matrix. As a practical solution nonparametric bootstrap may be used to include the uncertainty of the covariance matrix. The following code includes the uncertainty of the stochastic predictors. 
@@ -342,29 +426,29 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 \end{alltt}
 \begin{verbatim}
 ## Response variable: y 
-## Total response variance: 5.552254 
+## Total response variance: 5.21 
 ## Analysis based on 50 observations 
 ## 
 ## 4 Regressors: 
 ## x1 x2 x3 x4 
-## Proportion of variance explained by model: 82.41%
+## Proportion of variance explained by model: 80.7%
 ## Metrics are not normalized (rela=FALSE). 
 ## 
 ## Relative importance metrics: 
 ## 
-##          lmg
-## x1 0.1811296
-## x2 0.1666997
-## x3 0.3132778
-## x4 0.1629547
+##      lmg
+## x1 0.168
+## x2 0.105
+## x3 0.257
+## x4 0.277
 ## 
 ## Average coefficients for different model sizes: 
 ## 
-##          1X       2Xs       3Xs       4Xs
-## x1 1.074823 1.0625800 1.0486902 1.0286499
-## x2 1.013182 0.9951801 0.9758422 0.9506321
-## x3 1.293776 1.3391547 1.3728345 1.3889366
-## x4 1.250949 1.1850119 1.0992265 0.9949324
+##       1X   2Xs   3Xs   4Xs
+## x1 1.037 1.029 1.009 0.972
+## x2 0.793 0.759 0.716 0.662
+## x3 1.168 1.132 1.089 1.044
+## x4 1.258 1.241 1.217 1.189
 ## 
 ##  
 ##  Confidence interval information ( 1000 bootstrap replicates, bty= perc ): 
@@ -372,10 +456,10 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 ##  
 ##                   Lower  Upper
 ##        percentage 0.95   0.95  
-## x1.lmg 0.1811     0.0784 0.3107
-## x2.lmg 0.1667     0.0579 0.2927
-## x3.lmg 0.3133     0.1648 0.4536
-## x4.lmg 0.1630     0.0567 0.3131
+## x1.lmg 0.1683     0.0675 0.3082
+## x2.lmg 0.1052     0.0259 0.2261
+## x3.lmg 0.2570     0.1257 0.3875
+## x4.lmg 0.2765     0.1503 0.4095
 ## 
 ## CAUTION: Bootstrap confidence intervals can be somewhat liberal.
 \end{verbatim}
@@ -383,11 +467,13 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 \hlcom{#----------------------------------------------------------------------------------------}
 
 
-\hlstd{df.rtwos.boot} \hlkwb{<-}\hlkwd{rtwos.boot}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{], post.sample,} \hlnum{10}\hlstd{)}
+\hlstd{df.rtwos.boot} \hlkwb{<-}\hlkwd{rtwos.boot}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{], post.sample,} \hlnum{100}\hlstd{)}
 
-\hlstd{n.boot} \hlkwb{=} \hlnum{10}
+\hlstd{n.boot} \hlkwb{=} \hlnum{100}
 
-\hlstd{LMG.Vals.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.I.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.J.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.T.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
 
 \hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
 
@@ -397,37 +483,40 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 
         \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
 
-        \hlstd{LMG.Vals.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
-\hlstd{\}}
+        \hlstd{LMG.Vals.I.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+        \hlstd{LMG.Vals.J.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{2}\hlstd{]}
+        \hlstd{LMG.Vals.T.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{3}\hlstd{]}
 
 \hlstd{\}}
 
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlstd{\}}
+
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.0563607 0.1407858 0.2943099
+##   2.5%    50%  97.5% 
+## 0.0481 0.1786 0.3276
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.0758204 0.1941894 0.3464876
+##   2.5%    50%  97.5% 
+## 0.0736 0.1959 0.3503
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1151979 0.2832940 0.4079618
+##   2.5%    50%  97.5% 
+## 0.0178 0.0527 0.1651
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.04244554 0.16971870 0.31231758
+##   2.5%    50%  97.5% 
+## 0.0601 0.1999 0.3977
 \end{verbatim}
 \begin{alltt}
 \hlcom{#very similar values as in the confidence intervals for stochastic predictors}
@@ -444,8 +533,8 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 ## 
 ## SAMPLING FOR MODEL 'continuous' NOW (CHAIN 1).
 ## 
-## Gradient evaluation took 0.000117 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 1.17 seconds.
+## Gradient evaluation took 0.000217 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 2.17 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -462,15 +551,15 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.08434 seconds (Warm-up)
-##                0.062999 seconds (Sampling)
-##                0.147339 seconds (Total)
+##  Elapsed Time: 0.146693 seconds (Warm-up)
+##                0.106807 seconds (Sampling)
+##                0.2535 seconds (Total)
 ## 
 ## 
 ## SAMPLING FOR MODEL 'continuous' NOW (CHAIN 2).
 ## 
-## Gradient evaluation took 1.6e-05 seconds
-## 1000 transitions using 10 leapfrog steps per transition would take 0.16 seconds.
+## Gradient evaluation took 2.9e-05 seconds
+## 1000 transitions using 10 leapfrog steps per transition would take 0.29 seconds.
 ## Adjust your expectations accordingly!
 ## 
 ## 
@@ -487,9 +576,9 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 ## Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Iteration: 2000 / 2000 [100%]  (Sampling)
 ## 
-##  Elapsed Time: 0.103181 seconds (Warm-up)
-##                0.063035 seconds (Sampling)
-##                0.166216 seconds (Total)
+##  Elapsed Time: 0.14285 seconds (Warm-up)
+##                0.113844 seconds (Sampling)
+##                0.256694 seconds (Total)
 \end{verbatim}
 \begin{alltt}
 \hlcom{#posterior sample}
@@ -500,17 +589,17 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 \end{alltt}
 \begin{verbatim}
 ##           parameters
-## iterations (Intercept)        x1        x2        x3        x4     sigma
-##       [1,]  0.20013187 0.9951292 0.9836621 0.9862314 0.9920344 1.0069258
-##       [2,] -0.17301698 1.0027072 1.0099915 1.0217840 0.9964729 1.1497936
-##       [3,]  0.26606459 1.0002421 0.9906716 0.9853976 1.0025311 1.1194660
-##       [4,]  0.23934385 0.9913646 1.0054863 0.9887745 0.9994093 0.9760771
-##       [5,]  0.10217015 0.9917333 1.0084500 0.9925039 0.9939052 0.9815683
-##       [6,] -0.17613916 1.0034315 1.0090995 1.0053460 0.9811486 1.0075087
-##       [7,]  0.01952345 0.9996066 0.9969790 1.0070605 0.9794494 0.9698949
-##       [8,]  0.10767092 1.0006765 1.0017746 1.0014465 1.0108357 1.1981013
-##       [9,] -0.20811507 1.0081525 1.0074328 0.9894853 0.9867378 1.0760004
-##      [10,]  0.09935476 1.0115203 0.9977477 1.0142334 0.9973044 1.0099387
+## iterations (Intercept)    x1    x2    x3    x4 sigma
+##       [1,]     -0.1276 0.982 1.012 1.016 0.998 0.869
+##       [2,]     -0.1000 1.012 0.995 0.990 0.994 0.722
+##       [3,]     -0.3582 0.995 1.006 0.980 1.013 0.681
+##       [4,]     -0.0984 1.011 0.995 1.000 0.999 1.071
+##       [5,]     -0.1142 1.007 1.003 0.999 0.998 1.111
+##       [6,]     -0.3027 1.009 1.014 0.998 1.000 0.871
+##       [7,]     -0.2289 0.986 0.991 1.008 1.001 0.914
+##       [8,]     -0.0522 1.014 1.010 0.995 0.996 0.717
+##       [9,]     -0.1920 0.990 0.987 0.995 1.005 0.681
+##      [10,]     -0.1777 1.006 1.014 1.006 0.993 1.032
 \end{verbatim}
 \begin{alltt}
 \hlcom{#no need for the intercept, last parameter is sigma}
@@ -524,7 +613,7 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 
 \hlstd{n.boot} \hlkwb{=} \hlnum{10}
 
-\hlstd{LMG.Vals.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.I.boot.p}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
 
 \hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
 
@@ -534,40 +623,62 @@ Using the default uninformative priors, the LMG distributions obtained from the 
 
         \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
 
-        \hlstd{LMG.Vals.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+        \hlstd{LMG.Vals.I.boot.p[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
 \hlstd{\}}
 
 \hlstd{\}}
 
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot.p[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1381109 0.2030829 0.3103296
+##  2.5%   50% 97.5% 
+## 0.113 0.248 0.401
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot.p[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1497110 0.1935097 0.2664145
+##  2.5%   50% 97.5% 
+## 0.107 0.177 0.258
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot.p[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1015362 0.1829171 0.2721100
+##   2.5%    50%  97.5% 
+## 0.0479 0.0782 0.1288
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot.p[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.06347948 0.16874963 0.24271955
+##   2.5%    50%  97.5% 
+## 0.0989 0.2850 0.3869
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+x1 & 0.179 (0.048, 0.328)  & -0.011 (-0.074, 0.086)   & 0.168 (0.012, 0.38)  \\ 
+x2 & 0.196 (0.074, 0.35)  & -0.041 (-0.098, 0.049)   & 0.156 (0.013, 0.373)  \\ 
+x3 & 0.053 (0.018, 0.165)  & -0.035 (-0.072, 0.009)   & 0.015 (\ensuremath{3.314\times 10^{-5}}, 0.132)  \\ 
+x4 & 0.2 (0.06, 0.398)  & -0.041 (-0.102, 0.047)   & 0.16 (0.012, 0.383)  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO2}
+\end{table}
+
+
+
 
 In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in a Bayesian way. The package Jags is used.
 
@@ -662,7 +773,10 @@ zCovMat <- inverse( zInvCovMat )
 
 \hlstd{n.boot} \hlkwb{=} \hlnum{10}
 
-\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.I.covm}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.J.covm}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.T.covm}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+
 
 \hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
 
@@ -672,40 +786,61 @@ zCovMat <- inverse( zInvCovMat )
 
                 \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
 
-                \hlstd{LMG.Vals[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+                \hlstd{LMG.Vals.I.covm[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+                \hlstd{LMG.Vals.J.covm[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{2}\hlstd{]}
+                \hlstd{LMG.Vals.T.covm[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{3}\hlstd{]}
+
         \hlstd{\}}
 
 \hlstd{\}}
 
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.covm[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.07955934 0.19561327 0.25671047
+##  2.5%   50% 97.5% 
+## 0.127 0.219 0.345
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.covm[}\hlnum{2}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1059393 0.1921079 0.3129919
+##  2.5%   50% 97.5% 
+## 0.159 0.246 0.331
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.covm[}\hlnum{3}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1073336 0.1822257 0.2556199
+##  2.5%   50% 97.5% 
+## 0.106 0.131 0.238
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.covm[}\hlnum{4}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1192879 0.1863754 0.3401010
+##  2.5%   50% 97.5% 
+## 0.100 0.184 0.287
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+x1 & 0.219 (0.127, 0.345)  & -0.016 (-0.062, 0.048)   & 0.213 (0.069, 0.387)  \\ 
+x2 & 0.246 (0.159, 0.331)  & -0.007 (-0.106, 0.074)   & 0.23 (0.06, 0.403)  \\ 
+x3 & 0.131 (0.106, 0.238)  & -0.043 (-0.081, 0.005)   & 0.1 (0.036, 0.242)  \\ 
+x4 & 0.184 (0.1, 0.287)  & -0.037 (-0.09, 0.01)   & 0.155 (0.023, 0.259)  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO3}
+\end{table}
 
 Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the large credible intervals. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. Code xx shows the uncertainty about the LMG values caused by the uncertainty about the covariance matrix. 
 
@@ -734,7 +869,7 @@ Another interesting option in some cases would be to use the shrinkage estimate 
 
 \hlstd{n.boot} \hlkwb{=} \hlnum{1000}
 
-\hlstd{LMG.Vals.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
+\hlstd{LMG.Vals.I.boot}\hlkwb{<-}\hlkwd{array}\hlstd{(}\hlnum{0}\hlstd{,} \hlkwd{c}\hlstd{(}\hlnum{4}\hlstd{,}\hlkwd{dim}\hlstd{(df.rtwos.boot)[}\hlnum{2}\hlstd{], n.boot))}
 
 \hlkwa{for} \hlstd{(b} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{n.boot)\{}
 
@@ -744,40 +879,40 @@ Another interesting option in some cases would be to use the shrinkage estimate 
 
         \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{]))}
 
-        \hlstd{LMG.Vals.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+        \hlstd{LMG.Vals.I.boot[,i, b]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
 \hlstd{\}}
 
 \hlstd{\}}
 
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.0979818 0.1894039 0.2799671
+##   2.5%    50%  97.5% 
+## 0.0331 0.0755 0.1425
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{2}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1773573 0.2536383 0.3293491
+##  2.5%   50% 97.5% 
+## 0.143 0.219 0.299
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{3}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.07376485 0.13427948 0.21775383
+##  2.5%   50% 97.5% 
+## 0.163 0.258 0.340
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(}\hlkwd{c}\hlstd{(LMG.Vals.I.boot[}\hlnum{4}\hlstd{,}\hlnum{1}\hlstd{,]),} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
-##      2.5%       50%     97.5% 
-## 0.1266168 0.1955925 0.2684755
+##  2.5%   50% 97.5% 
+## 0.152 0.243 0.328
 \end{verbatim}
 \begin{alltt}
-\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals.boot[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlnum{1}\hlstd{,]))}
+\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals.I.boot[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,}\hlnum{1}\hlstd{,]))}
 \hlstd{pairs.chart} \hlkwb{<-} \hlkwd{ggpairs}\hlstd{(dat,} \hlkwc{lower} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{combo} \hlstd{=} \hlstr{"facetdensity"}\hlstd{)),} \hlkwc{upper} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{continuous} \hlstd{=} \hlstr{"cor"}\hlstd{)))} \hlopt{+} \hlstd{ggplot2}\hlopt{::}\hlkwd{theme}\hlstd{(}\hlkwc{axis.text} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{size} \hlstd{=} \hlnum{6}\hlstd{))}
 \hlstd{pairs.chart}
 \end{alltt}
@@ -787,11 +922,11 @@ Another interesting option in some cases would be to use the shrinkage estimate 
 \hlkwd{cov}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
-##            x1         x2          x3          x4
-## x1  0.8507778  0.2803422 -0.10769517 -0.10821297
-## x2  0.2803422  1.0379131 -0.16375752  0.06331260
-## x3 -0.1076952 -0.1637575  0.80799891  0.05999761
-## x4 -0.1082130  0.0633126  0.05999761  0.89839912
+##         x1      x2      x3      x4
+## x1  0.5408 -0.0195 -0.0646 -0.1055
+## x2 -0.0195  0.9811  0.2331 -0.0374
+## x3 -0.0646  0.2331  0.9027  0.2073
+## x4 -0.1055 -0.0374  0.2073  1.2234
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -804,32 +939,32 @@ Another interesting option in some cases would be to use the shrinkage estimate 
 \hlkwd{cov}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
-##              x1          x2           x3         x4
-## x1  0.918802371 -0.10264450  0.009003572  0.1281456
-## x2 -0.102644497  0.97559948 -0.012534282  0.1849557
-## x3  0.009003572 -0.01253428  0.961040604 -0.0892520
-## x4  0.128145565  0.18495569 -0.089252004  0.7174392
+##             x1         x2          x3         x4
+## x1  1.18967229 -0.2288990  0.01461313  0.2334858
+## x2 -0.22889895  0.7701068  0.27285759 -0.0514278
+## x3  0.01461313  0.2728576  0.71861703 -0.1451502
+## x4  0.23348578 -0.0514278 -0.14515015  1.2953711
 \end{verbatim}
 \begin{alltt}
 \hlkwd{cov.shrink}\hlstd{(df[,}\hlnum{2}\hlopt{:}\hlnum{5}\hlstd{])}
 \end{alltt}
 \begin{verbatim}
-## Estimating optimal shrinkage intensity lambda.var (variance vector): 1 
+## Estimating optimal shrinkage intensity lambda.var (variance vector): 0.6037 
 ## 
-## Estimating optimal shrinkage intensity lambda (correlation matrix): 1
-##           x1        x2        x3        x4
-## x1 0.9399215 0.0000000 0.0000000 0.0000000
-## x2 0.0000000 0.9399215 0.0000000 0.0000000
-## x3 0.0000000 0.0000000 0.9399215 0.0000000
-## x4 0.0000000 0.0000000 0.0000000 0.9399215
+## Estimating optimal shrinkage intensity lambda (correlation matrix): 0.4525
+##              x1          x2           x3          x4
+## x1  1.063018555 -0.12783778  0.008351944  0.11160357
+## x2 -0.127837782  0.89676052  0.178027260 -0.02806219
+## x3  0.008351944  0.17802726  0.876357065 -0.08105320
+## x4  0.111603568 -0.02806219 -0.081053201  1.10490300
 ## attr(,"lambda")
-## [1] 1
+## [1] 0.4524851
 ## attr(,"lambda.estimated")
 ## [1] TRUE
 ## attr(,"class")
 ## [1] "shrinkage"
 ## attr(,"lambda.var")
-## [1] 1
+## [1] 0.6037376
 ## attr(,"lambda.var.estimated")
 ## [1] TRUE
 \end{verbatim}
@@ -922,12 +1057,12 @@ A simple linear regression model including the dependent variable SO2 and the si
 ##  
 ##                        Lower  Upper
 ##             percentage 0.95   0.95  
-## negtemp.lmg 0.1111     0.0395 0.2157
-## manuf.lmg   0.2965     0.2031 0.4133
-## pop.lmg     0.1661     0.1137 0.2405
-## wind.lmg    0.0167     0.0088 0.0686
-## precip.lmg  0.0187     0.0074 0.0658
-## days.lmg    0.0604     0.0221 0.1436
+## negtemp.lmg 0.1111     0.0355 0.2138
+## manuf.lmg   0.2965     0.1900 0.4115
+## pop.lmg     0.1661     0.1098 0.2403
+## wind.lmg    0.0167     0.0089 0.0728
+## precip.lmg  0.0187     0.0081 0.0712
+## days.lmg    0.0604     0.0203 0.1389
 ## 
 ## CAUTION: Bootstrap confidence intervals can be somewhat liberal. 
 ## NOTE: X-matrix has been considered as fixed for bootstrapping.
@@ -945,29 +1080,29 @@ A simple linear regression model including the dependent variable SO2 and the si
 \end{alltt}
 \begin{verbatim}
 ##           parameters
-## iterations (Intercept)   negtemp      manuf          pop        wind
-##       [1,]    76.63403 0.9372802 0.04841073 -0.023218029 -2.64495618
-##       [2,]   125.55302 1.2466290 0.09637679 -0.066305907 -3.19036264
-##       [3,]    57.36694 0.9911093 0.03160349 -0.009311882  0.01044934
-##       [4,]    84.42258 1.4791986 0.03711957 -0.014665873 -0.34841785
-##       [5,]    93.21212 1.2233823 0.03128086 -0.008084000  0.33863006
-##       [6,]    87.03184 1.5349165 0.00412235  0.012872617 -2.55050086
-##       [7,]    94.75793 0.7006997 0.05364753 -0.031105908 -3.31781375
-##       [8,]    83.86657 0.7426624 0.04801954 -0.025619233 -1.38722141
-##       [9,]   102.88610 1.4435390 0.05184942 -0.025740406 -1.64110264
-##      [10,]   118.68871 1.0830053 0.05654027 -0.029810740 -5.16775861
+## iterations (Intercept)   negtemp      manuf          pop      wind
+##       [1,]   135.83097 1.6205034 0.05559092 -0.024963609 -3.368546
+##       [2,]   148.61733 1.9921319 0.05209391 -0.033695296 -3.379457
+##       [3,]   134.21933 1.8223345 0.05344065 -0.030226013 -3.321580
+##       [4,]   109.72730 0.9034187 0.06408435 -0.036752478 -4.075358
+##       [5,]   169.22540 1.8980336 0.07106017 -0.042167151 -3.707558
+##       [6,]   148.96289 1.5976024 0.03715969 -0.002440436 -5.353039
+##       [7,]   143.43058 1.9582751 0.04677972 -0.023647799 -3.424771
+##       [8,]   138.12934 1.9767608 0.04680241 -0.020412746 -3.164154
+##       [9,]    31.62113 0.4178926 0.07519204 -0.047230985 -1.559374
+##      [10,]    67.76305 0.3463465 0.08937092 -0.059099658 -2.171377
 ##           parameters
 ## iterations     precip         days    sigma
-##       [1,]  0.1604472  0.118589312 13.37797
-##       [2,]  0.5069793 -0.137335376 14.59451
-##       [3,]  0.5041612 -0.005711373 14.32118
-##       [4,]  0.4686286  0.039197926 14.92060
-##       [5,]  0.2656314 -0.159223921 15.44457
-##       [6,]  0.5662126  0.185683615 16.19240
-##       [7,] -0.1457218  0.051595750 14.96856
-##       [8,]  0.3112843 -0.139255549 14.45331
-##       [9,]  0.2724058  0.048202080 14.16934
-##      [10,]  0.2932432  0.029287718 12.75397
+##       [1,] 0.61867890 -0.135979662 13.71905
+##       [2,] 0.58114542  0.009231195 13.98130
+##       [3,] 0.63406863  0.004519797 13.94855
+##       [4,] 0.40657783 -0.096770264 15.49280
+##       [5,] 1.09928658 -0.419331341 13.29130
+##       [6,] 0.72383580 -0.181001660 17.26865
+##       [7,] 0.54949515 -0.026075784 13.07193
+##       [8,] 0.55819691 -0.022390552 12.83345
+##       [9,] 0.13001486  0.259908026 16.58099
+##      [10,] 0.07051633 -0.038521238 14.73657
 \end{verbatim}
 \begin{alltt}
 \hlcom{#no need for the intercept, last parameter is sigma}
@@ -979,76 +1114,76 @@ A simple linear regression model including the dependent variable SO2 and the si
 \hlstd{df.rtwos[,}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]}
 \end{alltt}
 \begin{verbatim}
-##                          X1           X2         X3
-## none           0.0000000000 0.000000e+00 0.00000000
-## x1             0.2095431804 1.775796e-01 0.13489062
-## x2             0.4446934425 4.179614e-01 0.41661681
-## x3             0.2929164865 2.203668e-01 0.30988091
-## x4             0.0142179243 9.678623e-03 0.06630532
-## x5             0.0002332062 3.691272e-07 0.01541407
-## x6             0.1708118912 8.639088e-02 0.13975755
-## x1 x2          0.5583792612 5.104269e-01 0.47869292
-## x1 x3          0.4732622423 3.746202e-01 0.42079549
-## x1 x4          0.2114451600 1.803153e-01 0.15386482
-## x1 x5          0.2529084140 2.084866e-01 0.21806295
-## x1 x6          0.2669814140 1.931435e-01 0.19205192
-## x2 x3          0.5496435031 6.689090e-01 0.45766492
-## x2 x4          0.4463420384 4.212209e-01 0.42806286
-## x2 x5          0.4460556275 4.183760e-01 0.43768634
-## x2 x6          0.5524401553 4.622856e-01 0.50146874
-## x3 x4          0.2929345455 2.203690e-01 0.33015361
-## x3 x5          0.2937818488 2.205027e-01 0.32912977
-## x3 x6          0.4456911919 2.956683e-01 0.43288956
-## x4 x5          0.0145009021 9.679073e-03 0.08256418
-## x4 x6          0.1735285646 8.897505e-02 0.17929668
-## x5 x6          0.2185774367 1.148293e-01 0.14474330
-## x1 x2 x3       0.5999081239 6.806839e-01 0.49085217
-## x1 x2 x4       0.5828622187 5.369044e-01 0.47953024
-## x1 x2 x5       0.5913931426 5.328805e-01 0.54740304
-## x1 x2 x6       0.6010744974 5.189484e-01 0.52124884
-## x1 x3 x4       0.4962294308 3.959121e-01 0.42165365
-## x1 x3 x5       0.5170723418 4.058519e-01 0.50460899
-## x1 x3 x6       0.5266597023 3.883851e-01 0.47376230
-## x1 x4 x5       0.2583510585 2.145589e-01 0.22766353
-## x1 x4 x6       0.2692358837 1.960944e-01 0.20998386
-## x1 x5 x6       0.2678265140 2.091053e-01 0.21831904
-## x2 x3 x4       0.5529165888 6.757592e-01 0.46702982
-## x2 x3 x5       0.5514266268 6.697259e-01 0.47971614
-## x2 x3 x6       0.6100903238 6.738347e-01 0.51696588
-## x2 x4 x5       0.4476880079 4.216230e-01 0.44930231
-## x2 x4 x6       0.5599544061 4.698455e-01 0.50602109
-## x2 x5 x6       0.5747343757 4.722065e-01 0.50147391
-## x3 x4 x5       0.2938018636 2.205046e-01 0.34970572
-## x3 x4 x6       0.4491269234 2.977539e-01 0.44059086
-## x3 x5 x6       0.4819547629 3.164232e-01 0.43459853
-## x4 x5 x6       0.2193728852 1.158819e-01 0.18169678
-## x1 x2 x3 x4    0.6190277770 6.963630e-01 0.49239417
-## x1 x2 x3 x5    0.6222290346 6.872889e-01 0.55188213
-## x1 x2 x3 x6    0.6323045906 6.819204e-01 0.52802696
-## x1 x2 x4 x5    0.6247895508 5.669954e-01 0.54744668
-## x1 x2 x4 x6    0.6259280279 5.455982e-01 0.52201955
-## x1 x2 x5 x6    0.6019013867 5.348317e-01 0.54741474
-## x1 x3 x4 x5    0.5508487894 4.358934e-01 0.50477150
-## x1 x3 x4 x6    0.5505484630 4.101271e-01 0.47445457
-## x1 x3 x5 x6    0.5284278757 4.073263e-01 0.50460907
-## x1 x4 x5 x6    0.2708395551 2.159926e-01 0.22869636
-## x2 x3 x4 x5    0.5546775480 6.765545e-01 0.48921418
-## x2 x3 x4 x6    0.6181232920 6.824053e-01 0.52131583
-## x2 x3 x5 x6    0.6210337734 6.739417e-01 0.51746614
-## x2 x4 x5 x6    0.5847711002 4.814350e-01 0.50603453
-## x3 x4 x5 x6    0.4880867456 3.200922e-01 0.44165482
-## x1 x2 x3 x4 x5 0.6488611356 7.067140e-01 0.55188379
-## x1 x2 x3 x4 x6 0.6523787469 6.977712e-01 0.52929783
-## x1 x2 x3 x5 x6 0.6324408123 6.895395e-01 0.55189795
-## x1 x2 x4 x5 x6 0.6300577358 5.728615e-01 0.54746790
-## x1 x3 x4 x5 x6 0.5566788981 4.406473e-01 0.50477765
-## x2 x3 x4 x5 x6 0.6308577065 6.827467e-01 0.52211213
-## all            0.6544018382 7.119186e-01 0.55189833
+##                          X1          X2          X3
+## none           0.0000000000 0.000000000 0.000000000
+## x1             0.1851174789 0.354757878 0.286512432
+## x2             0.5159090754 0.246527846 0.342081676
+## x3             0.3550144090 0.113969863 0.191841855
+## x4             0.0142971366 0.015067873 0.016850648
+## x5             0.0002522025 0.001754583 0.006335778
+## x6             0.0976191698 0.245652389 0.230862537
+## x1 x2          0.6054322912 0.507200513 0.528696856
+## x1 x3          0.5099993760 0.445270827 0.450735709
+## x1 x4          0.1862057657 0.363098436 0.290265657
+## x1 x5          0.2240787525 0.441680841 0.382884967
+## x1 x6          0.2050125946 0.425074111 0.363324206
+## x2 x3          0.6091586524 0.460226343 0.508703591
+## x2 x4          0.5187029528 0.246550343 0.342174538
+## x2 x5          0.5174445778 0.249893437 0.351805476
+## x2 x6          0.5641635721 0.434853872 0.507672952
+## x3 x4          0.3550676397 0.116690195 0.193250427
+## x3 x5          0.3560037606 0.116542643 0.200135346
+## x3 x6          0.4377402491 0.346152318 0.405710107
+## x4 x5          0.0146011543 0.016958947 0.023458917
+## x4 x6          0.1024127968 0.247415066 0.233531366
+## x5 x6          0.1232918763 0.300851144 0.264298788
+## x1 x2 x3       0.6456106231 0.584255292 0.592992648
+## x1 x2 x4       0.6299578857 0.535105745 0.552953372
+## x1 x2 x5       0.6337285916 0.584173288 0.611906572
+## x1 x2 x6       0.6163720923 0.566495167 0.591070960
+## x1 x3 x4       0.5332435173 0.469598807 0.472349588
+## x1 x3 x5       0.5494288477 0.532562443 0.547631148
+## x1 x3 x6       0.5272929582 0.512954480 0.523845393
+## x1 x4 x5       0.2278603389 0.459725409 0.394161398
+## x1 x4 x6       0.2062563925 0.434216088 0.367645926
+## x1 x5 x6       0.2247710032 0.444241717 0.385372831
+## x2 x3 x4       0.6138551538 0.460582565 0.509634363
+## x2 x3 x5       0.6111122982 0.464530328 0.519795613
+## x2 x3 x6       0.6282292054 0.559388261 0.600408251
+## x2 x4 x5       0.5202160480 0.249919029 0.351888289
+## x2 x4 x6       0.5712100901 0.437947107 0.512078169
+## x2 x5 x6       0.5710755760 0.469718024 0.523015285
+## x3 x4 x5       0.3560535555 0.119303587 0.201596553
+## x3 x4 x6       0.4406228328 0.346764294 0.407037274
+## x3 x5 x6       0.4543353180 0.393715673 0.431450645
+## x4 x5 x6       0.1259845839 0.301113141 0.265303596
+## x1 x2 x3 x4    0.6648538323 0.604437815 0.610664917
+## x1 x2 x3 x5    0.6641871676 0.638957779 0.655086937
+## x1 x2 x3 x6    0.6516045505 0.627040581 0.639878133
+## x1 x2 x4 x5    0.6665049380 0.626816987 0.650558389
+## x1 x2 x4 x6    0.6410854774 0.594866718 0.615773494
+## x1 x2 x5 x6    0.6360323883 0.585606086 0.613042441
+## x1 x3 x4 x5    0.5829666007 0.572906477 0.585314068
+## x1 x3 x4 x6    0.5510641756 0.538350903 0.546506715
+## x1 x3 x5 x6    0.5513361785 0.534281256 0.549041548
+## x1 x4 x5 x6    0.2292035985 0.460591928 0.395268558
+## x2 x3 x4 x5    0.6157810155 0.464875234 0.520697018
+## x2 x3 x4 x6    0.6358059358 0.562980536 0.605322254
+## x2 x3 x5 x6    0.6294242541 0.573880076 0.604750245
+## x2 x4 x5 x6    0.5794657832 0.474944249 0.529029029
+## x3 x4 x5 x6    0.4588355009 0.395931365 0.434254757
+## x1 x2 x3 x4 x5 0.6903033120 0.671422793 0.685128213
+## x1 x2 x3 x4 x6 0.6712607148 0.648350860 0.658656123
+## x1 x2 x3 x5 x6 0.6666325206 0.640247140 0.656109414
+## x1 x2 x4 x5 x6 0.6728797311 0.626825334 0.650558535
+## x1 x3 x4 x5 x6 0.5887423878 0.572960223 0.585334637
+## x2 x3 x4 x5 x6 0.6375962715 0.578877182 0.610545875
+## all            0.6963888732 0.671452014 0.685134958
 \end{verbatim}
 \begin{alltt}
 \hlcom{# prepare data frame for LMG values}
 
-\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+\hlstd{LMG.Vals.I}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
 
 \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])\{}
 
@@ -1056,54 +1191,54 @@ A simple linear regression model including the dependent variable SO2 and the si
 
   \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(usair[,}\hlnum{2}\hlopt{:}\hlnum{7}\hlstd{]))}
 
-  \hlstd{LMG.Vals[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+  \hlstd{LMG.Vals.I[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
 \hlstd{\}}
 
 \hlcom{# posterior LMG distribution of each variable}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.03140146 0.10425536 0.20332655
+## 0.03089074 0.10414155 0.20513745
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##      2.5%       50%     97.5% 
-## 0.1528304 0.2641768 0.3565642
+## 0.1492509 0.2632596 0.3615762
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.08782959 0.15190153 0.21056465
+## 0.08674675 0.15221081 0.21173554
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##        2.5%         50%       97.5% 
-## 0.007501645 0.017654467 0.071564974
+## 0.007556802 0.017508171 0.071477479
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{5}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{5}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##        2.5%         50%       97.5% 
-## 0.006988704 0.020612799 0.069884355
+## 0.006626489 0.020800713 0.070602786
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{6}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{6}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.01761491 0.05739723 0.13408836
+## 0.01776118 0.05803545 0.13121868
 \end{verbatim}
 \begin{alltt}
 \hlcom{#Visualization}
-\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals))}
+\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals.I))}
 
 \hlstd{pairs.chart} \hlkwb{<-} \hlkwd{ggpairs}\hlstd{(dat,} \hlkwc{lower} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{combo} \hlstd{=} \hlstr{"facetdensity"}\hlstd{)),} \hlkwc{upper} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{continuous} \hlstd{=} \hlstr{"cor"}\hlstd{)))} \hlopt{+} \hlstd{ggplot2}\hlopt{::}\hlkwd{theme}\hlstd{(}\hlkwc{axis.text} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{size} \hlstd{=} \hlnum{6}\hlstd{))}
 \hlstd{pairs.chart}
@@ -1128,28 +1263,28 @@ A simple linear regression model including the dependent variable SO2 and the si
 \begin{verbatim}
 ##           parameters
 ## iterations (Intercept)   negtemp      manuf         pop      wind
-##       [1,]    89.81921 0.9954251 0.04757398 -0.01827321 -2.874278
-##       [2,]   102.34929 0.8576861 0.05986172 -0.04000167 -3.068902
-##       [3,]    82.48015 0.8726391 0.06028279 -0.02943372 -2.886816
-##       [4,]   104.68428 1.1246337 0.06291728 -0.02986882 -2.992389
-##       [5,]   105.32564 1.0099265 0.06004396 -0.03390757 -3.042098
-##       [6,]    97.62453 0.9849631 0.05775336 -0.03569145 -3.181789
-##       [7,]   108.99691 1.1103095 0.06485238 -0.03683087 -3.038839
-##       [8,]   108.00249 1.1095669 0.06392837 -0.03489973 -3.022639
-##       [9,]   104.88886 0.8596561 0.06802693 -0.04236175 -3.114606
-##      [10,]   110.01475 1.0939596 0.03827552 -0.01521879 -2.874750
+##       [1,]    93.15510 0.9598408 0.05076080 -0.02230947 -2.974473
+##       [2,]    85.33896 0.9767056 0.04873335 -0.02762700 -2.993646
+##       [3,]   115.76574 1.0501914 0.04800659 -0.02754002 -2.960514
+##       [4,]   105.13833 1.0937662 0.06237204 -0.03862311 -2.755087
+##       [5,]   100.17739 0.9218288 0.06397271 -0.03741000 -3.209142
+##       [6,]    94.81891 0.8699693 0.06460313 -0.03974537 -3.058839
+##       [7,]   107.25037 1.1169629 0.04871286 -0.02439039 -2.983201
+##       [8,]    85.37864 0.8471359 0.05783901 -0.03187420 -2.868974
+##       [9,]   104.06738 0.9644024 0.05936805 -0.03575935 -3.024624
+##      [10,]    92.09087 1.0109323 0.05776583 -0.03223990 -2.961939
 ##           parameters
-## iterations       precip         days    sigma
-##       [1,]  0.276227708  0.012587472 15.36679
-##       [2,] -0.083183938  0.032998990 17.82745
-##       [3,]  0.059481326  0.090567911 11.39204
-##       [4,]  0.166154108 -0.005130413 15.37028
-##       [5,] -0.005799239  0.011521322 15.34251
-##       [6,]  0.078044836  0.044796613 18.45930
-##       [7,]  0.224391786 -0.076565709 16.99801
-##       [8,]  0.233775974 -0.075735576 17.02467
-##       [9,]  0.017462691 -0.001904609 14.16142
-##      [10,] -0.019851667 -0.010796473 15.93392
+## iterations      precip        days    sigma
+##       [1,]  0.14680578  0.01154576 10.73355
+##       [2,]  0.30231176  0.07928726 11.73207
+##       [3,] -0.06167479 -0.00771524 15.35028
+##       [4,]  0.14574409 -0.01068613 13.39733
+##       [5,] -0.05972290  0.10561934 13.20576
+##       [6,]  0.04507632  0.07356100 13.71082
+##       [7,]  0.16243033 -0.03046557 15.03457
+##       [8,]  0.13903104  0.09494624 15.20654
+##       [9,] -0.06792343  0.05425036 15.97530
+##      [10,]  0.27630906  0.04133327 12.82158
 \end{verbatim}
 \begin{alltt}
 \hlcom{#no need for the intercept, last parameter is sigma}
@@ -1161,7 +1296,7 @@ A simple linear regression model including the dependent variable SO2 and the si
 
 \hlcom{# prepare data frame for LMG values}
 
-\hlstd{LMG.Vals}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
+\hlstd{LMG.Vals.I}\hlkwb{<-}\hlkwd{matrix}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{6}\hlstd{,} \hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])}
 
 \hlkwa{for}\hlstd{(i} \hlkwa{in} \hlnum{1}\hlopt{:}\hlkwd{dim}\hlstd{(df.rtwos)[}\hlnum{2}\hlstd{])\{}
 
@@ -1169,54 +1304,54 @@ A simple linear regression model including the dependent variable SO2 and the si
 
   \hlstd{obj.Gelman}\hlkwb{<-}\hlkwd{partition}\hlstd{(gofn,} \hlkwc{pcan} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{var.names} \hlstd{=} \hlkwd{names}\hlstd{(usair[,}\hlnum{2}\hlopt{:}\hlnum{7}\hlstd{]))}
 
-  \hlstd{LMG.Vals[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
+  \hlstd{LMG.Vals.I[,i]}\hlkwb{=}\hlstd{obj.Gelman}\hlopt{$}\hlstd{IJ[,}\hlnum{1}\hlstd{]}
 \hlstd{\}}
 
 \hlcom{# posterior LMG distribution of each variable}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
-\end{alltt}
-\begin{verbatim}
-##       2.5%        50%      97.5% 
-## 0.07362282 0.11363424 0.16192618
-\end{verbatim}
-\begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{1}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##      2.5%       50%     97.5% 
-## 0.1695037 0.2591710 0.3325388
+## 0.0725409 0.1143731 0.1584069
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{2}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\end{alltt}
+\begin{verbatim}
+##      2.5%       50%     97.5% 
+## 0.1656552 0.2578780 0.3334933
+\end{verbatim}
+\begin{alltt}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{3}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.09346488 0.15095056 0.20686893
+## 0.09132594 0.15029884 0.20709797
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{4}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.01262413 0.01637030 0.02123865
+## 0.01266590 0.01641026 0.02130490
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{5}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{5}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##        2.5%         50%       97.5% 
-## 0.007893674 0.013095342 0.025689887
+## 0.007922485 0.013181413 0.026273074
 \end{verbatim}
 \begin{alltt}
-\hlkwd{quantile}\hlstd{(LMG.Vals[}\hlnum{6}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
+\hlkwd{quantile}\hlstd{(LMG.Vals.I[}\hlnum{6}\hlstd{,],} \hlkwd{c}\hlstd{(}\hlnum{0.025}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.975}\hlstd{))}
 \end{alltt}
 \begin{verbatim}
 ##       2.5%        50%      97.5% 
-## 0.01733809 0.05146921 0.10703968
+## 0.01718799 0.05162126 0.10892648
 \end{verbatim}
 \begin{alltt}
 \hlcom{#Visualization}
-\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals))}
+\hlstd{dat} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwd{t}\hlstd{(LMG.Vals.I))}
 
 \hlstd{pairs.chart} \hlkwb{<-} \hlkwd{ggpairs}\hlstd{(dat,} \hlkwc{lower} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{combo} \hlstd{=} \hlstr{"facetdensity"}\hlstd{)),} \hlkwc{upper} \hlstd{=} \hlkwd{list}\hlstd{(}\hlkwd{list}\hlstd{(}\hlkwc{continuous} \hlstd{=} \hlstr{"cor"}\hlstd{)))} \hlopt{+} \hlstd{ggplot2}\hlopt{::}\hlkwd{theme}\hlstd{(}\hlkwc{axis.text} \hlstd{=} \hlkwd{element_text}\hlstd{(}\hlkwc{size} \hlstd{=} \hlnum{6}\hlstd{))}
 \hlstd{pairs.chart}
@@ -1225,6 +1360,10 @@ A simple linear regression model including the dependent variable SO2 and the si
 \includegraphics[width=\maxwidth]{figure/ch03_figreal_data_LMG-2} 
 
 \end{knitrout}
+
+
+
+
 
 
 

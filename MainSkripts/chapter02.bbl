@@ -1,0 +1,26 @@
+\begin{thebibliography}{}
+
+\bibitem[Alexander {\it et~al.}, 2015]{Alexander2015}
+Alexander, D. L.~J., Tropsha, A., and Winkler, D.~A. (2015).
+\newblock {Beware of R(2): Simple, Unambiguous Assessment of the Prediction
+  Accuracy of QSAR and QSPR Models.}
+\newblock {\em Journal of chemical information and modeling}, {\bf55},
+  1316--22.
+
+\bibitem[Gelman {\it et~al.}, 2017]{Gelman2017}
+Gelman, A., Goodrich, B., Gabry, J., and Ali, I. (2017).
+\newblock {R squared for Bayesian regression models *}.
+\newblock Technical report.
+
+\bibitem[Gr{\"{o}}mping, 2015]{Gromping2015}
+Gr{\"{o}}mping, U. (2015).
+\newblock {Variable importance in regression models}.
+\newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
+  {\bf7},  137--152.
+
+\bibitem[Kvalseth, 1985]{Kvalseth1985}
+Kvalseth, T.~O. (1985).
+\newblock {Cautionary Note about R 2}.
+\newblock {\em The American Statistician}, {\bf39},  279.
+
+\end{thebibliography}

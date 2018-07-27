@@ -13,7 +13,7 @@ opts_chunk$set(
     cache=FALSE
 ) 
 
-
+options(digits =3)
 #function to calculate R2 data frame
 rtwos<-function(X, post.sample){
   # X: Predictor data as data frame
@@ -291,7 +291,7 @@ In the following section the Bayesian LMG implementation is presented on two exa
 Lets assume a simple model: 
 
 \begin{align} 
-&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1)&
 \end{align} 
 
 
@@ -343,7 +343,12 @@ After the $\Rtwo$ for each posterior sample and their corresponding submodels is
 
 # prepare data frame for LMG values
 
-LMG.Vals<-matrix(0, 4, dim(df.rtwos)[2])
+LMG.Vals.I<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.J<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.T<-matrix(0, 4, dim(df.rtwos)[2])
+
 
 for(i in 1:dim(df.rtwos)[2]){
   
@@ -351,18 +356,32 @@ for(i in 1:dim(df.rtwos)[2]){
   
   obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
   
-  LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.J[,i]=obj.Gelman$IJ[,2]
+	LMG.Vals.T[,i]=obj.Gelman$IJ[,3]
 }
+
+varnames <- row.names(obj.Gelman$IJ)
 
 
 # posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
+
+quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))
+
+quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))
 
 # some example how it could be displayed
-dat <- data.frame(t(LMG.Vals))
+dat <- data.frame(t(LMG.Vals.I))
 
 pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
@@ -383,6 +402,25 @@ booteval.relimp(run, bty = "perc", level = 0.95,
 
 @
 
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition for stochastic predictors using bootstrap. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO}
+\end{table}
+
+
+
 
 Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. In the example above the predictors were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. As noted in ... under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for fixed and stochastic predictors. Inference about the covariance matrix can be seen as an independent problem. G recommends in most cases to use the non fixed regressor option when calculating bootstrap confidence intervals. The confidence intervals will then in general be a bit larger. If we want to include this uncertainty in the Bayesian framework, we would need some ideas about the distribution of the predictor variables $\X$. It is then possible to obtain poserior distributions of their corresponding covariance matrix. As a practical solution nonparametric bootstrap may be used to include the uncertainty of the covariance matrix. The following code includes the uncertainty of the stochastic predictors. 
 
@@ -400,11 +438,13 @@ booteval.relimp(run.stochastic, bty = "perc", level = 0.95,
 #----------------------------------------------------------------------------------------
 
 
-df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 10)
+df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 100)
 
-n.boot = 10
+n.boot = 100
 
-LMG.Vals.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.I.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.J.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.T.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
 
 for (b in 1:n.boot){
 	
@@ -414,15 +454,18 @@ for(i in 1:dim(df.rtwos.boot)[2]){
 	
 	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
 	
-	LMG.Vals.boot[,i, b]=obj.Gelman$IJ[,1]
+	LMG.Vals.I.boot[,i, b]=obj.Gelman$IJ[,1]
+	LMG.Vals.J.boot[,i, b]=obj.Gelman$IJ[,2]
+	LMG.Vals.T.boot[,i, b]=obj.Gelman$IJ[,3]
+
 }
 	
 }
 
-quantile(c(LMG.Vals.boot[1,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[2,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[1,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[2,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
 
 #very similar values as in the confidence intervals for stochastic predictors
 
@@ -451,7 +494,7 @@ df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 10)
 
 n.boot = 10
 
-LMG.Vals.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.I.boot.p<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
 
 for (b in 1:n.boot){
 	
@@ -461,18 +504,40 @@ for(i in 1:dim(df.rtwos.boot)[2]){
 	
 	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
 	
-	LMG.Vals.boot[,i, b]=obj.Gelman$IJ[,1]
+	LMG.Vals.I.boot.p[,i, b]=obj.Gelman$IJ[,1]
 }
 	
 }
 
-quantile(c(LMG.Vals.boot[1,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[2,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot.p[1,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot.p[2,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot.p[3,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot.p[4,1:1000,]), c(0.025, 0.5, 0.975))
 
 
 @
+
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO2}
+\end{table}
+
+
+
 
 In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in a Bayesian way. The package Jags is used.
 
@@ -553,7 +618,10 @@ df.rtwos <-rtwos.covm(df[,2:5], post.sample, covMat, 10)
 
 n.boot = 10
 
-LMG.Vals<-array(0, c(4,dim(df.rtwos)[2], n.boot))
+LMG.Vals.I.covm<-array(0, c(4,dim(df.rtwos)[2], n.boot))
+LMG.Vals.J.covm<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.T.covm<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+
 
 for (b in 1:n.boot){
 	
@@ -563,21 +631,42 @@ for (b in 1:n.boot){
 		
 		obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
 		
-		LMG.Vals[,i, b]=obj.Gelman$IJ[,1]
+		LMG.Vals.I.covm[,i, b]=obj.Gelman$IJ[,1]
+		LMG.Vals.J.covm[,i, b]=obj.Gelman$IJ[,2]
+		LMG.Vals.T.covm[,i, b]=obj.Gelman$IJ[,3]
+
 	}
 	
 }
 
-quantile(c(LMG.Vals[1,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals[2,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals[3,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals[4,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.covm[1,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.covm[2,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.covm[3,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.covm[4,1:1000,]), c(0.025, 0.5, 0.975))
 
 
 
 
 
 @
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{clll}
+  \hline
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+
+   \hline
+\end{tabular}
+\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\label{tbl:fundus.to.SLO3}
+\end{table}
 
 Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the large credible intervals. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. Code xx shows the uncertainty about the LMG values caused by the uncertainty about the covariance matrix. 
 
@@ -605,7 +694,7 @@ df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 1000)
 
 n.boot = 1000
 
-LMG.Vals.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.I.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
 
 for (b in 1:n.boot){
 	
@@ -615,17 +704,17 @@ for(i in 1:dim(df.rtwos.boot)[2]){
 	
 	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
 	
-	LMG.Vals.boot[,i, b]=obj.Gelman$IJ[,1]
+	LMG.Vals.I.boot[,i, b]=obj.Gelman$IJ[,1]
 }
 	
 }
 
-quantile(c(LMG.Vals.boot[1,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[2,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[3,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.boot[4,1,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[1,1,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[2,1,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[3,1,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[4,1,]), c(0.025, 0.5, 0.975))
 
-dat <- data.frame(t(LMG.Vals.boot[1:4,1,]))
+dat <- data.frame(t(LMG.Vals.I.boot[1:4,1,]))
 pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
 
@@ -708,7 +797,7 @@ df.rtwos[,1:3]
 
 # prepare data frame for LMG values
 
-LMG.Vals<-matrix(0, 6, dim(df.rtwos)[2])
+LMG.Vals.I<-matrix(0, 6, dim(df.rtwos)[2])
 
 for(i in 1:dim(df.rtwos)[2]){
   
@@ -716,20 +805,20 @@ for(i in 1:dim(df.rtwos)[2]){
   
   obj.Gelman<-partition(gofn, pcan = 6, var.names = names(usair[,2:7]))
   
-  LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
 }
 
 # posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[5,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[6,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[5,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[6,], c(0.025, 0.5, 0.975))
 
 
 #Visualization
-dat <- data.frame(t(LMG.Vals))
+dat <- data.frame(t(LMG.Vals.I))
 
 pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
@@ -757,7 +846,7 @@ df.rtwos <-rtwos(usair[,2:7], post.sample)
 
 # prepare data frame for LMG values
 
-LMG.Vals<-matrix(0, 6, dim(df.rtwos)[2])
+LMG.Vals.I<-matrix(0, 6, dim(df.rtwos)[2])
 
 for(i in 1:dim(df.rtwos)[2]){
   
@@ -765,19 +854,19 @@ for(i in 1:dim(df.rtwos)[2]){
   
   obj.Gelman<-partition(gofn, pcan = 6, var.names = names(usair[,2:7]))
   
-  LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
 }
 
 # posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[5,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[6,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[5,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.I[6,], c(0.025, 0.5, 0.975))
 
 #Visualization
-dat <- data.frame(t(LMG.Vals))
+dat <- data.frame(t(LMG.Vals.I))
 
 pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
