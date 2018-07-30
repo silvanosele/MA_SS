@@ -1,16 +1,27 @@
 \begin{thebibliography}{}
 
 \bibitem[Alexander {\it et~al.}, 2015]{Alexander2015}
-Alexander, D. L.~J., Tropsha, A., and Winkler, D.~A. (2015).
-\newblock {Beware of R(2): Simple, Unambiguous Assessment of the Prediction
-  Accuracy of QSAR and QSPR Models.}
-\newblock {\em Journal of chemical information and modeling}, {\bf55},
-  1316--22.
+Alexander, D.~L., Tropsha, A., and Winkler, D.~A. (2015).
+\newblock {Beware of R2: Simple, Unambiguous Assessment of the Prediction
+  Accuracy of QSAR and QSPR Models}.
+\newblock {\em Journal of Chemical Information and Modeling}, {\bf55},
+  1316--1322.
+
+\bibitem[Chevan and Sutherland, 1991]{Chevan1991}
+Chevan, A. and Sutherland, M. (1991).
+\newblock {Hierarchical partitioning}.
+\newblock {\em American Statistician}, {\bf45},  90--96.
 
 \bibitem[Gelman {\it et~al.}, 2017]{Gelman2017}
 Gelman, A., Goodrich, B., Gabry, J., and Ali, I. (2017).
-\newblock {R squared for Bayesian regression models *}.
+\newblock {R-squared for Bayesian regression models *}.
 \newblock Technical report.
+
+\bibitem[Gr{\"{o}}mping, 2006]{Gromping2006}
+Gr{\"{o}}mping, U. (2006).
+\newblock {Relative Importance for Linear Regression in R : The Package
+  relaimpo}.
+\newblock {\em Journal of Statistical Software}, {\bf17},  1--27.
 
 \bibitem[Gr{\"{o}}mping, 2007]{Gromping2007}
 Gr{\"{o}}mping, U. (2007).
@@ -24,15 +35,37 @@ Gr{\"{o}}mping, U. (2015).
 \newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
   {\bf7},  137--152.
 
+\bibitem[Jackman, 2009]{Jackman2009}
+Jackman, S. (2009).
+\newblock {\em {Bayesian Analysis for the Social Sciences}}.
+\newblock Wiley.
+
 \bibitem[Kvalseth, 1985]{Kvalseth1985}
 Kvalseth, T.~O. (1985).
 \newblock {Cautionary Note about R 2}.
 \newblock {\em The American Statistician}, {\bf39},  279.
+
+\bibitem[Link and Eaton, 2012]{Link2012}
+Link, W.~A. and Eaton, M.~J. (2012).
+\newblock {On thinning of chains in MCMC}.
+\newblock {\em Methods in Ecology and Evolution}, {\bf3},  112--115.
 
 \bibitem[Nimon and Oswald, 2013]{Nimon2013}
 Nimon, K.~F. and Oswald, F.~L. (2013).
 \newblock {Understanding the Results of Multiple Linear Regression: Beyond
   Standardized Regression Coefficients}.
 \newblock {\em Organizational Research Methods}, {\bf00},  1--25.
+
+\bibitem[Sch{\"{a}}fer and Strimmer, 2005]{Schafer2005}
+Sch{\"{a}}fer, J. and Strimmer, K. (2005).
+\newblock {A shrinkage approach to large-scale covariance matrix estimation and
+  implications for functional genomics}.
+\newblock {\em Statistical Applications in Genetics and Molecular Biology},
+  {\bf4},  1--30.
+
+\bibitem[Walsh and Nally, 2015]{Walsh2015}
+Walsh, C. and Nally, R.~M. (2015).
+\newblock {Title Hierarchical Partitioning}.
+\newblock Technical report.
 
 \end{thebibliography}

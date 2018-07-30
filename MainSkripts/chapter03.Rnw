@@ -5,11 +5,12 @@ set_parent('Main.Rnw')
 @
 
 <<'preamble03',include=FALSE>>=
-library(knitr); library(hier.part); library(rstanarm);  library(GGally); library(ggplot2); library(relaimpo); library(rjags); library(corpcor); library(brinla); library(stargazer)
+library(knitr); library(hier.part); library(rstanarm);  library(GGally); library(ggplot2); library(relaimpo); library(rjags); library(corpcor); library(brinla); library(stargazer); library(xtable); library(kableExtra)
 
 opts_chunk$set(
     fig.path='figure/ch03_fig', 
     self.contained=FALSE,
+    inlcude=FALSE,
     cache=FALSE
 ) 
 
@@ -277,8 +278,6 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 	return(df.Rtwos)
 }
 
-
-
 @
 
 
@@ -288,14 +287,14 @@ In the following section the Bayesian LMG implementation is presented on two exa
 
 \section{Simulated Data}
 
-Lets assume a simple model: 
+We assume a simple model for the first example: 
 
-\begin{align} 
-&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1)&
-\end{align} 
+\begin{align*} 
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
+\end{align*} 
 
 
-The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obatin the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obtain the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
 
 The following Code was used to simulate the data :
 
@@ -313,31 +312,40 @@ df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 @
 
 
-The model is fitted using the rstanarm package with the default priors for the regression and $\sigma^2$ parameter. For computational reasons a small burning periode of 1000 and a sample size of 1000 were chosen. For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample.
+The model is fitted using the rstanarm package with the default priors for the regression and $\sigma^2$ parameters. A burn-in periode of 1000, a sample size of 20000 and a thining of 20 were chosen, resulting in a posterior sample size of 1000. For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
 
 
-<<'simdata.postsample', cache=TRUE>>=
+<<'simdata.postsample', echo=TRUE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
 post2 <- stan_glm(y ~ 1 + x1 + x2 + x3 + x4,
                   data = df,
-                  chains = 2, cores = 1)
+                  chains = 1, cores =1, iter=40000, thin=20)
+@
+
+<<'simdata.postsample2', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
 
 #posterior sample
 post.sample <- as.matrix(post2)
 
+dt <- data.frame(post.sample[1:10,2:6])
+rownames(dt)<-c('sample 1', 'sample 2', 'sample 3', 'sample 4', 'sample 5', 'sample 6', 'sample 7', 'sample 8', 'sample 9', 'sample 10')
 #example of the first 10 posterior samples
-post.sample[1:10,]
+kable(dt, format = "latex", booktabs=TRUE, linesep = c("", "", "", ""), caption = 'Samples from the posterior distributions of the regression parameters') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 #no need for the intercept, last parameter is sigma
 post.sample <- post.sample[,-1]
+@
 
-
+<<'simdata.postsample3', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
 #data frame with all submodels
 df.rtwos <-rtwos(df[,2:5], post.sample)
 
-df.rtwos[,1:5]
+colnames(df.rtwos)[1:6] <- c('sample 1', 'sample 2', 'sample 3', 'sample 4', 'sample 5', 'sample 6')
+kable(df.rtwos[,1:6], format = 'latex', booktabs=TRUE, linesep = c("", "", "", ""), caption = '$ \\Rtwo$ for all submodels for the first six posterior samples')  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 @
 
-After the $\Rtwo$ for each posterior sample and their corresponding submodels is calculated, the package hier.part is used to calculate the LMG value for each posterior sample.
+For each posterior sample the $\Rtwo$ of the full model and the submodels is calculated via the conditional variance formula. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}.  a the package hier.part is used to calculate the LMG value for each posterior sample.
 
 <<'simdata.LMG', cache=TRUE>>=
 
@@ -416,10 +424,8 @@ booteval.relimp(run, bty = "perc", level = 0.95,
    \hline
 \end{tabular}
 \caption{Variance decomposition for stochastic predictors using bootstrap. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
-\label{tbl:fundus.to.SLO}
+\label{tbl:nonstochEx1}
 \end{table}
-
-
 
 
 Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. In the example above the predictors were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. As noted in ... under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for fixed and stochastic predictors. Inference about the covariance matrix can be seen as an independent problem. G recommends in most cases to use the non fixed regressor option when calculating bootstrap confidence intervals. The confidence intervals will then in general be a bit larger. If we want to include this uncertainty in the Bayesian framework, we would need some ideas about the distribution of the predictor variables $\X$. It is then possible to obtain poserior distributions of their corresponding covariance matrix. As a practical solution nonparametric bootstrap may be used to include the uncertainty of the covariance matrix. The following code includes the uncertainty of the stochastic predictors. 
@@ -438,9 +444,9 @@ booteval.relimp(run.stochastic, bty = "perc", level = 0.95,
 #----------------------------------------------------------------------------------------
 
 
-df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 100)
+df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 10)
 
-n.boot = 100
+n.boot = 10
 
 LMG.Vals.I.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
 LMG.Vals.J.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
@@ -688,11 +694,11 @@ y <- b1*x1 + x2*b2 + b3*x3 + b4*x4 + rnorm(50, 0, 1)
 
 df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 
-post.sample <- matrix(1, 1,5)
+post.sample <- matrix(1, 1000,5)
 
-df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 1000)
+df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 10)
 
-n.boot = 1000
+n.boot = 10
 
 LMG.Vals.I.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
 
@@ -709,14 +715,12 @@ for(i in 1:dim(df.rtwos.boot)[2]){
 	
 }
 
-quantile(c(LMG.Vals.I.boot[1,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot[2,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot[3,1,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot[4,1,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[1,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[2,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
 
-dat <- data.frame(t(LMG.Vals.I.boot[1:4,1,]))
-pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
-pairs.chart
+
 
 cov(df[,2:5])
 @

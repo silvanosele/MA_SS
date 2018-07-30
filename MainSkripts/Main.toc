@@ -3,16 +3,19 @@
 \contentsline {chapter}{\bfseries {Preface}}{iii}{chapter*.2}
 \vspace *{10mm}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
-\contentsline {chapter}{\numberline {2}Data}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Bayesian Regression}{8}{section.2.1}
-\contentsline {chapter}{\numberline {3}Examples}{11}{chapter.3}
-\contentsline {section}{\numberline {3.1}Simulated Data}{11}{section.3.1}
-\contentsline {section}{\numberline {3.2}Real World Data}{26}{section.3.2}
-\contentsline {chapter}{\numberline {4}Discussion and Outlook - Some extenstions}{35}{chapter.4}
-\contentsline {section}{\numberline {4.1}random intercept model}{35}{section.4.1}
-\contentsline {section}{\numberline {4.2}marginal model}{39}{section.4.2}
+\contentsline {chapter}{\numberline {2}Methods}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}LMG variable importance metric}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2} Appropriate $\text {R}^2$ definitions in the Bayesian framework}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Conditional variance formula}{5}{section.2.3}
+\contentsline {section}{\numberline {2.4}Bayesian Regression}{7}{section.2.4}
+\contentsline {chapter}{\numberline {3}Examples}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Simulated Data}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}Real World Data}{24}{section.3.2}
+\contentsline {chapter}{\numberline {4}Discussion and Outlook - Some extenstions}{33}{chapter.4}
+\contentsline {section}{\numberline {4.1}random intercept model}{33}{section.4.1}
+\contentsline {section}{\numberline {4.2}marginal model}{38}{section.4.2}
 \contentsline {chapter}{\numberline {5}Other variable importance metrics in the Bayesian framework}{45}{chapter.5}
 \contentsline {section}{\numberline {5.1}Conclusion}{45}{section.5.1}
 \contentsline {chapter}{\numberline {6}Appendix}{47}{chapter.6}
 \vspace *{10mm}
-\contentsline {chapter}{\bfseries Bibliography}{49}{section*.8}
+\contentsline {chapter}{\bfseries Bibliography}{49}{section*.9}

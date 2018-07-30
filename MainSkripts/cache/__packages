@@ -20,3 +20,5 @@ sp
 INLA
 brinla
 stargazer
+xtable
+kableExtra

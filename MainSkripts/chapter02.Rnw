@@ -16,62 +16,11 @@ opts_chunk$set(
 ) 
 @
 
-\chapter{Data} 
-Maybe it is the methods section. Here however, we give a couple hints.
-Note that you can wisely use \rr{preamble}-chunks. Minimal, is likely: 
+\chapter{Methods} 
 
-\bigskip
+\section{LMG variable importance metric}
 
-\hrule
-<<echo=TRUE>>=
-library(knitr) 
-opts_chunk$set( 
-    fig.path='figure/ch02_fig',    
-    self.contained=FALSE,
-    cache=TRUE
-) 
-@
-\hrule
-
-\bigskip
-
-Defining figure options is very helpful:
-
- 
-\bigskip
-
-
-\hrule
-<<echo=TRUE>>=
-library(knitr)
-opts_chunk$set(fig.path='figure/ch02_fig',
-               echo=TRUE, message=FALSE,
-               fig.width=8, fig.height=2.5,  
-               out.width='\\textwidth-3cm',
-               message=FALSE, fig.align='center',
-               background="gray98", tidy=FALSE, #tidy.opts=list(width.cutoff=60),
-               cache=TRUE
-) 
-options(width=74)
-@ 
-\hrule
-
-\bigskip 
-
-Notice how in Figure~\ref{f02:1} everything is properly scaled.   
-
-\begin{figure}
-<<echo=FALSE>>=
-par(mai=c(.8,.8,.1,.1)) 
-set.seed(12)
-plot( runif(30), type='l')
-@   
-  \caption{Test figure to illustrate figure options used by knitr.}
-  \label{f02:1}
-\end{figure}
-
-
-The focus of this master thesis is on the LMG variable importance metric. The LMG is a metric that is based on variance decomposition. The total $\Rtwo$ of a model is decomposed onto the predictors. Many authors call this a desirable property of a variable importance metric. Marginal and conditional information are incorporated \citep{Gromping2015} .  The following formulas are taken from \cite{Gromping2015}. The same mathematical notations are used. 
+The focus of this master thesis is on the LMG variable importance metric. The LMG is a metric that is based on variance decomposition. The total $\Rtwo$ of a model is decomposed onto the predictors. Marginal and conditional information are incorporated \citep{Gromping2015} .  The following formulas are taken from \cite{Gromping2015}. The same mathematical notations are used. 
 
 The following  notations for the explained variance (1) and sequentially added variance (2) simplify the notation of the LMG formula. 
 
@@ -80,24 +29,25 @@ The following  notations for the explained variance (1) and sequentially added v
    \end{align} 
    \begin{align} 
      \SVAR(M \mid S) = \EVAR(M \cup S) - \EVAR(S), \label{eq:2} 
-    \end{align} , where S and M denote disjoint sets of predictors.
+    \end{align} , where $S$ and $M$ denote disjoint sets of predictors.
     
    The LMG formula is given below for the first predictor only. Because of exchangeable predictors, this is no loss of generality.  $\Rtwo(S)$ can be written as $\EVAR(S)/\var(Y).$ 
 
-   \begin{align} 
+   \begin{align*} 
      \LMG(1) &= \frac{1}{p!} \sum_{\pi permutation}^{} \SVAR(\{1\} \mid S_{1}(\pi)),   \nonumber  \\
-     &= \frac{1}{p!} \sum_{S \subseteq \{ 2, \dots, p \} }^{} n(S)!(p-n(S)-1)! \SVAR(\{1\} \mid S) \nonumber  \\
-     &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \left( \substack {\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)\right)\bigg/ \binom{p-1}{i}\\   
-         &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \frac{ \substack{\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)}{\binom{p-1}{i}} \\      
-   \end{align},
+     &= \frac{1}{p!} \sum_{S \subseteq \{ 2, \dots, p \} }^{} n(S)! \, (p-n(S)-1)! \, \SVAR(\{1\} \mid S) \nonumber  \\
+     &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \left( \substack {\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)\right)\bigg/ \binom{p-1}{i}  \nonumber \\   
+         &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \frac{ \substack{\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)}{\binom{p-1}{i}}, \nonumber \\      
+   \end{align*}
    where $S_{1}(\pi)$ is the set of predecessors of predictor 1.
    
-   The different writings of the formulas help to better grasp what is calculated in the LMG metric. The $\Rtwo$ of the model including all predictors is decomposed. In the top formula the LMG value of predictor 1 is represented as an unweighted average over all orderings of the sequentiel added variance contribution of predictor 1. The middle formula shows that the calculation can be  done computationally more efficient. The orderings with the same set of predecessors $S$ are combined into one summand. Instead of $p!$ summands only $2^{p-1}$ summands need to be calculated. The bottom formula shows that the LMG metric can also be seen as the unweighted average over average explained variance improvements when adding predictor 1 to a model of size i without predictor 1 \citep{Gromping2015}. 
-The LMG metric is implemented in the R package relaimpo .
-Chevan and Sutherland propose that instead of only using the variances, an appropriate goodness-of-fit metric can as well be used in the LMG formula. They name their proposal hierarchical partitioning. The requirements are simply: an initial measure of fit when no predictor variable is present, a final measure of fit when N predictor variables are present, all intermediate models when various combinations of predictor variables are present. 
-  The LMG component of each variable is named independent component (I). The sum of the independent components (I) results then in the overall goodness-of-fit metric. The difference between the goodness-of-fit when only the predictors itself is included in the model, compared to its independent component (I) is named the joint contribution (J).  When $\Rtwo$ is chosen as the measure of fit the same LMG values as in relaimpo was calculated. However,  the hier.part package is only guaranteed to work for 9 predictors. 
-
-For the linear model the $\Rtwo$ is the most widely used goodness-of-fit metric.  Different formulas for $\Rtwo$ exist \cite{Kvalseth1985}, all leading to the same value when and intercept is included and the model is fitted by maximum likelihood. 
+   The different writings of the formula help to better understand what is calculated in the LMG metric. The $\Rtwo$ of the model including all predictors is decomposed. In the top formula the LMG value of predictor 1 is represented as an unweighted average over all orderings of the sequential added variance contribution of predictor 1. The middle formula shows that the calculation can be  done computationally more efficient. The orderings with the same set of predecessors $S$ are combined into one summand. Instead of $p!$ summands only $2^{p-1}$ summands need to be calculated. The bottom formula shows that the LMG metric can also be seen as the unweighted average over average explained variance improvements when adding predictor 1 to a model of size i without predictor 1 \citep{Gromping2015}. The LMG metric is implemented in the R package relaimpo \citep{Gromping2006}.
+   
+\cite{Chevan1991} propose that instead of only using the variances, an appropriate goodness-of-fit metric can as well be used in the LMG formula. They name their proposal hierarchical partitioning. The requirements are simply: an initial measure of fit when no predictor variable is present, a final measure of fit when N predictor variables are present, all intermediate models when various combinations of predictor variables are present. 
+  The LMG component of each variable is named independent component (I). The sum of the independent components (I) results then in the overall goodness-of-fit metric. The difference between the goodness-of-fit when only the predictors itself is included in the model, compared to its independent component (I) is named the joint contribution (J). Hierarchical partitioning is implemented in the hier.part package \citep{Walsh2015}. The LMG values are calculated when  $\Rtwo$ is chosen as the goodness-of-fit measure.  The partitioning function of the hier.part package is used in this master thesis. The hierarchical partitioning function accepts as input a data frame with the $\Rtwo$ values of all submodels. Of note,  the hier.part package is only guaranteed to work for 9 predictors and does not work at all for more than 12 predictors.
+  
+\section{ Appropriate $\Rtwo$ definitions in the Bayesian framework}
+The focus of this master thesis is on the linear model. For the linear model the $\Rtwo$ is the most widely used goodness-of-fit metric.  Different formulas for $\Rtwo$ exist \cite{Kvalseth1985}, all leading to the same value when and intercept is included and the model is fitted by maximum likelihood. 
 
 Two popular definitions are:
    
@@ -109,33 +59,39 @@ Two popular definitions are:
 , where $\hat{y_{i}} = = \E ({y \mid X_{i}, \hat{\theta}})$.  $\hat{\theta}$ is the maximum likelihood estimate of the regression coefficients.
 
 
-When other estimation methods than maximum likelihood are used \eqref{eq:rtwo1} can be negative and \eqref{eq:rtwo2}  can be bigger than 1. This is not uncommon in a Bayesian Regression setting, when samples of the posterior parameter distribution are employed. A model that explaines more than 100\% of the variance does not make sense. A negative $\Rtwo$ is also difficult to interpret. A negative $\Rtwo$ may be interpreted as a fit that is worse than the mean of the data. This can make sense for predictive purposes, e.g. when new data from a test set is predicted by leave-one-out crossvalidation \citep{Alexander2015}.  For non predicting purposes a negative $\Rtwo$ does not make sense. The aim of the LMG formula is to gain some more information about the possible association between variables. A predictor can not explain less than zero variance in the population. To respect the non-negative share property of the LMG formula the $\Rtwo$ of submodels should not decrease when adding predictors. Both classical $\Rtwo$ definitions seem not to be well suited for the LMG metric in the Bayesian framework. Because of $\Rtwo$ bigger than one or the possibility of negative $\Rtwo$ values \cite{Gelman2017} proposes to use:
+When other estimation methods than maximum likelihood are used \eqref{eq:rtwo1} can be negative and \eqref{eq:rtwo2}  can be bigger than 1. This is not uncommon in a Bayesian regression setting, when samples of the posterior parameter distribution are employed. A model that explaines more than 100\% of the variance does not make sense. A negative $\Rtwo$ is also difficult to interpret. A negative $\Rtwo$ may be interpreted as a fit that is worse than the mean of the data. This can make sense for predictive purposes, e.g. when new data from a test set is predicted by leave-one-out crossvalidation \citep{Alexander2015}.  For non predicting purposes a negative $\Rtwo$ does not make sense. The aim of the LMG formula is to gain some more information about the possible association between variables. A predictor can not explain less than zero variance in the population. To respect the non-negative share property of the LMG formula the $\Rtwo$ of submodels should not decrease when adding predictors. Both classical $\Rtwo$ definitions seem not to be well suited for the LMG metric in the Bayesian framework.
+
+A more reasonable $\Rtwo$ definition for the LMG formula in the Bayesian framework can be found by noting that the variance of the linear model can also be written as 
+
+      \begin{align} 
+        \var(y) = \var(\X \bbeta) + \sigma^2 = \bbeta^\top \bSigma_{\X \X}  \bbeta + \sigma^2, \label{eq:vary} 
+   \end{align}
+where $\bbeta^\top = (\beta_{1} \dots \beta_{p})$ are the regression parameters without the intercept.
+$\bSigma_{\X \X}$ is the covariance matrix of the regressors.
+
+By using this variance definition \cite{Gelman2017} proposes to use 
 
       \begin{align} 
        \Rtwo_{Gelman} = \frac{\var(\sum_{i=1}^{n}\hat{y}^s_{i})}{\var(\sum_{i=1}^{n}\hat{y}^s_{i})+\var(\sum_{i=1}^{n}e^s_{i})}, \qquad i = 1,\dots,n, \label{rtwoGelman} 
    \end{align} 
    
-, where $\hat{y}^s_{i}  = \E \left({y \mid X_{i}, \theta^s}\right) $ and the vector of errors $e^s_{i} = y_{i} - \hat{y}^s_{i}$ and $\theta^s, s = 1, ... , S$ are draws from the posterior parameter distribution. The formula is then guaranteed to be between 0 and 1. The $\Rtwo$ can  be interpreted as a data-based estimate of the proportion of variance explained for new data under the assumption that the predictors are held fixed \citep{Gelman2017}.  However, we can no longer interpret an increase in $\Rtwo$ as a improved fit to a fixed target because the denominator of $\Rtwo$ is no longer fixed . This seems to be problematic for the LMG formula in the Bayesian framework. However, in the linear model it is possible to calculate the $\Rtwo$ of all submodels from the parameters of the fullmodel and the covariance matrix of the predictors. We therefore compare all submodels of a posterior sample to the same fixed value. How it is possible to get the $\Rtwo$ of the submodels from the full model is shown in the next section.
+, where $\hat{y}^s_{i}  = \E \left({y \mid X_{i}, \theta^s}\right) $ and the vector of errors $e^s_{i} = y_{i} - \hat{y}^s_{i}$ and $\theta^s, s = 1,\dotsc, S$ are draws from the posterior parameter distribution. The formula is then guaranteed to be between 0 and 1. The $\Rtwo$ can  be interpreted as a data-based estimate of the proportion of variance explained for new data under the assumption that the predictors are held fixed \citep{Gelman2017}.
 
-
-The variance of the linear model can be written as 
-
-      \begin{align} 
-        \var(y) = \bbeta^\top \bSigma_{\X \X}  \bbeta + \sigma^2, \label{eq:vary} 
-   \end{align}
-where $\bbeta^\top = (\beta_{1} \dots \beta_{p})$ are the regression parameters without the intercept.
-$\bSigma_{\X \X}$ is the covariance matrix of the regressors.
-
-Writting it this way makes it clear that the predictors in \eqref{rtwoGelman} could also be taken as random \citep{Gelman2017}. The predictors are then called stochastic predictors. We have then an additional uncertainty in the $\Rtwo$ formula that can have a large influence on the $\Rtwo$ values.
-
-In the Bayesian framework the $\sigma^2$ parameter is explicitly modeled in the standard linear regression setting. It is therefor possible to sample the $\sigma^2$ parameter from its posterior distribution instead of defining the error as in \eqref{rtwoGelman}, which woud lead to the following definition:
+In the Bayesian framework the $\sigma^2$ parameter is explicitly modeled in the standard linear regression setting. It is therefor possible to sample the $\sigma^2$ parameter from its posterior distribution instead of defining the error as in \eqref{rtwoGelman}, which would lead to the following definition:
 
     \begin{align} 
-        R^2 = \frac{\var(\sum_{i=1}^{n}\hat{y}^s_{i})}{\var(\sum_{i=1}^{n}\hat{y}^s_{i})+\sigma^s} \label{rtwoused} 
+        \Rtwo &= \frac{\var(\sum_{i=1}^{n}\hat{y}^s_{i})}{\var(\sum_{i=1}^{n}\hat{y}^s_{i})+\sigma_{s}^2} \\ &= \frac{\bbeta_{s}^\top \bSigma_{\X \X}  \bbeta_{s}}{\bbeta_{s}^\top \bSigma_{\X \X}  \bbeta_{s}+\sigma_{s}^2}\label{rtwoused} 
    \end{align} 
- , where $\hat{y}^s_{i}  = E \left({y \mid X_{i}, \theta^s}\right) $,  and $\theta^s, s = 1, ... , S$ are draws from the posterior parameter distribution.
- 
-In practice \eqref{rtwoused} and \eqref{rtwoGelman} should lead to  similar values in the standard linear model. In my opionion it is more reasonable to go the full bayesian route and sample  $\sigma^2$. This provides us the opportunity to include prior information abouth $\sigma^2$ directly into to $\Rtwo$ calculations. The LMG calculations in the examples of this master thesis will therefore be based on \eqref{rtwoused}.  The benefit of \eqref{rtwoGelman} is that it also works for generalized linear models, where we often have no separate variance parameter.  
+ , where $\hat{y}^s_{i}  = E \left({y \mid X_{i}, \theta^s}\right) $,  and $\theta^s, s = 1,\dotsc, S$ are draws from the posterior parameter distribution.
+
+
+The predictors in \eqref{rtwoGelman} and \eqref{rtwoused} could also be taken as random \citep{Gelman2017}. The predictors are then called stochastic predictors. Using the sample covariance estimate provides us then just an estimate of the true covariance structure. With stochastic predictors there is an additional uncertainty in the $\Rtwo$ formula that can have a large influence on the $\Rtwo$ and especially the LMG values.
+
+In practice \eqref{rtwoused} and \eqref{rtwoGelman} should lead to  similar values in the standard linear model. In my opinion it is more reasonable to go the full Bayesian route and sample  $\sigma^2$. This provides us the opportunity to include prior information about $\sigma^2$ directly into to $\Rtwo$ calculations. The LMG calculations in the examples of this master thesis will therefore be based on \eqref{rtwoused}.  The benefit of \eqref{rtwoGelman} is that it also works for generalized linear models, where we often have no separate variance parameter.
+
+ The denominator of $\Rtwo$ is no longer fixed in \eqref{rtwoGelman} and \eqref{rtwoused}. We can therefore no longer interpret an increase in $\Rtwo$ as an improved fit to a fixed target \citep{Gelman2017}. This seems to be problematic for the LMG formula in the Bayesian framework. However, in the linear model it is possible to calculate the $\Rtwo$ of all submodels from the parameters of the fullmodel and the covariance matrix of the predictors. We therefore compare all submodels of a posterior sample to the same fixed value. How it is possible to get the $\Rtwo$ of the submodels from the full model is shown in the next section.
+
+\section{Conditional variance formula}
 
 
 For two predictors \eqref{eq:vary} simplifies to
@@ -150,7 +106,7 @@ For two predictors \eqref{eq:vary} simplifies to
         \SVAR({X_{1}} \mid \emptyset ) = \beta_{1}^2 \var(X_{1}) + 2  \beta_{1}  \beta_{2} \cov(X_{1}, X_{2}) + \beta_{2}^2 \var(X_{2}) \rho_{12}^2 \nonumber 
    \end{align}
    
-The contribution of the second regressor is then simply the difference to the total explained variance. 
+The contribution of the second regressor is then simply the difference to the total explained variance \citep{Gromping2007}. 
 
 In the general case with $p$ regressors, the conditional variance formula \eqref{eq:condvar} can be used to calculate the $\Rtwo$ of all submodels. The conditional variance formula can for example be used to specify the conditional distribution of a multivariate normal distribution $\Y$ .
 
@@ -185,9 +141,9 @@ and the conditional variance is
 \var ( \mathbf{Y}_{1} | \mathbf{y}_{2} ) = \bSigma_{11}\ -\ \bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21} \text{.} \label{eq:condvar} 
 \end{align}
 
-We want to calculate $\Rtwo$ of a submodel containining the predictors $\X_{q...p}$, and regression coefficients $\bbeta^\top = (\beta_{1}, \dotsc, \beta_{p})$ without the intercept. The regression coefficients are further separated in $\bbeta^\top_{1  ,\dotsc,  q-1} = (\beta_{1} ,\dotsc, \beta_{q-1})$ and $\bbeta^\top_{q ,\dotsc, p} = (\beta_{q} ,\dotsc, \beta_{p})$. 
+The aim is to calculate $\Rtwo$ of a submodel containining the predictors $\X_{q...p}$, and regression coefficients $\bbeta^\top = (\beta_{1}, \dotsc, \beta_{p})$ without the intercept. The regression coefficients are further separated in $\bbeta^\top_{1  ,\dotsc,  q-1} = (\beta_{1} ,\dotsc, \beta_{q-1})$ and $\bbeta^\top_{q ,\dotsc, p} = (\beta_{q} ,\dotsc, \beta_{p})$. 
 
-As in the normal distribution example above we have the covariance matrix of $p$ predictors written as 
+As in the multivariate normal distribution example above, the covariance matrix of $p$ predictors is written as 
 
       \begin{align*} 
 \cov(\X) =	\bSigma_{\X \X} = \begin{pmatrix}
@@ -203,10 +159,10 @@ As in the normal distribution example above we have the covariance matrix of $p$
  The conditional variance of the predictors $ \X_{1 ,\dotsc, q-1} $ given the predictors  $ \X_{q ,\dotsc, p} $ is then
  
           \begin{align*} 
- \cov(\X_{1,\dotsc, q-1} \mid \x_{q ,\dotsc, p}) = \bSigma_{11}\ -\ \bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21} 
+ \cov(\X_{1,\dotsc, q-1} \mid \x_{q ,\dotsc, p}) = \bSigma_{11}\ -\ \bSigma_{12} \bSigma_{22}^{-1}\bSigma_{21} .
        \end{align*}
        
-       The total explained variance of the full model $\X_{1 \dots p}$ omits simply the $\sigma^2$ parameter in equation , which is
+       The total explained variance of the full model $\X_{1 \dots p}$ omits simply the $\sigma^2$ parameter in \eqref{eq:vary} , which is
 
       \begin{align*} 
         \EVAR(\X_{1 ,\dotsc, p}) = \bbeta^\top \bSigma_{\X \X}  \bbeta. 
@@ -218,54 +174,58 @@ The explained variance of a submodel can be calculated by subtracting from the t
        \EVAR(\X_{q \dots p}) =  \EVAR(\X_{1  ,\dotsc, p}) - \bbeta^\top_{1 ,\dotsc, q-1} \cov(\X_{1,\dotsc, {q-1}} \mid \x_{q \dots p}) \bbeta_{1 ,\dotsc, {q-1}} . \label{eq:varsub} 
    \end{align}
 
-To gain the the $\Rtwo$ value of the submodel we need to divide the explained variance by the total variance,
+To gain the the $\Rtwo$ value of the submodel we need to divide the explained variance by the total variance, which is
        \begin{align*} 
-\EVAR(\X_{q ,\dotsc, p}) / \var(\Y).   
+\EVAR(\X_{q ,\dotsc, p}) / \var(\Y),   
 \end{align*}
 
-The LMG formula requires calculation of the $\Rtwo$ values for all $2^p-1$ submodels. 
+where $\var(\Y)$ is definied as  $\bbeta^\top \bSigma_{\X \X}  \bbeta + \sigma^2$.
 
-In the Bayesian setting we do have a whole probability distribution for each regression parameter. We can sample the regression parameters from the posterior joint distribution of the fullmodel and use the conditional variance formula to calculate the explained variance of all submodels for each parameter sample. As Gelman notes their $\Rtwo$ can no longer be interpreted as a fit to a fixed target. For the LMG formula this may be problematic. However, using the conditional variance formula to calculate the $\Rtwo$ of the submodels, the same total variance is used for a sample of the joint posterior distribution. The important property that all shares should be non-negative and the dependence of the submodels to each other is then respected for each sample. With dependence, i mean the interconnection of the $\Rtwo$ values of the submodels. As an example for a violation of this interconnection lets assume we have uncorrelated predictors. Instead of fitting the full model and use the conditional mean formula to get the $\Rtwo$ of the submodels,  it would be possible to fit a separate Bayesian model for each submodel. The LMG values could then be built by sampling a parameter from each submodel. The problem is then that the paramter values change in each submodel, even if the predictors are uncorrelated. We would have many possibly true parameter values of a predictor in the same LMG comparison. It would then also be possible that the $\Rtwo$ decreases when adding predictors.  
-A further of fitting one full model only  is that we only need to fit one Bayesian model including all predictors. This makes it possible to calculate the LMG values also in the Bayesian framework in a reasonable amount of time. 
+
+
+A posterior density distribution is obtained for the regression parameters in the Bayesian regression setting. The LMG formula requires calculation of the $\Rtwo$ values for all $2^p-1$ submodels. Samples from the joint posterior paramters of the full model are used to calculate the explained variance of the  submodels. For each sample the  conditional variance formula is used to obtain the $\Rtwo$ of the $2^p-1$ submodels. The property that all shares should be non-negative and the dependence of the parameter values from the submodels to each other is then respected for each sample. 
+
+Instead of using the conditional mean formula to get the $\Rtwo$ of the submodels,  it would be possible to fit a separate Bayesian model for each submodel. An $\Rtwo$ distribution can easily be built for each submodel by using \eqref{rtwoGelman} or  \eqref{rtwoused}. However, the problem is how to calculate the LMG values out of these $\Rtwo$ distributions. If we just sample independently from the $\Rtwo$ distributions, the dependence of the paramter values of the submodels to each other is ignored. We would have many possibly true parameter values of a predictor in the same LMG comparison. It would then also be possible that the $\Rtwo$ decreases when adding predictors.  Another drawback is that it would be much more time consuming to fit a separate Bayesian model for each submodel. Using the conditional variance formula on the full model allows us to calculate LMG values in the Bayesian framework in a reasonable amount of time. Depending on the number of predictors and the number of posterior samples, the calculations still take some time in the Bayesian framework. For stochastic predictors the computation time is multiplied by the number of covariance samples.
 
 
 \section{Bayesian Regression}
-This Section provides a short introduction Bayesian regression and about some assumptions. It is summarized from the book (Bayesian Analysis for the Social Sciences, 2009). 
-In regression analysis we are interested in the dependence of $\y$ on $\X$. The conditional mean of a continuous response variable $\y = (y_{1}, \dots, y_{n})^\top)$ is related to a $n \times k$ predictor matrix $\X$ via a linear model, 
+This Section provides a short introduction to Bayesian regression. It further shows that assuming stochastic or non-stochastic predictors results in the same posteriors for the regression parameters under some assumptions.  It is summarized from the book Bayesian Analysis for the Social Sciences \citep{Jackman2009}. 
 
-       \begin{align} 
+In regression analysis we are interested in the dependence of $\y$ on $\X$. The conditional mean of a continuous response variable $\y = (y_{1}, \dots, y_{n})^\top$ is related to a $n \times k$ predictor matrix $\X$ via a linear model, 
+
+       \begin{align*} 
 \E(\y \mid \X , \bbeta) = \X \bbeta ,
-   \end{align}
+   \end{align*}
 where $\bbeta$ is a $k \times 1$ vector of unknown regression coefficients.
 
-Under some assumptions about the density, conditional independence and homoskedastic variances, the regression can be written as
+Under some assumptions about the density, conditional independence and homoskedastic variances, the regression setting can be written as
 
-       \begin{align} 
-\y \mid \X , \bbeta, \sigma^2 \sim \mathcal{N}(\X \bbeta , \sigma^2 \I_{n})
-   \end{align}
+       \begin{align*} 
+\y \mid \X , \bbeta, \sigma^2 \sim \mathcal{N}(\X \bbeta , \sigma^2 \I_{n}) \text{.}
+   \end{align*}
 
-Under the assumption of weak exogeneity and conditional indepdendence the joint density of the data can be written as
+Under the assumption of weak exogeneity and conditional independence, the joint density of the data can be written as
 
-       \begin{align} 
+       \begin{align*} 
 p(\y, \X \mid \btheta) = p(\y \mid \X, \btheta_{y \mid x}) \, p(\X \mid \btheta_{x}),
-   \end{align}
+   \end{align*}
 
 where $\btheta = (\btheta_{y \mid x}, \btheta_{x})^\top$. The weak exogeneity assumption implicates that the whole information about $\y_{i}$ is contained in $x_{i}$ and $\btheta_{y \mid x}$. Knowledge of the parameters $\btheta_{x_{i}}$ provides no additional information about $\y_{i}$.
-The interest of regression is mostly in the posterior parameters $\btheta_{y \mid x}$. These posterior densities are proportional to  likelihood of the data  multiplied by the prior densitiy. The joint density $p(\y, \X \mid  \btheta)$ is used to learn about the posterior parameters, via Bayes Rule
+The interest of regression is mostly in the posterior parameters $\btheta_{y \mid x}$. These posterior densities are proportional to the likelihood of the data  multiplied by the prior density. The joint density $p(\y, \X \mid  \btheta)$ is used to learn about the posterior parameters, via Bayes Rule
 
-       \begin{align} 
+       \begin{align*} 
 p(\btheta \mid \y, \X) \propto p(\y, \X \mid  \btheta) \, p(\btheta).
-   \end{align}
+   \end{align*}
    
-   The dependence of $\y$ on $\X$ is captured in the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$. Under the assumption of indepdentent prior densities about $\btheta_{y \mid x}$ and $\btheta_{x}$ the posterior distribution of the parameters can be written as
+   The dependence of $\y$ on $\X$ is captured in the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$. Under the assumption of independent prior densities about $\btheta_{y \mid x}$ and $\btheta_{x}$ the posterior distribution of the parameters can be written as
    
           \begin{align} 
-p(\bbeta, \sigma^2, \btheta_{x} \mid \y, \X) = \frac{p(\y \mid \X, \bbeta, \sigma^2) \, p(\bbeta, \sigma^2)}{p(\y \mid \X)} \times \frac{p(\X \mid \btheta_{x}) \, p(\btheta_{x})}{p(\X)}
+p(\bbeta, \sigma^2, \btheta_{x} \mid \y, \X) = \frac{p(\y \mid \X, \bbeta, \sigma^2) \, p(\bbeta, \sigma^2)}{p(\y \mid \X)} \times \frac{p(\X \mid \btheta_{x}) \, p(\btheta_{x})}{p(\X)}.  \label{eq:bayesf} 
    \end{align}
    
-  This factorization shows that under the above mentioned assumptions the posterior inference about the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$ is indepdendent from the inference about $\btheta_{x}$ given data $\X$. This also means that the assumptions about $\X$ being fixed or stochastic result in the same posterior density of  $\btheta_{y \mid x}$. In the case of fixed regressors $p(\X)$ and $\btheta_{x}$ drop out of the calculations. For stochastic predictors it means that given $\X$ nothing more can be gained about $\theta_{y \mid x} = (\bbeta, \sigma^2)$ from knowing $\btheta_{x}$. 
+  This factorization shows that under the above mentioned assumptions the posterior inference about the parameters $\btheta_{y \mid x} = (\beta, \sigma^2)$ is independent from the inference about $\btheta_{x}$ given data $\X$. This also means that the assumptions about $\X$ being non-stochastic or stochastic result in the same posterior density of  $\btheta_{y \mid x}$. In the case of non-stochastic regressors $p(\X)$ and $\btheta_{x}$ drop out of the calculations. For stochastic predictors it means that given $\X$ nothing more can be gained about $\theta_{y \mid x} = (\bbeta, \sigma^2)$ from knowing $\btheta_{x}$. 
   
-  In regression the focus is on $\btheta_{y \mid x} = (\bbeta, \sigma^2)$, for which under some assumptions it does not matter whether we assume fixed or stochastic predictors. For the LMG formula the variance of the predictors is also incorporated. The LMG formula may be especially interesting for continuous predictors, which in most cases are stochastic. For stochastic predictors the information about $\btheta_{x}$ would therefore also be relevant.  As seen in equation ... inference about $\btheta_{x}$  is independent from inference about $\btheta_{y \mid x}$. If we have stochastic predictors and ignore dependence we just use an estimate of the covariance matrix and do not incorporate this uncertainty.  Because the explained variance is calculated by $\bbeta^\top \bSigma_{\X \X}  \bbeta$, inference about  $\btheta_{x}$  seems to be equally important as inference about $\btheta_{y \mid x}$ for stochastic predictors. If we know the distribution of the $p(\X)$ the $\btheta_{x}$ could be estimated. However, the computation times are then much higher. We would need to do the whole LMG calculation for each posterior covariance sample of the predictors. Depending on the number of predictors this would quite take some time.  In most cases the problem is that we do not know the distribution of the $\X$. As a practical solution we could then use nonparametric bootstrapping to include the uncertainty of the stochastic predictors in the LMG formula. We would then also need to do the whole LMG caclulations for each bootstrap sample of the covariance matrix. There exist also different covariance estimator. The shrinkage method may be an interesting estimator with some interesting properties. 
+  The focus of regression is on $\btheta_{y \mid x} = (\bbeta, \sigma^2)$, for which it does not matter whether we assume fixed or stochastic predictors under the above mentioned assumptions. For the LMG formula, the variance of the predictors is also incorporated. The LMG formula may be especially interesting for continuous predictors, which often are of stochastic nature. For stochastic predictors the information about $\btheta_{x}$ would therefore also be relevant.  As seen in \eqref{eq:bayesf} inference about $\btheta_{x}$  is independent from inference about $\btheta_{y \mid x}$. If we have stochastic predictors and ignore dependence we just use an estimate of the covariance matrix and do not incorporate this uncertainty.  Because the explained variance is calculated by $\bbeta^\top \bSigma_{\X \X}  \bbeta$, inference about  $\btheta_{x}$  seems to be equally important as inference about $\btheta_{y \mid x}$ for stochastic predictors. If we know the distribution of the $p(\X)$ the $\btheta_{x}$ could be estimated. However, the computation times are then much higher. We would need to do the whole LMG calculation for each posterior covariance sample of the predictors. Depending on the number of predictors this would quite take some time.  In most cases the problem is that we do not know the distribution of the $\X$. As a practical solution we could then use nonparametric bootstrapping to include the uncertainty of the stochastic predictors in the LMG formula. We would then also need to do the whole LMG calculations for each bootstrap sample of the covariance matrix. There exist also different covariance estimator. The shrinkage method may be an interesting estimator with some nice properties \citep{Schafer2005}. 
   
   
   
