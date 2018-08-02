@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  30 JUL 2018 19:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  2 AUG 2018 15:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -741,6 +741,9 @@ Package: booktabs 2016/04/27 v1.618033 publication quality tables
 \@lastruleclass=\count171
 \@thisrulewidth=\dimen186
 )
+(/usr/local/texlive/2017/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2016/11/05 v2.16a AMS math features
 \@mathmargin=\skip71
@@ -971,218 +974,109 @@ LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
  [9
 
 ]
-Overfull \hbox (472.67163pt too wide) in paragraph at lines 583--583
-[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](dat,[] []lower[] []=[
-] []list[][]([][]list[][]([][]combo[] []=[] []"facetdensity"[][])),[] []upper[]
- []=[] []list[][]([][]list[][]([][]continuous[] []=[] []"cor"[][])))[] []+[] []
-ggplot2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]size[] 
-[]=[] []6[][]))[][] 
- []
+<figure/ch03_figsimdata_LMG_plot-1.pdf, id=294, 505.89pt x 505.89pt>
+File: figure/ch03_figsimdata_LMG_plot-1.pdf Graphic file (type pdf)
 
-[10] [11] <figure/ch03_figsimdata_LMG-1.pdf, id=293, 505.89pt x 505.89pt>
-File: figure/ch03_figsimdata_LMG-1.pdf Graphic file (type pdf)
-
-<use figure/ch03_figsimdata_LMG-1.pdf>
-Package pdftex.def Info: figure/ch03_figsimdata_LMG-1.pdf used on input line 58
-7.
+<use figure/ch03_figsimdata_LMG_plot-1.pdf>
+Package pdftex.def Info: figure/ch03_figsimdata_LMG_plot-1.pdf used on input li
+ne 471.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 587--588
-[][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12]
-[13 <./figure/ch03_figsimdata_LMG-1.pdf>] [14]
-Overfull \hbox (50.19438pt too wide) in paragraph at lines 715--715
-[][]\T1/cmtt/m/it/10.95 #------------------------------------------------------
-----------------------------------[][] 
- []
-
-
-Overfull \hbox (76.58566pt too wide) in paragraph at lines 774--774
-[][]\T1/cmtt/m/n/10.95 my_prior[] []<-[] []normal[][]([][]location[] []=[] []c[
-][]([][]1[][],[] []1[][],[][]1[][],[][]1[][]),[] []scale[] []=[] []c[][]([][]0.
-01[][],[] []0.01[][],[][]0.01[][],[][]0.01[][]),[] []autoscale[] []=[] []FALSE[
-][])[][] 
- []
-
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 830
-.
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
-File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-Overfull \hbox (14.34358pt too wide) in paragraph at lines 830--830
-[]\T1/cmtt/m/n/10.95 ## 1000 transitions using 10 leapfrog steps per transition
- would take 0.25 seconds.[] 
- []
-
-
-Overfull \hbox (14.34358pt too wide) in paragraph at lines 830--830
-[]\T1/cmtt/m/n/10.95 ## 1000 transitions using 10 leapfrog steps per transition
- would take 0.21 seconds.[] 
- []
-
-[15] [16] [17] [18]
-Overfull \hbox (370.82095pt too wide) in paragraph at lines 982--982
-[]                                                                             
-                   []\T1/cmtt/m/n/10.95 data[][]=dataList ,[] []n.chains[][]=nC
-hain ,[] []n.adapt[][]=nAdapt )[][] 
- []
-
-
-Overfull \hbox (342.5291pt too wide) in paragraph at lines 998--998
-[]                                                                             
-                                   []\T1/cmtt/m/n/10.95 variable.names[][]=[][]
-c[][]([][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 zCovMat\TS1/cmtt/m/n/10.95 '[
-][]\T1/cmtt/m/n/10.95 ) ,[][] 
- []
-
-
-Overfull \hbox (438.7214pt too wide) in paragraph at lines 999--999
-[]                                                                             
-                                   []\T1/cmtt/m/n/10.95 n.iter[][]=nStepToSave[
-][]/[][]nChain[][]*[][]nThin ,[] []thin[][]=nThin )[][] 
- []
-
-
-Overfull \hbox (8.68521pt too wide) in paragraph at lines 1035--1035
-[]                []\T1/cmtt/m/n/10.95 obj.Gelman[][]<-[][]partition[][](gofn,[
-] []pcan[] []=[] []4[][],[] []var.names[] []=[] []names[][](df[,[][]2[][]:[][]5
-[][]]))[][] 
- []
-
-[19] [20]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[21]
-Overfull \hbox (95.46135pt too wide) in paragraph at lines 1101--1101
-[][]\T1/cmtt/m/it/10.95 #How much variance is effectively in the bootstrap matr
-ix when we know the regression parameters.[][] 
- []
 
-[22] [23] <figure/ch03_figunnamed-chunk-1-1.pdf, id=355, 505.89pt x 505.89pt>
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[10] [11 <./figure/ch03_figsimdata_LMG_plot-1.pdf>] [12] [13
+
+]
+<figure/ch03_figunnamed-chunk-1-1.pdf, id=330, 505.89pt x 505.89pt>
 File: figure/ch03_figunnamed-chunk-1-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figunnamed-chunk-1-1.pdf>
 Package pdftex.def Info: figure/ch03_figunnamed-chunk-1-1.pdf used on input lin
-e 1240.
+e 581.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1240--1241
-[][] 
- []
 
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+<figure/ch03_figempi_lmg_plot-1.pdf, id=331, 505.89pt x 505.89pt>
+File: figure/ch03_figempi_lmg_plot-1.pdf Graphic file (type pdf)
 
- [24]
-Overfull \hbox (472.67163pt too wide) in paragraph at lines 1465--1465
-[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](dat,[] []lower[] []=[
-] []list[][]([][]list[][]([][]combo[] []=[] []"facetdensity"[][])),[] []upper[]
- []=[] []list[][]([][]list[][]([][]continuous[] []=[] []"cor"[][])))[] []+[] []
-ggplot2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]size[] 
-[]=[] []6[][]))[][] 
- []
-
-[25 <./figure/ch03_figunnamed-chunk-1-1.pdf>] [26] [27] [28]
-<figure/ch03_figreal_data_LMG-1.pdf, id=383, 505.89pt x 505.89pt>
-File: figure/ch03_figreal_data_LMG-1.pdf Graphic file (type pdf)
-
-<use figure/ch03_figreal_data_LMG-1.pdf>
-Package pdftex.def Info: figure/ch03_figreal_data_LMG-1.pdf used on input line 
-1469.
+<use figure/ch03_figempi_lmg_plot-1.pdf>
+Package pdftex.def Info: figure/ch03_figempi_lmg_plot-1.pdf used on input line 
+674.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1469--1470
-[][] 
- []
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [29]
-Overfull \hbox (201.06982pt too wide) in paragraph at lines 1472--1472
-[][]\T1/cmtt/m/n/10.95 my_prior[] []<-[] []normal[][]([][]location[] []=[] []c[
-][]([][]1[][],[] []0.05[][],[][]-[][]0.03[][],[][]-[][]3[][],[] []0[][],[] []0[
-][]),[] []scale[] []=[] []c[][]([][]0.1[][],[] []0.01[][],[][]0.01[][],[][]0.1[
-][],[] []0.1[][],[] []0.1[][]),[] []autoscale[] []=[] []FALSE[][])[][] 
- []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (472.67163pt too wide) in paragraph at lines 1566--1566
-[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](dat,[] []lower[] []=[
-] []list[][]([][]list[][]([][]combo[] []=[] []"facetdensity"[][])),[] []upper[]
- []=[] []list[][]([][]list[][]([][]continuous[] []=[] []"cor"[][])))[] []+[] []
-ggplot2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]size[] 
-[]=[] []6[][]))[][] 
- []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
-[30 <./figure/ch03_figreal_data_LMG-1.pdf>] [31]
-<figure/ch03_figreal_data_LMG-2.pdf, id=403, 505.89pt x 505.89pt>
-File: figure/ch03_figreal_data_LMG-2.pdf Graphic file (type pdf)
+[14
 
-<use figure/ch03_figreal_data_LMG-2.pdf>
-Package pdftex.def Info: figure/ch03_figreal_data_LMG-2.pdf used on input line 
-1570.
-(pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
-
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1570--1571
-[][] 
- []
-
-[32 <./figure/ch03_figreal_data_LMG-2.pdf>]
+] [15 <./figure/ch03_figunnamed-chunk-1-1.pdf>] [16] [17 <./figure/ch03_figempi
+_lmg_plot-1.pdf>] [18]
 Chapter 4.
-[33
+[19
 
-] [34] <figure/ch04_figsimdata_repeated-1.pdf, id=427, 505.89pt x 505.89pt>
+] [20] <figure/ch04_figsimdata_repeated-1.pdf, id=389, 505.89pt x 505.89pt>
 File: figure/ch04_figsimdata_repeated-1.pdf Graphic file (type pdf)
 
 <use figure/ch04_figsimdata_repeated-1.pdf>
 Package pdftex.def Info: figure/ch04_figsimdata_repeated-1.pdf used on input li
-ne 1681.
+ne 835.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1681--1682
+Overfull \hbox (17.0pt too wide) in paragraph at lines 835--836
 [][] 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [35]
-Overfull \hbox (8.68521pt too wide) in paragraph at lines 1693--1693
+ [21]
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 847--847
 []                                                                        []\T1
 /cmtt/m/n/10.95 data[] []= df,[][] 
  []
 
 
-Overfull \hbox (76.58566pt too wide) in paragraph at lines 1694--1694
+Overfull \hbox (76.58566pt too wide) in paragraph at lines 848--848
 []                                                                        []\T1
 /cmtt/m/n/10.95 chains[] []=[] []4[][],[] []cores[] []=[] []4[][])[][] 
  []
 
-[36 <./figure/ch04_figsimdata_repeated-1.pdf>] [37] [38]
-<figure/ch04_figsimdata_repeated_unstruct-1.pdf, id=453, 505.89pt x 505.89pt>
+[22 <./figure/ch04_figsimdata_repeated-1.pdf>] [23] [24]
+<figure/ch04_figsimdata_repeated_unstruct-1.pdf, id=414, 505.89pt x 505.89pt>
 File: figure/ch04_figsimdata_repeated_unstruct-1.pdf Graphic file (type pdf)
 
 <use figure/ch04_figsimdata_repeated_unstruct-1.pdf>
 Package pdftex.def Info: figure/ch04_figsimdata_repeated_unstruct-1.pdf used on
- input line 1873.
+ input line 1027.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1873--1874
+Overfull \hbox (17.0pt too wide) in paragraph at lines 1027--1028
 [][] 
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [39]
-Overfull \hbox (570.76451pt too wide) in paragraph at lines 1921--1921
+ [25]
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 103
+1.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+Overfull \hbox (570.76451pt too wide) in paragraph at lines 1075--1075
 []                                                                             
    []\T1/cmtt/m/n/10.95 data[] []=[] []list[][]([][]Y[][]=Y,[][]N[][]=N,[][]M[]
 []=M,[][]x1[] []= x1,[] []x2[] []= x2,[] []x3[] []= x3,[] []x4[] []= x4,[]     
@@ -1191,20 +1085,20 @@ Overfull \hbox (570.76451pt too wide) in paragraph at lines 1921--1921
  []
 
 
-Overfull \hbox (455.69652pt too wide) in paragraph at lines 1922--1922
+Overfull \hbox (455.69652pt too wide) in paragraph at lines 1076--1076
 []                                                                             
                                                    []\T1/cmtt/m/n/10.95 zRmat[]
  []=[] []diag[][]([][]x[][]=[][]1[][],[][]nrow[][]=[][]ncol[][](Y)) ),[][] 
  []
 
 
-Overfull \hbox (59.61055pt too wide) in paragraph at lines 1923--1923
+Overfull \hbox (59.61055pt too wide) in paragraph at lines 1077--1077
 []                                                                             
    []\T1/cmtt/m/n/10.95 n.chains[][]=[][]3[][])[][] 
  []
 
 
-Overfull \hbox (348.18747pt too wide) in paragraph at lines 1938--1938
+Overfull \hbox (348.18747pt too wide) in paragraph at lines 1092--1092
 []                                                                             
     []\T1/cmtt/m/n/10.95 variable.names[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/
 cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/1
@@ -1214,14 +1108,14 @@ tt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95 ,[][]"Sigma"[][]),[][]
  []
 
 
-Overfull \hbox (195.41145pt too wide) in paragraph at lines 1939--1939
+Overfull \hbox (195.41145pt too wide) in paragraph at lines 1093--1093
 []                                                                             
     []\T1/cmtt/m/n/10.95 n.iter[][]=[][]20000[][],[] []progress.bar[][]=[][]"no
 ne"[][])[][] 
  []
 
 
-Overfull \hbox (597.15579pt too wide) in paragraph at lines 2003--2003
+Overfull \hbox (597.15579pt too wide) in paragraph at lines 1157--1157
 []                                                                             
     []\T1/cmtt/m/n/10.95 variable.names[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/
 cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/1
@@ -1232,67 +1126,67 @@ tt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95 ,[][]"Sigma[1,1]"[][],[][]"Sigma[2,2]"[][
  []
 
 
-Overfull \hbox (246.33679pt too wide) in paragraph at lines 2004--2004
+Overfull \hbox (246.33679pt too wide) in paragraph at lines 1158--1158
 []                                                                             
     []\T1/cmtt/m/n/10.95 n.iter[][]=[][]20000[][],[] []thin[][]=[][]20[][],[] [
 ]progress.bar[][]=[][]"none"[][])[][] 
  []
 
-[40 <./figure/ch04_figsimdata_repeated_unstruct-1.pdf>] [41] [42] [43] [44
+[26 <./figure/ch04_figsimdata_repeated_unstruct-1.pdf>] [27] [28] [29] [30
 
 ]
 Chapter 5.
-[45]
+[31]
 Overfull \hbox (37.5471pt too wide) has occurred while \output is active
-\T1/cmr/m/n/10.95 46 \T1/cmr/m/sl/10.95 CHAPTER 5.  OTHER VARIABLE IMPORTANCE M
+\T1/cmr/m/n/10.95 32 \T1/cmr/m/sl/10.95 CHAPTER 5.  OTHER VARIABLE IMPORTANCE M
 ETRICS IN THE BAYESIAN FRAMEWORK
  []
 
-[46
+[32
 
 ]
 Chapter 6.
 
-Overfull \hbox (5.90967pt too wide) in paragraph at lines 2098--2099
+Overfull \hbox (5.90967pt too wide) in paragraph at lines 1248--1249
 \T1/cmr/m/n/10.95 he eror term in the by [][][]Gel-man \T1/cmr/m/it/10.95 et al
 .[][] \T1/cmr/m/n/10.95 ([][]2017[][]) pro-posed def-i-ni-tion of the $[][]$ is
  de-fined as $[]\OT1/cmr/m/n/10.95 ([][] \OML/cmm/m/it/10.95 e[]\OT1/cmr/m/n/10
 .95 )$\T1/cmr/m/n/10.95 .
  []
 
-[47] [48
+[33] [34
 
 ] (./Main.bbl (./Main.brf)
 \tf@brf=\write6
 \openout6 = `Main.brf'.
 
-) [49
+) [35
 
-] [50
+] [36
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2114.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2114.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1268.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1268.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2114.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2114.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1268.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1268.
 
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 01FDED697B2382C555E101FFF26ABF51;1063.
+(rerunfilecheck)             Checksum: E2EE865BED5A29CFB66C485E3980CF42;1063.
 Package rerunfilecheck Info: File `Main.brf' has not changed.
-(rerunfilecheck)             Checksum: 0447936BB1B63830304AF7FF3DDD1628;1132.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2114.
+(rerunfilecheck)             Checksum: 12DFAEAE0A31705C888A0C1D81C5A461;1228.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1268.
  ) 
 Here is how much of TeX's memory you used:
- 20284 strings out of 492995
- 369362 string characters out of 6132703
- 448048 words of memory out of 5000000
- 23453 multiletter control sequences out of 15000+600000
- 43309 words of font info for 117 fonts, out of 8000000 for 9000
+ 20334 strings out of 492995
+ 370205 string characters out of 6132703
+ 442939 words of memory out of 5000000
+ 23493 multiletter control sequences out of 15000+600000
+ 47822 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,19n,43p,10436b,798s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<
+ 38i,19n,43p,10436b,788s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
 usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
 r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
@@ -1301,33 +1195,35 @@ usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
 r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/
 local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/201
-7/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2017/te
-xmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texm
-f-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist
-/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texlive/2017/texmf-dist/f
-onts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2017/texmf-dist/fon
-ts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2017/texmf-dist/fonts
-/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
-ype1/public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
-e1/public/cm-super/sftt1095.pfb>
-Output written on Main.pdf (58 pages, 7783454 bytes).
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2017/
+texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texlive/2017/te
+xmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texmf-
+dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2017/texmf-di
+st/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-dist
+/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/f
+onts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2017/texmf-dist/fon
+ts/type1/public/cm-super/sfsl1095.pfb></usr/local/texlive/2017/texmf-dist/fonts
+/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
+ype1/public/cm-super/sfss1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
+e1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1
+/public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/p
+ublic/cm-super/sftt1095.pfb>
+Output written on Main.pdf (44 pages, 1428715 bytes).
 PDF statistics:
- 657 PDF objects out of 1000 (max. 8388607)
- 548 compressed objects within 6 object streams
- 114 named destinations out of 1000 (max. 500000)
- 167 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 628 PDF objects out of 1000 (max. 8388607)
+ 533 compressed objects within 6 object streams
+ 110 named destinations out of 1000 (max. 500000)
+ 162 words of extra memory for PDF output out of 10000 (max. 10000000)
 

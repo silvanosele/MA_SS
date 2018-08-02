@@ -63,6 +63,11 @@ Sch{\"{a}}fer, J. and Strimmer, K. (2005).
 \newblock {\em Statistical Applications in Genetics and Molecular Biology},
   {\bf4},  1--30.
 
+\bibitem[{Stan Development Team}, 2016]{rstanarm}
+{Stan Development Team} (2016).
+\newblock rstanarm: {Bayesian} applied regression modeling via {Stan}.
+\newblock R package version 2.13.1.
+
 \bibitem[Walsh and Nally, 2015]{Walsh2015}
 Walsh, C. and Nally, R.~M. (2015).
 \newblock {Title Hierarchical Partitioning}.

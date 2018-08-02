@@ -5,7 +5,8 @@ set_parent('Main.Rnw')
 @
 
 <<'preamble03',include=FALSE>>=
-library(knitr); library(hier.part); library(rstanarm);  library(GGally); library(ggplot2); library(relaimpo); library(rjags); library(corpcor); library(brinla); library(stargazer); library(xtable); library(kableExtra)
+library(knitr); library(hier.part); library(rstanarm);  library(GGally); library(ggplot2); library(relaimpo); library(rjags); library(corpcor); library(brinla); library(stargazer); library(xtable); library(kableExtra); library(MBESS); library(MASS); library(biostatUZH)
+
 
 opts_chunk$set(
     fig.path='figure/ch03_fig', 
@@ -35,14 +36,14 @@ rtwos<-function(X, post.sample){
   
   var.names <- character(length = 0)
   
-  v<- 1:length(lst)
+  v<- rownames(X)
   
   for(i in 1:length(lst))
   {
     
     for (j in 1:ncol(lst[[i]])){
       cur<- lst[[i]][,j]
-      name <- paste0('x',v[-cur])
+      name <- paste0(v[-cur])
       name <- paste(name, collapse = " ")
       var.names <- c(var.names, name)
     }
@@ -61,6 +62,8 @@ rtwos<-function(X, post.sample){
   row.names(df.Rtwos) <- var.names
   
   ########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+  
+  v <- 1:dim(X)[2]
   
   for (s in 1:size){
     
@@ -130,14 +133,14 @@ rtwos.boot<-function(df, post.sample, boot.n){
 	
 	var.names <- character(length = 0)
 	
-	v<- 1:length(lst)
+	v<- rownames(X)
 	
 	for(i in 1:length(lst))
 	{
 		
 		for (j in 1:ncol(lst[[i]])){
 			cur<- lst[[i]][,j]
-			name <- paste0('x',v[-cur])
+			name <- paste0(v[-cur])
 			name <- paste(name, collapse = " ")
 			var.names <- c(var.names, name)
 		}
@@ -156,6 +159,8 @@ rtwos.boot<-function(df, post.sample, boot.n){
 	dimnames(df.Rtwos)[[1]] <- var.names
 	
 	boot.M <- bootcov(df, boot.n)
+	
+	v <- 1:dim(X)[2]
 	
 	for (b in 1:boot.n){
 		
@@ -216,14 +221,14 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 	
 	var.names <- character(length = 0)
 	
-	v<- 1:length(lst)
+	v<- rownames(X)
 	
 	for(i in 1:length(lst))
 	{
 		
 		for (j in 1:ncol(lst[[i]])){
 			cur<- lst[[i]][,j]
-			name <- paste0('x',v[-cur])
+			name <- paste0(v[-cur])
 			name <- paste(name, collapse = " ")
 			var.names <- c(var.names, name)
 		}
@@ -240,6 +245,9 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 	df.Rtwos<-array(0,c(n+1,size, boot.n))
 	
 	dimnames(df.Rtwos)[[1]] <- var.names
+	
+	v <- 1:dim(X)[2]
+	
 	
 	for (b in 1:boot.n){
 		
@@ -283,7 +291,7 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 
 \chapter{Examples}
 
-In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses real data.
+In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses empirical data.
 
 \section{Simulated Data}
 
@@ -302,20 +310,26 @@ The following Code was used to simulate the data :
 
 x1 <- rnorm(50, 0, 1); x2 <- rnorm(50, 0, 1)
 x3 <- rnorm(50, 0, 1); x4 <- rnorm(50, 0, 1)
-#b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0
+#b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8
 b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1
 
 y <- b1*x1 + x2*b2 + b3*x3 + b4*x4 + rnorm(50, 0, 1) 
+
 
 df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 
 @
 
 
-The model is fitted using the rstanarm package with the default priors for the regression and $\sigma^2$ parameters. A burn-in periode of 1000, a sample size of 20000 and a thining of 20 were chosen, resulting in a posterior sample size of 1000. For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
+The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters.  A burn-in periode of 1000, a sample size of 20000 and a thining of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
+
+For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The resulting $\Rtwo$ values of the first few posterior samples is shown in Table~\ref{tab:simdata.postsample3}.  The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
+
+The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or nonstochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
 
 
-<<'simdata.postsample', echo=TRUE, results='hide', message=FALSE, warning=FALSE, cache=TRUE>>=
+
+<<'simdata.postsample', include =FALSE>>=
 post2 <- stan_glm(y ~ 1 + x1 + x2 + x3 + x4,
                   data = df,
                   chains = 1, cores =1, iter=40000, thin=20)
@@ -345,9 +359,8 @@ kable(df.rtwos[,1:6], format = 'latex', booktabs=TRUE, linesep = c("", "", "", "
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 @
 
-For each posterior sample the $\Rtwo$ of the full model and the submodels is calculated via the conditional variance formula. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}.  a the package hier.part is used to calculate the LMG value for each posterior sample.
 
-<<'simdata.LMG', cache=TRUE>>=
+<<'simdata.LMG', cache=FALSE, include=FALSE>>=
 
 # prepare data frame for LMG values
 
@@ -404,41 +417,78 @@ fit <- lm(y~., data=df)
 
 run<-boot.relimp(fit, fixed=TRUE)
 
-booteval.relimp(run, bty = "perc", level = 0.95,
+ci <- booteval.relimp(run, bty = "perc", level = 0.95,
                 sort = FALSE, norank = TRUE, nodiff = TRUE,
-                typesel = c("lmg"))
+                typesel = c("lmg"))@mark
+
+ci <- as.matrix(ci)
+ci <- matrix(as.numeric(ci), 4 , 3)
+colnames(ci) <- c('LMG', 'l.b', 'u.b')
+rownames(ci) <- c('X1', 'X2', 'X3', 'X4')
+
+#Code assuming stochastic predictors
+run.stochastic<-boot.relimp(fit, fixed=FALSE)
+
+ci.s <- booteval.relimp(run.stochastic, bty = "perc", level = 0.95,
+                sort = FALSE, norank = TRUE, nodiff = TRUE,
+                typesel = c("lmg"))@mark
+
+ci.s <- as.matrix(ci.s)
+ci.s <- matrix(as.numeric(ci.s), 4 , 3)
+colnames(ci.s) <- c('LMG', 'l.b', 'u.b')
+rownames(ci.s) <- c('X1', 'X2', 'X3', 'X4')
+
 
 @
 
+
+<<'simdata.LMG.plot', cache=TRUE, echo=FALSE, fig.cap='Posterior distribution of LMG values.'>>=
+pairs.chart
+@
+
 \begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
 \centering
 \begin{tabular}{clll}
-  \hline
+  \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
 \Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
 \Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
 \Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
 \Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
-
-   \hline
+   \bottomrule
 \end{tabular}
-\caption{Variance decomposition for stochastic predictors using bootstrap. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
 \label{tbl:nonstochEx1}
 \end{table}
 
 
-Using the default uninformative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals of the LMG estimates obtained from the relaimpo package. In both cases fixed regressors are assumed. In the example above the predictors were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. As noted in ... under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for fixed and stochastic predictors. Inference about the covariance matrix can be seen as an independent problem. G recommends in most cases to use the non fixed regressor option when calculating bootstrap confidence intervals. The confidence intervals will then in general be a bit larger. If we want to include this uncertainty in the Bayesian framework, we would need some ideas about the distribution of the predictor variables $\X$. It is then possible to obtain poserior distributions of their corresponding covariance matrix. As a practical solution nonparametric bootstrap may be used to include the uncertainty of the covariance matrix. The following code includes the uncertainty of the stochastic predictors. 
 
 
-<<'simdata.LMG.boot',cache =TRUE>>=
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{cll}
+   \toprule
+   &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
+ \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{ci[1,1]} (\Sexpr{ci[1,2]}, \Sexpr{ci[1,3]})  & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{ci[2,1]} (\Sexpr{ci[2,2]}, \Sexpr{ci[2,3]})  & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})   \\ 
+\Sexpr{varnames[3]} & \Sexpr{ci[3,1]} (\Sexpr{ci[3,2]}, \Sexpr{ci[3,3]})  & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{ci[4,1]} (\Sexpr{ci[4,2]}, \Sexpr{ci[4,3]}) & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:nonstochEx1relamip}
+\end{table}
 
-#Code assuming stochastic predictors
-run.stochastic<-boot.relimp(fit, fixed=FALSE)
+\FloatBarrier
 
-booteval.relimp(run.stochastic, bty = "perc", level = 0.95,
-                sort = FALSE, norank = TRUE, nodiff = TRUE,
-                typesel = c("lmg"))
+
+In the example the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can use this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference abouth the covariance matrix in a Bayesian way. As an alternative nonparametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the nonparametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the larger credible intervals compared to nonstochastic predictors. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
+
+<<'simdata.LMG.boot', include=FALSE, cache =TRUE>>=
+
 
 
 #----------------------------------------------------------------------------------------
@@ -474,86 +524,25 @@ quantile(c(LMG.Vals.I.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
 quantile(c(LMG.Vals.I.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
 
 #very similar values as in the confidence intervals for stochastic predictors
+t1 <- c(LMG.Vals.I.boot[1,,])
+t2 <- c(LMG.Vals.I.boot[2,,])
+t3 <- c(LMG.Vals.I.boot[3,,])
+t4 <- c(LMG.Vals.I.boot[4,,])
 
-
-#what if we have prior knowledge
-my_prior <- normal(location = c(1, 1,1,1), scale = c(0.01, 0.01,0.01,0.01), autoscale = FALSE)
-
-post2 <- stan_glm(y ~ 1 + x1 + x2 + x3 + x4,
-                  data = df, prior = my_prior,
-                  chains = 2, cores = 1)
-
-#posterior sample
-post.sample <- as.matrix(post2)
-
-#example of the first 10 posterior samples
-post.sample[1:10,]
-
-#no need for the intercept, last parameter is sigma
-post.sample <- post.sample[,-1]
-
-
-#data frame with all submodels
-
-
-df.rtwos.boot <-rtwos.boot(df[,2:5], post.sample, 10)
-
-n.boot = 10
-
-LMG.Vals.I.boot.p<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
-
-for (b in 1:n.boot){
-	
-for(i in 1:dim(df.rtwos.boot)[2]){
-	
-	gofn<-df.rtwos.boot[,i,b]
-	
-	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
-	
-	LMG.Vals.I.boot.p[,i, b]=obj.Gelman$IJ[,1]
-}
-	
-}
-
-quantile(c(LMG.Vals.I.boot.p[1,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot.p[2,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot.p[3,1:1000,]), c(0.025, 0.5, 0.975))
-quantile(c(LMG.Vals.I.boot.p[4,1:1000,]), c(0.025, 0.5, 0.975))
+dat.b<-data.frame(cbind(t1,t2,t3,t4))
+cor(dat.b)
 
 
 @
 
 
 
-\begin{table}[h]
-\centering
-\begin{tabular}{clll}
-  \hline
-  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
-  \hline
-\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-
-   \hline
-\end{tabular}
-\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
-\label{tbl:fundus.to.SLO2}
-\end{table}
-
-
-
-
-In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in a Bayesian way. The package Jags is used.
-
-<<'simdata.LMG.cov', cache=TRUE>>=
+<<'simdata.LMG.cov', include=FALSE, cache=TRUE>>=
 
 zy = df[,2:5]
 
 #----------------------------------------------------------------------------
-# The rest can remain unchanged, except for the specification of difference of
-# correlations at the very end.
+# In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in aBayesian way. The package Jags is used.
 #----------------------------------------------------------------------------
 
 # Load some functions used below:
@@ -653,33 +642,28 @@ quantile(c(LMG.Vals.I.covm[4,1:1000,]), c(0.025, 0.5, 0.975))
 
 
 
-
 @
 
 
 \begin{table}[h]
+\caption{LMG values assuming stochastic predictors with 95\% CI.}
 \centering
 \begin{tabular}{clll}
-  \hline
-  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
-  \hline
-\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
-
-   \hline
+   \toprule
+  & \multicolumn{1}{c}{\textbf{Relaimpo}} & \multicolumn{2}{c}{\textbf{Bayesian framework}} \\ \cmidrule(r){2-2}\cmidrule(l){3-4}
+ \textbf{Variable} &  & \multicolumn{1}{c}{nonparameteric bootstrap}& \multicolumn{1}{c}{covariance inference} \\
+ \midrule
+\Sexpr{varnames[1]} & \Sexpr{ci.s[1,1]} (\Sexpr{ci.s[1,2]}, \Sexpr{ci.s[1,3]})  & \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]}) &  \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[1,1:1000,], c(0.025, 0.5, 0.975))[3]}) \\ 
+\Sexpr{varnames[2]} & \Sexpr{ci.s[2,1]} (\Sexpr{ci.s[2,2]}, \Sexpr{ci.s[2,3]})  & \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[2,1:1000,], c(0.025, 0.5, 0.975))[3]}) \\ 
+\Sexpr{varnames[3]} & \Sexpr{ci.s[3,1]} (\Sexpr{ci.s[3,2]}, \Sexpr{ci.s[3,3]})  & \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[3,1:1000,], c(0.025, 0.5, 0.975))[3]}) \\ 
+\Sexpr{varnames[4]} & \Sexpr{ci.s[4,1]} (\Sexpr{ci.s[4,2]}, \Sexpr{ci.s[4,3]}) & \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]}) & \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.covm[4,1:1000,], c(0.025, 0.5, 0.975))[3]}) \\ 
+   \bottomrule
 \end{tabular}
-\caption{Variance decomposition. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
-\label{tbl:fundus.to.SLO3}
+\label{tbl:nonstochEx1relaimpstoch}
 \end{table}
 
-Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the large credible intervals. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. Code xx shows the uncertainty about the LMG values caused by the uncertainty about the covariance matrix. 
 
-Another interesting option in some cases would be to use the shrinkage estimate of the covariance matrix. 
-
-
-<<'covuncertainty', cache=FALSE>>=
+<<'covuncertainty', include=FALSE, cache=FALSE>>=
 
 #How much variance is effectively in the bootstrap matrix when we know the regression parameters.
 
@@ -725,7 +709,7 @@ quantile(c(LMG.Vals.I.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
 cov(df[,2:5])
 @
 
-<<'simdata.LMG.shrink',cache =TRUE>>=
+<<'simdata.LMG.shrink', include=FALSE, cache =TRUE>>=
 
 #Comparison of sample covariance and shrink covariance matrix
 
@@ -734,153 +718,266 @@ cov.shrink(df[,2:5])
 
 @
 
-\section{Real World Data}
+
+\clearpage
+
+\section{Empirical Data}
+In the following section the LMG analysis is applied on a popular empirical subset of a dataset containing test scores of pupils (N = 301) from the ref study. This subset of the data was used in ref(nimon) to present commonality analysis (another variance decomposition technique) in the R-package ref and in ref. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general information (general),  sentence comprehension (sentence) ,  word classification (wordc), and  word meaning (wordm) (Table~\ref{table:hs.data}). The aim of the regression analysis example from ref was to determine the strength of association between verbal ability and paragraph comprehension. The LMG metric may provide us some useful information about the importance of each predictor in the model. 
+An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may conclude that the \textit{non-significant} predictors (general information and word classification), are not important in the model. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefor provide us some new information about the importance of each predictor. 
+
+The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficient and the $\sigma^2$ parameter.   A burn-in periode of 20000, a sample size of 20000 and a thining of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The resulting independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seems to be unimportant.  The joint contributions of each predictor is also quite large.
+
+For comparison purposes, the LMG metric was additionaly calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~tbl:empirical.relaimp.comp). Assuming stochastich or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (tbl:empirical.relaimp.comp.stoch). 
 
 
-The following example data are taken from the book Bayesian Regression Modeling with INLA. The data were about air pollution in 41 cities in the United States originally published in Everitt (2006). The data consits of the SO2 level as the dependent variable and six explanatory variables 
-Two of the explanatory variables are are related to human ecology (pop, manuf) and four others are related to climate (negtemp, wind, precip, days).
+
+
+
 
 
 \begin{table}
-\caption{Variable description of air pollution data}
-\begin{tabularx}{\textwidth}{|l|X|l|}
-  \hline			
-  Variable Name & Description & Codes/Values \\   \hline  
-  SO2 & sulfur dioxide content of air & microgrames per cubic meter \\
-  negtemp & negative value of average & fahrenheit\\
-  manuf & number of manufacturing enterprises employing 20 or more workers & integers \\
-  pop & population size in thousands (1970 census) & numbers \\
-  wind & average wind speed & miles per hour \\
-  precip & average annual percipitation & inches \\
-  days & average munber of days with precipitation per year & integers \\
-  \hline  
-\end{tabularx}
-\label{table:airpollutiondata}
+\centering
+\caption{Variable description}
+\begin{tabular}{l l}
+  \toprule			
+  Variable Name & Description  \\   \midrule  
+  paragrap & scores on paragraph comprehension test  \\
+  general & scores on general information test \\
+  sentence & scores on sentence completion test\\
+  wordc & scores on word classification test \\
+  wordm & scores on word meaning test \\
+  \bottomrule  
+\end{tabular}
+\label{table:hs.data}
 \end{table}
 
-<<results='asis', echo = FALSE>>=
-data('usair', package='brinla')
-pairs.chart <- ggpairs(usair[,-1], lower = list(continuous = "cor"), upper = list(continuous = "points", combo = "dot")) + ggplot2::theme(axis.text = element_text(size = 6)) 
+<<results='asis', echo = FALSE, fig.cap='Test scores from Holzinger and Swineford\'s  (1939) Study. N=301'>>=
+data('HS.data', package='MBESS')
+hs.data <- HS.data[,c('paragrap','general', 'sentence' , 'wordc' , 'wordm')]
+pairs.chart <- ggpairs(hs.data, lower = list(continuous = "cor"), upper = list(continuous = "points", combo = "dot")) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
 
 @
 
-A simple linear regression model including the dependent variable SO2 and the six explanatory variables is fitted with the lm command in R. The $R^2$ of the full model is 0.670. 
 
-<<'real.data.LMG',cache =TRUE>>=
+<<'empirical.data.LMG', include=FALSE, cache =TRUE>>=
 
-usair.lm <- lm(SO2~., data = usair)
 
+bayes.hs <- stan_glm(paragrap ~ . ,
+                  data = hs.data,
+                  chains = 1, cores = 1, iter=40000, thin=20)
+
+# Comparison to relaimpo package
+
+
+
+fit <- lm(paragrap~., data= hs.data)
+
+
+######## compare to relimp package
+
+run<-boot.relimp(fit, fixed=TRUE)
+
+ci <- booteval.relimp(run, bty = "perc", level = 0.95,
+                sort = FALSE, norank = TRUE, nodiff = TRUE,
+                typesel = c("lmg"))@mark
+
+ci <- as.matrix(ci)
+ci <- matrix(as.numeric(ci), 4 , 3)
+colnames(ci) <- c('LMG', 'l.b', 'u.b')
+rownames(ci) <- c('X1', 'X2', 'X3', 'X4')
 
 #Code assuming stochastic predictors
-run<-boot.relimp(usair.lm, fixed=TRUE)
+run.stochastic<-boot.relimp(fit, fixed=TRUE)
 
-booteval.relimp(run, bty = "perc", level = 0.95,
+ci.s <- booteval.relimp(run.stochastic, bty = "perc", level = 0.95,
                 sort = FALSE, norank = TRUE, nodiff = TRUE,
-                typesel = c("lmg"))
+                typesel = c("lmg"))@mark
 
+ci.s <- as.matrix(ci.s)
+ci.s <- matrix(as.numeric(ci.s), 4 , 3)
+colnames(ci.s) <- c('LMG', 'l.b', 'u.b')
+rownames(ci.s) <- c('X1', 'X2', 'X3', 'X4')
+@
 
-bayes.usair <- stan_glm(SO2 ~ . ,
-                  data = usair,
-                  chains = 4, cores = 4)
+<<'empirical.data.reg', results='asis', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
+res.table <- tableRegression(fit, caption='Regression of paragraph comprehension on verbal tests.', caption.placement = "top", label = 'tbl:empirical.reg')
+@
 
+<<'empirical.data.postsample2', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
 #posterior sample
-post.sample <- as.matrix(bayes.usair)
+post.sample <- as.matrix(bayes.hs)
 
+dt <- data.frame(post.sample[1:10,2:6])
+rownames(dt)<-c('sample 1', 'sample 2', 'sample 3', 'sample 4', 'sample 5', 'sample 6', 'sample 7', 'sample 8', 'sample 9', 'sample 10')
 #example of the first 10 posterior samples
-post.sample[1:10,]
+kable(dt, format = "latex", booktabs=TRUE, linesep = c("", "", "", ""), caption = 'Samples from the posterior distributions of the regression parameters') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 #no need for the intercept, last parameter is sigma
 post.sample <- post.sample[,-1]
+@
 
+<<'empirical.data.postsample3', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
 #data frame with all submodels
-df.rtwos <-rtwos(usair[,2:7], post.sample)
+df.rtwos <-rtwos(hs.data[,2:5], post.sample)
 
-df.rtwos[,1:3]
+colnames(df.rtwos)[1:6] <- c('sample 1', 'sample 2', 'sample 3', 'sample 4', 'sample 5', 'sample 6')
+kable(df.rtwos[,1:6], format = 'latex', booktabs=TRUE, linesep = c("", "", "", ""), caption = '$ \\Rtwo$ for all submodels for the first six posterior samples')  %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+@
 
+<<'empirical.LMG.values', include=FALSE,  cache=TRUE>>=
 
-# prepare data frame for LMG values
+LMG.Vals.I<-matrix(0, 4, dim(df.rtwos)[2])
 
-LMG.Vals.I<-matrix(0, 6, dim(df.rtwos)[2])
+LMG.Vals.J<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.T<-matrix(0, 4, dim(df.rtwos)[2])
+
 
 for(i in 1:dim(df.rtwos)[2]){
   
   gofn<-df.rtwos[,i]
   
-  obj.Gelman<-partition(gofn, pcan = 6, var.names = names(usair[,2:7]))
+  obj.Gelman<-partition(gofn, pcan = 4, var.names = names(hs.data[,2:5]))
   
   LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.J[,i]=obj.Gelman$IJ[,2]
+	LMG.Vals.T[,i]=obj.Gelman$IJ[,3]
 }
+
+varnames <- row.names(obj.Gelman$IJ)
+
 
 # posterior LMG distribution of each variable
 quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))
 quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
 quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
 quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[5,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[6,], c(0.025, 0.5, 0.975))
+
+quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))
+
+quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))
+quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))
 
 
+
+
+@
+
+<<'empi.lmg.plot', echo = FALSE, fig.cap='LMG posterior distribution of different verbal ability tests'>>=
 #Visualization
 dat <- data.frame(t(LMG.Vals.I))
 
-pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
-pairs.chart
-
-#use prior knowledge
-my_prior <- normal(location = c(1, 0.05,-0.03,-3, 0, 0), scale = c(0.1, 0.01,0.01,0.1, 0.1, 0.1), autoscale = FALSE)
-
-
-bayes.usair <- stan_glm(SO2 ~ . ,
-                  data = usair, prior = my_prior,
-                  chains = 4, cores = 4)
-
-#posterior sample
-post.sample <- as.matrix(bayes.usair)
-
-#example of the first 10 posterior samples
-post.sample[1:10,]
-
-#no need for the intercept, last parameter is sigma
-post.sample <- post.sample[,-1]
-
-#data frame with all submodels
-df.rtwos <-rtwos(usair[,2:7], post.sample)
-
-
-# prepare data frame for LMG values
-
-LMG.Vals.I<-matrix(0, 6, dim(df.rtwos)[2])
-
-for(i in 1:dim(df.rtwos)[2]){
-  
-  gofn<-df.rtwos[,i]
-  
-  obj.Gelman<-partition(gofn, pcan = 6, var.names = names(usair[,2:7]))
-  
-  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
-}
-
-# posterior LMG distribution of each variable
-quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[5,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.I[6,], c(0.025, 0.5, 0.975))
-
-#Visualization
-dat <- data.frame(t(LMG.Vals.I))
-
-pairs.chart <- ggpairs(dat, lower = list(list(combo = "facetdensity")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
+pairs.chart <- ggpairs(dat, lower = list(list(combo = "density")), upper = list(list(continuous = "cor"))) + ggplot2::theme(axis.text = element_text(size = 6)) 
 pairs.chart
 
 @
 
 
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{clll}
+  \toprule
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:empirical.ijt}
+\end{table}
+
+
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{cll}
+   \toprule
+   &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
+ \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{ci[1,1]} (\Sexpr{ci[1,2]}, \Sexpr{ci[1,3]})  & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{ci[2,1]} (\Sexpr{ci[2,2]}, \Sexpr{ci[2,3]})  & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})   \\ 
+\Sexpr{varnames[3]} & \Sexpr{ci[3,1]} (\Sexpr{ci[3,2]}, \Sexpr{ci[3,3]})  & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{ci[4,1]} (\Sexpr{ci[4,2]}, \Sexpr{ci[4,3]}) & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:empirical.relaimp.comp}
+\end{table}
 
 
 
+<<'empirical.LMG.boot', include=FALSE, cache =TRUE>>=
 
 
 
+#----------------------------------------------------------------------------------------
+
+
+df.rtwos.boot <-rtwos.boot(hs.data[,2:5], post.sample, 10)
+
+n.boot = 10
+
+LMG.Vals.I.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.J.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+LMG.Vals.T.boot<-array(0, c(4,dim(df.rtwos.boot)[2], n.boot))
+
+for (b in 1:n.boot){
+	
+for(i in 1:dim(df.rtwos.boot)[2]){
+	
+	gofn<-df.rtwos.boot[,i,b]
+	
+	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
+	
+	LMG.Vals.I.boot[,i, b]=obj.Gelman$IJ[,1]
+	LMG.Vals.J.boot[,i, b]=obj.Gelman$IJ[,2]
+	LMG.Vals.T.boot[,i, b]=obj.Gelman$IJ[,3]
+
+}
+	
+}
+
+quantile(c(LMG.Vals.I.boot[1,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[2,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[3,1:1000,]), c(0.025, 0.5, 0.975))
+quantile(c(LMG.Vals.I.boot[4,1:1000,]), c(0.025, 0.5, 0.975))
+
+#very similar values as in the confidence intervals for stochastic predictors
+t1 <- c(LMG.Vals.I.boot[1,,])
+t2 <- c(LMG.Vals.I.boot[2,,])
+t3 <- c(LMG.Vals.I.boot[3,,])
+t4 <- c(LMG.Vals.I.boot[4,,])
+
+dat.b<-data.frame(cbind(t1,t2,t3,t4))
+cor(dat.b)
+
+
+@
+
+\begin{table}[h]
+\caption{Variance decomposition for Stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{cll}
+   \toprule
+   &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
+ \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{ci.s[1,1]} (\Sexpr{ci.s[1,2]}, \Sexpr{ci.s[1,3]})  &  \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[1,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{ci.s[2,1]} (\Sexpr{ci.s[2,2]}, \Sexpr{ci.s[2,3]})  &  \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[2,1:1000,], c(0.025, 0.5, 0.975))[3]})   \\ 
+\Sexpr{varnames[3]} & \Sexpr{ci.s[3,1]} (\Sexpr{ci.s[3,2]}, \Sexpr{ci.s[3,3]})  &  \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[3,1:1000,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{ci.s[4,1]} (\Sexpr{ci.s[4,2]}, \Sexpr{ci.s[4,3]}) &  \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I.boot[4,1:1000,], c(0.025, 0.5, 0.975))[3]}) \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:empirical.relaimp.comp.stoch}
+\end{table}

@@ -5,4 +5,9 @@ Link, W.~A. and Eaton, M.~J. (2012).
 \newblock {On thinning of chains in MCMC}.
 \newblock {\em Methods in Ecology and Evolution}, {\bf3},  112--115.
 
+\bibitem[{Stan Development Team}, 2016]{rstanarm}
+{Stan Development Team} (2016).
+\newblock rstanarm: {Bayesian} applied regression modeling via {Stan}.
+\newblock R package version 2.13.1.
+
 \end{thebibliography}

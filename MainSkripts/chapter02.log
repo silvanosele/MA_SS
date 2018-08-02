@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  30 JUL 2018 19:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  1 AUG 2018 09:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -953,7 +953,7 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 289.
 Package rerunfilecheck Info: File `chapter02.out' has not changed.
 (rerunfilecheck)             Checksum: BD63819C3F6F3CE9FDEA9A60E5AC42CC;356.
 Package rerunfilecheck Info: File `chapter02.brf' has not changed.
-(rerunfilecheck)             Checksum: D5111CA13911C9B3DFC7EF7DBC67B3D8;740.
+(rerunfilecheck)             Checksum: 845601883A567E74B8BC73830C550B36;792.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 289.
  ) 
 Here is how much of TeX's memory you used:
@@ -988,10 +988,10 @@ ve/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive
 texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/te
 xmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texlive/2017/texm
 f-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on chapter02.pdf (9 pages, 305123 bytes).
+Output written on chapter02.pdf (9 pages, 305329 bytes).
 PDF statistics:
- 255 PDF objects out of 1000 (max. 8388607)
- 218 compressed objects within 3 object streams
+ 258 PDF objects out of 1000 (max. 8388607)
+ 221 compressed objects within 3 object streams
  38 named destinations out of 1000 (max. 500000)
  41 words of extra memory for PDF output out of 10000 (max. 10000000)
 

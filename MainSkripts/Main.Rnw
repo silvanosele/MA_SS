@@ -75,8 +75,12 @@ June 2018
 
 \cleardoublepage
 \phantomsection
+
+
 \addtocontents{toc}{\protect \vspace*{10mm}}
 \addcontentsline{toc}{chapter}{\bfseries Bibliography}
+
+
 
 
 \bibliographystyle{mywiley} 
