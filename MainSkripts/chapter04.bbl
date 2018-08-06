@@ -1,0 +1,20 @@
+\begin{thebibliography}{}
+
+\bibitem[Bland and Altman, 1995]{Bland1995}
+Bland, J.~M. and Altman, D.~G. (1995).
+\newblock {Calculating correlation coefficients with repeated observations:
+  Part 1--Correlation within subjects.}
+\newblock {\em BMJ (Clinical research ed.)}, {\bf310},  446.
+
+\bibitem[Fitzmaurice {\it et~al.}, 2011]{Fitzmaurice2011}
+Fitzmaurice, G.~M., Laird, N.~M., and Ware, J.~H. (2011).
+\newblock {\em {Applied longitudinal analysis}}.
+\newblock Wiley.
+
+\bibitem[Nakagawa and Schielzeth, 2013]{Nakagawa2013}
+Nakagawa, S. and Schielzeth, H. (2013).
+\newblock {A general and simple method for obtaining R2 from generalized linear
+  mixed-effects models}.
+\newblock {\em Methods in Ecology and Evolution}, {\bf4},  133--142.
+
+\end{thebibliography}

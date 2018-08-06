@@ -11,8 +11,7 @@ library(knitr); library(hier.part); library(rstanarm);  library(GGally); library
 opts_chunk$set(
     fig.path='figure/ch03_fig', 
     self.contained=FALSE,
-    inlcude=FALSE,
-    cache=FALSE
+    cache=TRUE
 ) 
 
 options(digits =3)
@@ -291,18 +290,17 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 
 \chapter{Examples}
 
-In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses empirical data.
+The following chapter presents the Bayesian LMG implementation on two examples. Simulated data is used for the first example. Empirical data is used for the second example.
 
 \section{Simulated Data}
 
 We assume a simple model for the first example: 
 
 \begin{align*} 
-&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \, \sigma^2),& \\ & \beta_{1} = 0.5, , \beta_{2} = 1, \, \beta_{3} = 2 , \, \beta_{4}=0, \, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
 \end{align*} 
 
-
-The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obtain the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled.
 
 The following Code was used to simulate the data :
 
@@ -310,22 +308,21 @@ The following Code was used to simulate the data :
 
 x1 <- rnorm(50, 0, 1); x2 <- rnorm(50, 0, 1)
 x3 <- rnorm(50, 0, 1); x4 <- rnorm(50, 0, 1)
-#b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8
-b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1
+b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8
+#b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1
 
 y <- b1*x1 + x2*b2 + b3*x3 + b4*x4 + rnorm(50, 0, 1) 
-
 
 df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 
 @
 
 
-The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters.  A burn-in periode of 1000, a sample size of 20000 and a thining of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
+The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters. These default priors are called weakly informative priors, because they take into account the order of magnitude of the variables by using variance of the observed data. Information about these priors can be found in \cite{stanM2017}. A burn-in period of 1000, a sample size of 20000 and a thinning of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
 
 For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The resulting $\Rtwo$ values of the first few posterior samples is shown in Table~\ref{tab:simdata.postsample3}.  The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
 
-The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or nonstochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
+The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or non-stochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
 
 
 
@@ -333,6 +330,8 @@ The \texttt{hier.part} package is used to calculate the LMG value for each poste
 post2 <- stan_glm(y ~ 1 + x1 + x2 + x3 + x4,
                   data = df,
                   chains = 1, cores =1, iter=40000, thin=20)
+
+
 @
 
 <<'simdata.postsample2', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE>>=
@@ -485,7 +484,7 @@ pairs.chart
 \FloatBarrier
 
 
-In the example the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can use this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference abouth the covariance matrix in a Bayesian way. As an alternative nonparametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the nonparametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the larger credible intervals compared to nonstochastic predictors. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
+In this example we know that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. As an alternative non-parametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the non-parametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known, the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge about the covariance matrix. For stochastic predictors, compared to non-stochastic predictors, the uncertainty about the covariance matrix is reflected in the larger credible intervals . Even when we would knew the exact regression parameters, there is a lot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
 
 <<'simdata.LMG.boot', include=FALSE, cache =TRUE>>=
 
@@ -722,12 +721,14 @@ cov.shrink(df[,2:5])
 \clearpage
 
 \section{Empirical Data}
-In the following section the LMG analysis is applied on a popular empirical subset of a dataset containing test scores of pupils (N = 301) from the ref study. This subset of the data was used in ref(nimon) to present commonality analysis (another variance decomposition technique) in the R-package ref and in ref. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general information (general),  sentence comprehension (sentence) ,  word classification (wordc), and  word meaning (wordm) (Table~\ref{table:hs.data}). The aim of the regression analysis example from ref was to determine the strength of association between verbal ability and paragraph comprehension. The LMG metric may provide us some useful information about the importance of each predictor in the model. 
-An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may conclude that the \textit{non-significant} predictors (general information and word classification), are not important in the model. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefor provide us some new information about the importance of each predictor. 
+In the following section, the Bayesian LMG implementation is applied on an empirical dataset containing test scores of pupils (N = 301) from a study by \cite{Holzinger1939} available in the R package \texttt{MBESS} \citep{MBESS}. This dataset was used in \cite{Nimon2008} to present commonality analysis, which is another variance decomposition technique. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general-information (general),  sentence-comprehension (sentence) ,  word-classification (wordc), and  word-meaning (wordm) (Table~\ref{table:hs.data}). 
 
-The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficient and the $\sigma^2$ parameter.   A burn-in periode of 20000, a sample size of 20000 and a thining of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The resulting independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seems to be unimportant.  The joint contributions of each predictor is also quite large.
+The aim of the regression analysis  was to determine the strength of association between verbal ability and paragraph comprehension.  
+An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may wrongly conclude, that there is little association between the \textit{non-significant} predictors (general information and word classification) and paragraph comprehension. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefore provide us some new information about the importance of each predictor. 
 
-For comparison purposes, the LMG metric was additionaly calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~tbl:empirical.relaimp.comp). Assuming stochastich or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (tbl:empirical.relaimp.comp.stoch). 
+The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficients and the $\sigma^2$ parameter. A burn-in period of 20000, a sample size of 20000 and a thinning of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The  independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seem to be unimportant.  The joint contributions of each predictor is quite large.
+
+For comparison purposes, the LMG metric was additionally calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~\ref{tbl:empirical.relaimp.comp}). Assuming stochastic or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (Table\ref{tbl:empirical.relaimp.comp.stoch}). 
 
 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  2 AUG 2018 15:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  6 AUG 2018 18:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -964,22 +964,22 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 
 [4] [5] [6] [7] [8]
 Chapter 3.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 382.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 381.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 383.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 382.
  [9
 
 ]
-<figure/ch03_figsimdata_LMG_plot-1.pdf, id=294, 505.89pt x 505.89pt>
+<figure/ch03_figsimdata_LMG_plot-1.pdf, id=303, 505.89pt x 505.89pt>
 File: figure/ch03_figsimdata_LMG_plot-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figsimdata_LMG_plot-1.pdf>
 Package pdftex.def Info: figure/ch03_figsimdata_LMG_plot-1.pdf used on input li
-ne 471.
+ne 469.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
 
@@ -991,200 +991,825 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [10] [11 <./figure/ch03_figsimdata_LMG_plot-1.pdf>] [12] [13
 
 ]
-<figure/ch03_figunnamed-chunk-1-1.pdf, id=330, 505.89pt x 505.89pt>
+<figure/ch03_figunnamed-chunk-1-1.pdf, id=347, 505.89pt x 505.89pt>
 File: figure/ch03_figunnamed-chunk-1-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figunnamed-chunk-1-1.pdf>
 Package pdftex.def Info: figure/ch03_figunnamed-chunk-1-1.pdf used on input lin
 e 581.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
+ [14
+
+]
+
+LaTeX Warning: Text page 15 contains only floats.
 
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Overfull \vbox (0.27785pt too high) has occurred while \output is active []
 
-<figure/ch03_figempi_lmg_plot-1.pdf, id=331, 505.89pt x 505.89pt>
+
+[15 <./figure/ch03_figunnamed-chunk-1-1.pdf>]
+<figure/ch03_figempi_lmg_plot-1.pdf, id=376, 505.89pt x 505.89pt>
 File: figure/ch03_figempi_lmg_plot-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figempi_lmg_plot-1.pdf>
 Package pdftex.def Info: figure/ch03_figempi_lmg_plot-1.pdf used on input line 
-674.
+673.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[16] [17 <./figure/ch03_figempi_lmg_plot-1.pdf>] [18
 
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[14
-
-] [15 <./figure/ch03_figunnamed-chunk-1-1.pdf>] [16] [17 <./figure/ch03_figempi
-_lmg_plot-1.pdf>] [18]
+]
 Chapter 4.
-[19
+[19] <figure/ch04_fig_repeated_plot_ri-1.pdf, id=413, 505.89pt x 505.89pt>
+File: figure/ch04_fig_repeated_plot_ri-1.pdf Graphic file (type pdf)
 
-] [20] <figure/ch04_figsimdata_repeated-1.pdf, id=389, 505.89pt x 505.89pt>
-File: figure/ch04_figsimdata_repeated-1.pdf Graphic file (type pdf)
-
-<use figure/ch04_figsimdata_repeated-1.pdf>
-Package pdftex.def Info: figure/ch04_figsimdata_repeated-1.pdf used on input li
-ne 835.
+<use figure/ch04_fig_repeated_plot_ri-1.pdf>
+Package pdftex.def Info: figure/ch04_fig_repeated_plot_ri-1.pdf used on input l
+ine 793.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
 
-Overfull \hbox (17.0pt too wide) in paragraph at lines 835--836
-[][] 
- []
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: `h' float specifier changed to `ht'.
 
- [21]
-Overfull \hbox (8.68521pt too wide) in paragraph at lines 847--847
-[]                                                                        []\T1
-/cmtt/m/n/10.95 data[] []= df,[][] 
- []
+[20]
+Underfull \vbox (badness 1661) has occurred while \output is active []
 
-
-Overfull \hbox (76.58566pt too wide) in paragraph at lines 848--848
-[]                                                                        []\T1
-/cmtt/m/n/10.95 chains[] []=[] []4[][],[] []cores[] []=[] []4[][])[][] 
- []
-
-[22 <./figure/ch04_figsimdata_repeated-1.pdf>] [23] [24]
-<figure/ch04_figsimdata_repeated_unstruct-1.pdf, id=414, 505.89pt x 505.89pt>
-File: figure/ch04_figsimdata_repeated_unstruct-1.pdf Graphic file (type pdf)
-
-<use figure/ch04_figsimdata_repeated_unstruct-1.pdf>
-Package pdftex.def Info: figure/ch04_figsimdata_repeated_unstruct-1.pdf used on
- input line 1027.
+ [21 <./figure/ch04_fig_repeated_plot_ri-1.pdf>]
+<figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf, id=441, 505.89pt x 505.89
+pt>
+File: figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf Graphic file (type pd
+f)
+ <use figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf>
+Package pdftex.def Info: figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf us
+ed on input line 869.
 (pdftex.def)             Requested size: 455.30121pt x 455.31221pt.
-
-Overfull \hbox (17.0pt too wide) in paragraph at lines 1027--1028
-[][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [25]
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 103
-1.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
-File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-Overfull \hbox (570.76451pt too wide) in paragraph at lines 1075--1075
-[]                                                                             
-   []\T1/cmtt/m/n/10.95 data[] []=[] []list[][]([][]Y[][]=Y,[][]N[][]=N,[][]M[]
-[]=M,[][]x1[] []= x1,[] []x2[] []= x2,[] []x3[] []= x3,[] []x4[] []= x4,[]     
-[]zRscal[] []=[] []ncol[][](Y) ,[]  []\T1/cmtt/m/it/10.95 # for dwish prior[][]
- 
- []
-
-
-Overfull \hbox (455.69652pt too wide) in paragraph at lines 1076--1076
-[]                                                                             
-                                                   []\T1/cmtt/m/n/10.95 zRmat[]
- []=[] []diag[][]([][]x[][]=[][]1[][],[][]nrow[][]=[][]ncol[][](Y)) ),[][] 
- []
-
-
-Overfull \hbox (59.61055pt too wide) in paragraph at lines 1077--1077
-[]                                                                             
-   []\T1/cmtt/m/n/10.95 n.chains[][]=[][]3[][])[][] 
- []
-
-
-Overfull \hbox (348.18747pt too wide) in paragraph at lines 1092--1092
-[]                                                                             
-    []\T1/cmtt/m/n/10.95 variable.names[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/
-cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/1
-0.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta3\TS1/cmtt/m/n/10.95 '[]
-[]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta4\TS1/cm
-tt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95 ,[][]"Sigma"[][]),[][] 
- []
-
-
-Overfull \hbox (195.41145pt too wide) in paragraph at lines 1093--1093
-[]                                                                             
-    []\T1/cmtt/m/n/10.95 n.iter[][]=[][]20000[][],[] []progress.bar[][]=[][]"no
-ne"[][])[][] 
- []
-
-
-Overfull \hbox (597.15579pt too wide) in paragraph at lines 1157--1157
-[]                                                                             
-    []\T1/cmtt/m/n/10.95 variable.names[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/
-cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/1
-0.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta3\TS1/cmtt/m/n/10.95 '[]
-[]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 beta4\TS1/cm
-tt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95 ,[][]"Sigma[1,1]"[][],[][]"Sigma[2,2]"[][
-],[][]"Sigma[3,3]"[][],[][]"Sigma[4,4]"[][]),[][] 
- []
-
-
-Overfull \hbox (246.33679pt too wide) in paragraph at lines 1158--1158
-[]                                                                             
-    []\T1/cmtt/m/n/10.95 n.iter[][]=[][]20000[][],[] []thin[][]=[][]20[][],[] [
-]progress.bar[][]=[][]"none"[][])[][] 
- []
-
-[26 <./figure/ch04_figsimdata_repeated_unstruct-1.pdf>] [27] [28] [29] [30
+ [22] [23 <./figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf>] [24
 
 ]
 Chapter 5.
-[31]
+[25]
 Overfull \hbox (37.5471pt too wide) has occurred while \output is active
-\T1/cmr/m/n/10.95 32 \T1/cmr/m/sl/10.95 CHAPTER 5.  OTHER VARIABLE IMPORTANCE M
+\T1/cmr/m/n/10.95 26 \T1/cmr/m/sl/10.95 CHAPTER 5.  OTHER VARIABLE IMPORTANCE M
 ETRICS IN THE BAYESIAN FRAMEWORK
  []
 
-[32
+[26
 
 ]
 Chapter 6.
 
-Overfull \hbox (5.90967pt too wide) in paragraph at lines 1248--1249
+Overfull \hbox (5.90967pt too wide) in paragraph at lines 934--935
 \T1/cmr/m/n/10.95 he eror term in the by [][][]Gel-man \T1/cmr/m/it/10.95 et al
 .[][] \T1/cmr/m/n/10.95 ([][]2017[][]) pro-posed def-i-ni-tion of the $[][]$ is
  de-fined as $[]\OT1/cmr/m/n/10.95 ([][] \OML/cmm/m/it/10.95 e[]\OT1/cmr/m/n/10
 .95 )$\T1/cmr/m/n/10.95 .
  []
 
-[33] [34
+[27] [28
 
-] (./Main.bbl (./Main.brf)
+]
+Appendix A.
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 946
+.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+Overfull \hbox (1066.80058pt too wide) in paragraph at lines 962--962
+[][]\T1/cmtt/m/n/10.95 library[][](knitr);[] []library[][](hier.part);[] []libr
+ary[][](rstanarm);[]  []library[][](GGally);[] []library[][](ggplot2);[] []libr
+ary[][](relaimpo);[] []library[][](rjags);[] []library[][](corpcor);[] []librar
+y[][](brinla);[] []library[][](stargazer);[] []library[][](xtable);[] []library
+[][](kableExtra);[] []library[][](MBESS);[] []library[][](MASS);[] []library[][
+](biostatUZH)[][] 
+ []
+
+
+Overfull \hbox (118.09483pt too wide) in paragraph at lines 975--975
+[]  []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sample_i
+,]), last position should be sigma paramater. [][] 
+ []
+
+
+Overfull \hbox (276.52922pt too wide) in paragraph at lines 1017--1017
+[]  []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior samples
+ and calculate submodels according to the conditional expectation formula.[][] 
+
+ []
+
+
+Overfull \hbox (910.26677pt too wide) in paragraph at lines 1035--1035
+[]        []\T1/cmtt/m/n/10.95 matr[] []<-[] []X[cur, cur][] []-[] []X[cur, set
+][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[set, cur][]  []\T1/cmtt/m/it/10.
+95 #conditional expectation formula, how much variance is explained by the pred
+ictors that are not included in the model and that is not explained by other pr
+edictors[][] 
+ []
+
+
+Overfull \hbox (50.19438pt too wide) in paragraph at lines 1036--1036
+[]        []\T1/cmtt/m/n/10.95 var.explain[][]<-[] []sample.s[cur][][]%*%[][]ma
+tr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/10.95 #multiply by parameter samp
+le[][] 
+ []
+
+
+Overfull \hbox (163.3618pt too wide) in paragraph at lines 1044--1044
+[]    []\T1/cmtt/m/n/10.95 df.Rtwos[,s][] []<-[] []df.Rtwos[,s][][]/[][]c[][](V
+tot[][]+[][]post.sample[s,sig.posi][][]^[][]2[][])[] []\T1/cmtt/m/it/10.95 #tot
+al variance + sigma^2 (post sample[s])[][] 
+ []
+
+
+Overfull \hbox (78.48624pt too wide) in paragraph at lines 1067--1067
+[][]\T1/cmtt/m/it/10.95 #Function that includes uncertainty about stochastic pr
+edictors by bootstrapping using bootcov[][] 
+ []
+
+
+Overfull \hbox (152.04506pt too wide) in paragraph at lines 1072--1072
+[]        []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sa
+mple_i,]), last position should be sigma paramater. [][] 
+ []
+
+
+Overfull \hbox (310.47945pt too wide) in paragraph at lines 1123--1123
+[]        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
+amples and calculate submodels according to the conditional expectation formula
+.[][] 
+ []
+
+
+Overfull \hbox (1046.06767pt too wide) in paragraph at lines 1139--1139
+[]                                []\T1/cmtt/m/n/10.95 matr[] []<-[] []X[cur, c
+ur][] []-[] []X[cur, set][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[set, cur
+][]  []\T1/cmtt/m/it/10.95 #conditional expectation formula, how much variance 
+is explained by the predictors that are not included in the model and that is n
+ot explained by other predictors[][] 
+ []
+
+
+Overfull \hbox (185.99529pt too wide) in paragraph at lines 1140--1140
+[]                                []\T1/cmtt/m/n/10.95 var.explain[][]<-[] []sa
+mple.s[cur][][]%*%[][]matr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/10.95 #mu
+ltiply by parameter sample[][] 
+ []
+
+
+Overfull \hbox (253.89574pt too wide) in paragraph at lines 1148--1148
+[]                []\T1/cmtt/m/n/10.95 df.Rtwos[,s,b][] []<-[] []df.Rtwos[,s,b]
+[][]/[][]c[][](Vtot[][]+[][]post.sample[s,sig.posi][][]^[][]2[][])[] []\T1/cmtt
+/m/it/10.95 #total variance + sigma^2 (post sample[s])[][] 
+ []
+
+
+Overfull \hbox (152.04506pt too wide) in paragraph at lines 1160--1160
+[]        []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sa
+mple_i,]), last position should be sigma paramater. [][] 
+ []
+
+
+Overfull \hbox (355.74641pt too wide) in paragraph at lines 1210--1210
+[]                []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use pos
+terior samples and calculate submodels according to the conditional expectation
+ formula.[][] 
+ []
+
+
+Overfull \hbox (10.58578pt too wide) in paragraph at lines 1216--1216
+[]                        []\T1/cmtt/m/n/10.95 Vtot[] []<-[] []sample.s[][]%*%[
+][]X[][]%*%[][]sample.s[]  []\T1/cmtt/m/it/10.95 #total explained variance[][] 
+
+ []
+
+
+Overfull \hbox (1091.33464pt too wide) in paragraph at lines 1226--1226
+[]                                        []\T1/cmtt/m/n/10.95 matr[] []<-[] []
+X[cur, cur][] []-[] []X[cur, set][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[
+set, cur][]  []\T1/cmtt/m/it/10.95 #conditional expectation formula, how much v
+ariance is explained by the predictors that are not included in the model and t
+hat is not explained by other predictors[][] 
+ []
+
+
+Overfull \hbox (231.26225pt too wide) in paragraph at lines 1227--1227
+[]                                        []\T1/cmtt/m/n/10.95 var.explain[][]<
+-[] []sample.s[cur][][]%*%[][]matr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/1
+0.95 #multiply by parameter sample[][] 
+ []
+
+
+Overfull \hbox (3.02684pt too wide) in paragraph at lines 1228--1228
+[]                                        []\T1/cmtt/m/n/10.95 df.Rtwos[count,s
+,b][] []<-[] []Vtot[] []-[] []var.explain[][] 
+ []
+
+
+Overfull \hbox (299.1627pt too wide) in paragraph at lines 1235--1235
+[]                        []\T1/cmtt/m/n/10.95 df.Rtwos[,s,b][] []<-[] []df.Rtw
+os[,s,b][][]/[][]c[][](Vtot[][]+[][]post.sample[s,sig.posi][][]^[][]2[][])[] []
+\T1/cmtt/m/it/10.95 #total variance + sigma^2 (post sample[s])[][] 
+ []
+
+
+Overfull \hbox (314.23724pt too wide) in paragraph at lines 1262--1262
+[][]\T1/cmtt/m/n/10.95 rownames[][](dt)[][]<-[][]c[][]([][]\TS1/cmtt/m/n/10.95 
+'\T1/cmtt/m/n/10.95 sample 1\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\
+TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 2\TS1/cmtt/m/n/10.95 '[][]\T1/cmt
+t/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 3\TS1/cmtt/m/n
+/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sa
+mple 4\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T
+1/cmtt/m/n/10.95 sample 5\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1
+/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 6\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m
+/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 7\TS1/cmtt/m/n/10
+.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sampl
+e 8\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/c
+mtt/m/n/10.95 sample 9\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cm
+tt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 10\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n
+/10.95 )[][] 
+ []
+
+
+Overfull \hbox (438.7214pt too wide) in paragraph at lines 1264--1264
+[][]\T1/cmtt/m/n/10.95 kable[][](dt,[] []format[] []=[] []"latex"[][],[] []book
+tabs[][]=[][]TRUE[][],[] []linesep[] []=[] []c[][]([][]""[][],[] []""[][],[] []
+""[][],[] []""[][]),[] []caption[] []=[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10
+.95 Samples from the posterior distributions of the regression parameters\TS1/c
+mtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[] []%>%[][] 
+ []
+
+
+Overfull \hbox (110.53589pt too wide) in paragraph at lines 1272--1272
+[][]\T1/cmtt/m/n/10.95 colnames[][](df.rtwos)[[][]1[][]:[][]6[][]][] []<-[] []c
+[][]([][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 1\TS1/cmtt/m/n/10.95 '[
+][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 2\TS
+1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/
+n/10.95 sample 3\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n
+/10.95 '\T1/cmtt/m/n/10.95 sample 4\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 
+,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 5\TS1/cmtt/m/n/10.95 '[][]
+\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 6\TS1/c
+mtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[][] 
+ []
+
+
+Overfull \hbox (478.33pt too wide) in paragraph at lines 1273--1273
+[][]\T1/cmtt/m/n/10.95 kable[][](df.rtwos[,[][]1[][]:[][]6[][]],[] []format[] [
+]=[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 latex\TS1/cmtt/m/n/10.95 '[][]\T
+1/cmtt/m/n/10.95 ,[] []booktabs[][]=[][]TRUE[][],[] []linesep[] []=[] []c[][]([
+][]""[][],[] []""[][],[] []""[][],[] []""[][]),[] []caption[] []=[] []\TS1/cmtt
+/m/n/10.95 '\T1/cmtt/m/n/10.95 $ \\Rtwo$ for all submodels for the first six po
+sterior samples\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[]  []%>%[][] 
+ []
+
+
+Overfull \hbox (472.67163pt too wide) in paragraph at lines 1318--1318
+[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](dat,[] []lower[] []=[
+] []list[][]([][]list[][]([][]combo[] []=[] []"facetdensity"[][])),[] []upper[]
+ []=[] []list[][]([][]list[][]([][]continuous[] []=[] []"cor"[][])))[] []+[] []
+ggplot2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]size[] 
+[]=[] []6[][]))[][] 
+ []
+
+
+Overfull \hbox (50.19438pt too wide) in paragraph at lines 1357--1357
+[][]\T1/cmtt/m/it/10.95 #------------------------------------------------------
+----------------------------------[][] 
+ []
+
+
+Overfull \hbox (599.05637pt too wide) in paragraph at lines 1403--1403
+[][]\T1/cmtt/m/it/10.95 # In the following example we know that the $\X$ are co
+ming from a normal distribution. The covariance matrix of the distribution is e
+stimated in aBayesian way. The package Jags is used.[][] 
+ []
+
+
+Overfull \hbox (370.82095pt too wide) in paragraph at lines 1445--1445
+[]                                                                             
+                   []\T1/cmtt/m/n/10.95 data[][]=dataList ,[] []n.chains[][]=nC
+hain ,[] []n.adapt[][]=nAdapt )[][] 
+ []
+
+
+Overfull \hbox (342.5291pt too wide) in paragraph at lines 1448--1448
+[]                                                                             
+                                   []\T1/cmtt/m/n/10.95 variable.names[][]=[][]
+c[][]([][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 zCovMat\TS1/cmtt/m/n/10.95 '[
+][]\T1/cmtt/m/n/10.95 ) ,[][] 
+ []
+
+
+Overfull \hbox (438.7214pt too wide) in paragraph at lines 1449--1449
+[]                                                                             
+                                   []\T1/cmtt/m/n/10.95 n.iter[][]=nStepToSave[
+][]/[][]nChain[][]*[][]nThin ,[] []thin[][]=nThin )[][] 
+ []
+
+
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 1485--1485
+[]                []\T1/cmtt/m/n/10.95 obj.Gelman[][]<-[][]partition[][](gofn,[
+] []pcan[] []=[] []4[][],[] []var.names[] []=[] []names[][](df[,[][]2[][]:[][]5
+[][]]))[][] 
+ []
+
+
+Overfull \hbox (95.46135pt too wide) in paragraph at lines 1504--1504
+[][]\T1/cmtt/m/it/10.95 #How much variance is effectively in the bootstrap matr
+ix when we know the regression parameters.[][] 
+ []
+
+
+Overfull \hbox (506.62186pt too wide) in paragraph at lines 1554--1554
+[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](hs.data,[] []lower[] 
+[]=[] []list[][]([][]continuous[] []=[] []"cor"[][]),[] []upper[] []=[] []list[
+][]([][]continuous[] []=[] []"points"[][],[] []combo[] []=[] []"dot"[][]))[] []
++[] []ggplot2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]s
+ize[] []=[] []6[][]))[][] 
+ []
+
+
+Overfull \hbox (421.74629pt too wide) in paragraph at lines 1594--1594
+[][]\T1/cmtt/m/n/10.95 res.table[] []<-[] []tableRegression[][](fit,[] []captio
+n[][]=[][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 Regression of paragraph compr
+ehension on verbal tests.\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []capt
+ion.placement[] []=[] []"top"[][],[] []label[] []=[] []\TS1/cmtt/m/n/10.95 '\T1
+/cmtt/m/n/10.95 tbl:empirical.reg\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[
+][] 
+ []
+
+
+Overfull \hbox (314.23724pt too wide) in paragraph at lines 1599--1599
+[][]\T1/cmtt/m/n/10.95 rownames[][](dt)[][]<-[][]c[][]([][]\TS1/cmtt/m/n/10.95 
+'\T1/cmtt/m/n/10.95 sample 1\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\
+TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 2\TS1/cmtt/m/n/10.95 '[][]\T1/cmt
+t/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 3\TS1/cmtt/m/n
+/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sa
+mple 4\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T
+1/cmtt/m/n/10.95 sample 5\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1
+/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 6\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m
+/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 7\TS1/cmtt/m/n/10
+.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sampl
+e 8\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/c
+mtt/m/n/10.95 sample 9\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cm
+tt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 10\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n
+/10.95 )[][] 
+ []
+
+
+Overfull \hbox (438.7214pt too wide) in paragraph at lines 1601--1601
+[][]\T1/cmtt/m/n/10.95 kable[][](dt,[] []format[] []=[] []"latex"[][],[] []book
+tabs[][]=[][]TRUE[][],[] []linesep[] []=[] []c[][]([][]""[][],[] []""[][],[] []
+""[][],[] []""[][]),[] []caption[] []=[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10
+.95 Samples from the posterior distributions of the regression parameters\TS1/c
+mtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[] []%>%[][] 
+ []
+
+
+Overfull \hbox (110.53589pt too wide) in paragraph at lines 1609--1609
+[][]\T1/cmtt/m/n/10.95 colnames[][](df.rtwos)[[][]1[][]:[][]6[][]][] []<-[] []c
+[][]([][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 1\TS1/cmtt/m/n/10.95 '[
+][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 2\TS
+1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/
+n/10.95 sample 3\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n
+/10.95 '\T1/cmtt/m/n/10.95 sample 4\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 
+,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 5\TS1/cmtt/m/n/10.95 '[][]
+\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 sample 6\TS1/c
+mtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[][] 
+ []
+
+
+Overfull \hbox (478.33pt too wide) in paragraph at lines 1610--1610
+[][]\T1/cmtt/m/n/10.95 kable[][](df.rtwos[,[][]1[][]:[][]6[][]],[] []format[] [
+]=[] []\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 latex\TS1/cmtt/m/n/10.95 '[][]\T
+1/cmtt/m/n/10.95 ,[] []booktabs[][]=[][]TRUE[][],[] []linesep[] []=[] []c[][]([
+][]""[][],[] []""[][],[] []""[][],[] []""[][]),[] []caption[] []=[] []\TS1/cmtt
+/m/n/10.95 '\T1/cmtt/m/n/10.95 $ \\Rtwo$ for all submodels for the first six po
+sterior samples\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 )[]  []%>%[][] 
+ []
+
+
+Overfull \hbox (444.37978pt too wide) in paragraph at lines 1656--1656
+[][]\T1/cmtt/m/n/10.95 pairs.chart[] []<-[] []ggpairs[][](dat,[] []lower[] []=[
+] []list[][]([][]list[][]([][]combo[] []=[] []"density"[][])),[] []upper[] []=[
+] []list[][]([][]list[][]([][]continuous[] []=[] []"cor"[][])))[] []+[] []ggplo
+t2[][]::[][]theme[][]([][]axis.text[] []=[] []element_text[][]([][]size[] []=[]
+ []6[][]))[][] 
+ []
+
+
+Overfull \hbox (50.19438pt too wide) in paragraph at lines 1662--1662
+[][]\T1/cmtt/m/it/10.95 #------------------------------------------------------
+----------------------------------[][] 
+ []
+
+
+Overfull \hbox (20.00195pt too wide) in paragraph at lines 1705--1705
+[][]\T1/cmtt/m/n/10.95 library[][](knitr);[] []library[][](ggplot2);[] []librar
+y[][](rjags);[]  []library[][](MASS);[] []library[][](hier.part)[][] 
+ []
+
+
+Overfull \hbox (219.94551pt too wide) in paragraph at lines 1718--1718
+[][]\T1/cmtt/m/it/10.95 # how much variance is explained by the within subject 
+predictors (repeated measuremnt correlations, Bland-Altman 1995)[][] 
+ []
+
+
+Overfull \hbox (389.69664pt too wide) in paragraph at lines 1723--1723
+[]        []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sa
+mple_i,]), second last position should be sigma paramater, last position random
+ intercept sd. [][] 
+ []
+
+
+Overfull \hbox (310.47945pt too wide) in paragraph at lines 1767--1767
+[]        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
+amples and calculate submodels according to the conditional expectation formula
+.[][] 
+ []
+
+
+Overfull \hbox (1046.06767pt too wide) in paragraph at lines 1785--1785
+[]                                []\T1/cmtt/m/n/10.95 matr[] []<-[] []X[cur, c
+ur][] []-[] []X[cur, set][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[set, cur
+][]  []\T1/cmtt/m/it/10.95 #conditional expectation formula, how much variance 
+is explained by the predictors that are not included in the model and that is n
+ot explained by other predictors[][] 
+ []
+
+
+Overfull \hbox (185.99529pt too wide) in paragraph at lines 1786--1786
+[]                                []\T1/cmtt/m/n/10.95 var.explain[][]<-[] []sa
+mple.s[cur][][]%*%[][]matr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/10.95 #mu
+ltiply by parameter sample[][] 
+ []
+
+
+Overfull \hbox (231.26225pt too wide) in paragraph at lines 1794--1794
+[]                []\T1/cmtt/m/n/10.95 df.Rtwos[,s][] []<-[] []df.Rtwos[,s][][]
+/[][]c[][](Vtot[][]+[][]post.sample[s,sig.posi][][]^[][]2[][])[] []\T1/cmtt/m/i
+t/10.95 #total variance + sigma^2 (post sample[s])[][] 
+ []
+
+
+Overfull \hbox (389.69664pt too wide) in paragraph at lines 1804--1804
+[]        []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sa
+mple_i,]), second last position should be sigma paramater, last position random
+ intercept sd. [][] 
+ []
+
+
+Overfull \hbox (174.67854pt too wide) in paragraph at lines 1841--1841
+[]        []\T1/cmtt/m/n/10.95 sig.posi[] []<-[] []([][]ncol[][](post.sample)[]
+[]-[][]1[][])[] []\T1/cmtt/m/it/10.95 # second last position sigma, last positi
+on random intercept variance[][] 
+ []
+
+
+Overfull \hbox (310.47945pt too wide) in paragraph at lines 1848--1848
+[]        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
+amples and calculate submodels according to the conditional expectation formula
+.[][] 
+ []
+
+
+Overfull \hbox (1046.06767pt too wide) in paragraph at lines 1866--1866
+[]                                []\T1/cmtt/m/n/10.95 matr[] []<-[] []X[cur, c
+ur][] []-[] []X[cur, set][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[set, cur
+][]  []\T1/cmtt/m/it/10.95 #conditional expectation formula, how much variance 
+is explained by the predictors that are not included in the model and that is n
+ot explained by other predictors[][] 
+ []
+
+
+Overfull \hbox (185.99529pt too wide) in paragraph at lines 1867--1867
+[]                                []\T1/cmtt/m/n/10.95 var.explain[][]<-[] []sa
+mple.s[cur][][]%*%[][]matr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/10.95 #mu
+ltiply by parameter sample[][] 
+ []
+
+
+Overfull \hbox (457.59709pt too wide) in paragraph at lines 1875--1875
+[]                []\T1/cmtt/m/n/10.95 df.Rtwos[,s][] []<-[] []df.Rtwos[,s][][]
+/[][]c[][](Vtot[][]+[][]post.sample[s,sig.posi][][]^[][]2[] []+[][]post.sample[
+s,subj.posi][][]^[][]2[] [])[] []\T1/cmtt/m/it/10.95 #total variance + sigma^2 
++ random intercept variance[][] 
+ []
+
+
+Overfull \hbox (412.33012pt too wide) in paragraph at lines 1886--1886
+[]        []\T1/cmtt/m/it/10.95 # post.sample: posterior sample as matrix (M[sa
+mple_i,]), the last positions are filled with diag(SIGMA) inferences (number of
+ repeated measures)[][] 
+ []
+
+
+Overfull \hbox (310.47945pt too wide) in paragraph at lines 1922--1922
+[]        []\T1/cmtt/m/n/10.95 sig.posi[] []<-[] [](([][]ncol[][](post.sample)[
+][]-[][](m[][]-[][]1[][]))[][]:[][]ncol[][](post.sample))[] []\T1/cmtt/m/it/10.
+95 # second last position sigma, last position random intercept variance[][] 
+ []
+
+
+Overfull \hbox (310.47945pt too wide) in paragraph at lines 1928--1928
+[]        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
+amples and calculate submodels according to the conditional expectation formula
+.[][] 
+ []
+
+
+Overfull \hbox (1046.06767pt too wide) in paragraph at lines 1946--1946
+[]                                []\T1/cmtt/m/n/10.95 matr[] []<-[] []X[cur, c
+ur][] []-[] []X[cur, set][][]%*%[][]solve[][](X[set, set])[][]%*%[][]X[set, cur
+][]  []\T1/cmtt/m/it/10.95 #conditional expectation formula, how much variance 
+is explained by the predictors that are not included in the model and that is n
+ot explained by other predictors[][] 
+ []
+
+
+Overfull \hbox (185.99529pt too wide) in paragraph at lines 1947--1947
+[]                                []\T1/cmtt/m/n/10.95 var.explain[][]<-[] []sa
+mple.s[cur][][]%*%[][]matr[][]%*%[][]sample.s[cur][]  []\T1/cmtt/m/it/10.95 #mu
+ltiply by parameter sample[][] 
+ []
+
+
+Overfull \hbox (327.45456pt too wide) in paragraph at lines 1955--1955
+[]                []\T1/cmtt/m/n/10.95 df.Rtwos[,s][] []<-[] []df.Rtwos[,s][][]
+/[][]c[][](Vtot[] []+[] []sum[][](post.sample[s,sig.posi] ))[] []\T1/cmtt/m/it/
+10.95 #total variance + sigma^2 + random intercept variance[][] 
+ []
+
+
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 2000--2000
+[]                                                                        []\T1
+/cmtt/m/n/10.95 data[] []= df,[][] 
+ []
+
+
+Overfull \hbox (76.58566pt too wide) in paragraph at lines 2001--2001
+[]                                                                        []\T1
+/cmtt/m/n/10.95 chains[] []=[] []4[][],[] []cores[] []=[] []4[][])[][] 
+ []
+
+
+Overfull \hbox (450.03815pt too wide) in paragraph at lines 2141--2141
+[]        []\T1/cmtt/m/n/10.95 textConnection[][](modelString),[] []data[] []=[
+] []list[][]([][]Y[][]=Y,[][]N[][]=N,[][]M[][]=M,[][]x1[] []= x1,[] []x2[] []= 
+x2,[] []x3[] []= x3,[] []x4[] []= x4,[][]zRscal[] []=[] []ncol[][](Y) ,[] []zRm
+at[] []=[] []diag[][]([][]x[][]=[][]1[][],[][]nrow[][]=[][]ncol[][](Y)) ),[] []
+n.chains[][]=[][]3[][])[][] 
+ []
+
+
+Overfull \hbox (246.33679pt too wide) in paragraph at lines 2143--2143
+[][]\T1/cmtt/m/n/10.95 samp[] []<-[] []coda.samples[][](model,[] []variable.nam
+es[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 be
+ta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/c
+mtt/m/n/10.95 beta3\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/
+m/n/10.95 '\T1/cmtt/m/n/10.95 beta4\TS1/cmtt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95
+ ,[][]"Sigma"[][]),[] []n.iter[][]=[][]20000[][],[] []progress.bar[][]=[][]"non
+e"[][])[][] 
+ []
+
+
+Overfull \hbox (297.26213pt too wide) in paragraph at lines 2149--2149
+[][]\T1/cmtt/m/n/10.95 samp[] []<-[] []coda.samples[][](model,[] []variable.nam
+es[][]=[][]c[][]([][]"beta1"[][],[][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 be
+ta2\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/m/n/10.95 '\T1/c
+mtt/m/n/10.95 beta3\TS1/cmtt/m/n/10.95 '[][]\T1/cmtt/m/n/10.95 ,[] []\TS1/cmtt/
+m/n/10.95 '\T1/cmtt/m/n/10.95 beta4\TS1/cmtt/m/n/10.95 '[] []\T1/cmtt/m/n/10.95
+ ,[][]"Sigma[1,1]"[][],[][]"Sigma[2,2]"[][],[][]"Sigma[3,3]"[][],[][]"Sigma[4,4
+]"[][]),[][] 
+ []
+
+
+Overfull \hbox (246.33679pt too wide) in paragraph at lines 2150--2150
+[]                                                                             
+    []\T1/cmtt/m/n/10.95 n.iter[][]=[][]20000[][],[] []thin[][]=[][]20[][],[] [
+]progress.bar[][]=[][]"none"[][])[][] 
+ []
+
+! Dimension too large.
+\fb@put@frame ...p \ifdim \dimen@ >\ht \@tempboxa 
+                                                  \fb@putboxa #1\fb@afterfra...
+l.2191 \end{kframe}
+                   
+I can't work with sizes bigger than about 19 feet.
+Continue and I'll use the largest value I can.
+
+[29
+
+]
+! Dimension too large.
+\fb@put@frame ...p \ifdim \dimen@ >\ht \@tempboxa 
+                                                  \fb@putboxa #1\fb@afterfra...
+l.2191 \end{kframe}
+                   
+I can't work with sizes bigger than about 19 feet.
+Continue and I'll use the largest value I can.
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[30]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[31]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[32]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[33]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[34]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[35]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[36]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[37]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[38]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[39]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[40]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[41]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[42]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[43]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[44]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[45]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[46]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[47]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[48]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[49]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[50]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[51]
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 2191
+ []
+
+[52] (./Main.bbl (./Main.brf)
 \tf@brf=\write6
 \openout6 = `Main.brf'.
 
-) [35
+ [53] [54
 
-] [36
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1268.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1268.
+] [55]) [56]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2209.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2209.
  (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1268.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1268.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2209.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2209.
 
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: E2EE865BED5A29CFB66C485E3980CF42;1063.
+(rerunfilecheck)             Checksum: 9694C758551383FC6B858532C782A938;1116.
 Package rerunfilecheck Info: File `Main.brf' has not changed.
-(rerunfilecheck)             Checksum: 12DFAEAE0A31705C888A0C1D81C5A461;1228.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1268.
+(rerunfilecheck)             Checksum: DE634A44E605E08490BAA4E185469E76;1613.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2209.
  ) 
 Here is how much of TeX's memory you used:
- 20334 strings out of 492995
- 370205 string characters out of 6132703
- 442939 words of memory out of 5000000
- 23493 multiletter control sequences out of 15000+600000
+ 20409 strings out of 492995
+ 371269 string characters out of 6132703
+ 817929 words of memory out of 5000000
+ 23537 multiletter control sequences out of 15000+600000
  47822 words of font info for 133 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,19n,43p,10436b,788s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 47i,19n,64p,10436b,868s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
@@ -1220,10 +1845,10 @@ ype1/public/cm-super/sfss1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
 e1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1
 /public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/p
 ublic/cm-super/sftt1095.pfb>
-Output written on Main.pdf (44 pages, 1428715 bytes).
+Output written on Main.pdf (64 pages, 1473493 bytes).
 PDF statistics:
- 628 PDF objects out of 1000 (max. 8388607)
- 533 compressed objects within 6 object streams
- 110 named destinations out of 1000 (max. 500000)
- 162 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 769 PDF objects out of 1000 (max. 8388607)
+ 653 compressed objects within 7 object streams
+ 141 named destinations out of 1000 (max. 500000)
+ 170 words of extra memory for PDF output out of 10000 (max. 10000000)
 

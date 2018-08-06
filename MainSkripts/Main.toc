@@ -11,11 +11,12 @@
 \contentsline {chapter}{\numberline {3}Examples}{9}{chapter.3}
 \contentsline {section}{\numberline {3.1}Simulated Data}{9}{section.3.1}
 \contentsline {section}{\numberline {3.2}Empirical Data}{14}{section.3.2}
-\contentsline {chapter}{\numberline {4}Discussion and Outlook - Some extenstions}{19}{chapter.4}
+\contentsline {chapter}{\numberline {4}Extension of the LMG formula for longitudinal data}{19}{chapter.4}
 \contentsline {section}{\numberline {4.1}random intercept model}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}marginal model}{24}{section.4.2}
-\contentsline {chapter}{\numberline {5}Other variable importance metrics in the Bayesian framework}{31}{chapter.5}
-\contentsline {section}{\numberline {5.1}Conclusion}{31}{section.5.1}
-\contentsline {chapter}{\numberline {6}Appendix}{33}{chapter.6}
+\contentsline {section}{\numberline {4.2}marginal model}{21}{section.4.2}
+\contentsline {chapter}{\numberline {5}Other variable importance metrics in the Bayesian framework}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}Conclusion}{25}{section.5.1}
+\contentsline {chapter}{\numberline {6}Appendix}{27}{chapter.6}
+\contentsline {chapter}{\numberline {A}Formula}{29}{appendix.A}
 \vspace *{10mm}
-\contentsline {chapter}{\bfseries Bibliography}{35}{section*.18}
+\contentsline {chapter}{\bfseries Bibliography}{53}{section*.23}

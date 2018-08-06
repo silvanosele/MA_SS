@@ -13,6 +13,7 @@ opts_chunk$set(
     cache=FALSE
 ) 
 
+options(digits =3)
 
 
 #function to calculate R2 data frame from random intercept model
@@ -39,14 +40,14 @@ rtwos.ri.r<-function(X, post.sample){
 	
 	var.names <- character(length = 0)
 	
-	v<- 1:length(lst)
+  v<- rownames(X)
 	
 	for(i in 1:length(lst))
 	{
 		
 		for (j in 1:ncol(lst[[i]])){
 			cur<- lst[[i]][,j]
-			name <- paste0('x',v[-cur])
+			name <- paste0(v[-cur])
 			name <- paste(name, collapse = " ")
 			var.names <- c(var.names, name)
 		}
@@ -64,8 +65,12 @@ rtwos.ri.r<-function(X, post.sample){
 	
 	row.names(df.Rtwos) <- var.names
 	
+	
+	
 	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
 	
+	v <- 1:dim(X)[2]
+
 	for (s in 1:size){
 		
 		sample.s <- post.sample[s,1:ncol(X)]
@@ -116,14 +121,15 @@ rtwos.ri.a<-function(X, post.sample){
 	
 	var.names <- character(length = 0)
 	
-	v<- 1:length(lst)
-	
+	v<- rownames(X)
+
+
 	for(i in 1:length(lst))
 	{
 		
 		for (j in 1:ncol(lst[[i]])){
 			cur<- lst[[i]][,j]
-			name <- paste0('x',v[-cur])
+			name <- paste0(v[-cur])
 			name <- paste(name, collapse = " ")
 			var.names <- c(var.names, name)
 		}
@@ -144,6 +150,8 @@ rtwos.ri.a<-function(X, post.sample){
 	
 	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
 	
+	  v <- 1:dim(X)[2]
+
 	for (s in 1:size){
 		
 		sample.s <- post.sample[s,1:ncol(X)]
@@ -195,14 +203,14 @@ rtwos.marg<-function(X, post.sample, m){
 	
 	var.names <- character(length = 0)
 	
-	v<- 1:length(lst)
+	v<- rownames(X)
 	
 	for(i in 1:length(lst))
 	{
 		
 		for (j in 1:ncol(lst[[i]])){
 			cur<- lst[[i]][,j]
-			name <- paste0('x',v[-cur])
+			name <- paste0(v[-cur])
 			name <- paste(name, collapse = " ")
 			var.names <- c(var.names, name)
 		}
@@ -221,6 +229,8 @@ rtwos.marg<-function(X, post.sample, m){
 	row.names(df.Rtwos) <- var.names
 	
 	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+	v <- 1:dim(X)[2]
+
 	
 	for (s in 1:size){
 		
@@ -256,63 +266,54 @@ rtwos.marg<-function(X, post.sample, m){
 
 @
 
-\chapter{Discussion and Outlook - Some extenstions}
+\chapter{Extension of the LMG formula for longitudinal data}
 
-In the following chapter some extenstions of the LMG formula in the Bayesian framework beyond the simple linear regression model are shown. The focus is on repeated measurements models. These models extend the simple linear regression be allowing intra subject correlation between repeated measures. 
+In the following chapter some extenstions of the LMG formula beyond the simple linear regression model are shown. The focus is on repeated measurements models. These models extend the simple linear regression by allowing intra-subject correlation between repeated measures.
 
-The dependence within subjects can be modeled by including random effects (mixed model) or by assuming correlated errors within a subject (marginal model). Using a random intercept model or a compound symmetry matrix for the error will result in the same model for the fixed predictors. A mixed model can be extended by including a random slope per subject, allowing for less restrictive longitudinal shapes. The marginal approach can get more freedom by different specified covariance matrices of the error terms. An unstructured covariance matrix, where no restriction are imposed, allows for the most freedom. However, depending on the number of repeated measuresments and the sample size the covariance matrix can get too large to make reasonable inference about it. 
+The dependence of within-subject measurements can be modeled by including random effects (mixed model) or by assuming correlated errors within a subject (marginal model). A mixed model can be extended by including a random slope per subject, allowing for less restrictive longitudinal shapes. The marginal approach can get more freedom by different specified covariance matrices of the error terms. An unstructured covariance matrix, where no restriction are imposed, allows for the most freedom. However, depending on the number of repeated measuresments and the sample size the covariance matrix can get too large to make reasonable inference about it \citep{Fitzmaurice2011}. 
 
+The extenstion of the LMG formula in the Bayesian framework to longitudinal models is restricted to models where the conditional variance formula can  be applied to get the explained variance of the submodel from the regression parameters of the full model. The focus is therefore on the fixed predictors and not on the random effects. The conditional variance formula can be used in the marginal models, where only the fixed effects are modelled anyway. In the mixed model framework, the conditional variance formula is applicable to random intercepts models. For random-slope models there are at least some difficulties involved, if it is possible at all, to get the explained variance of the submodel. This chapter shows the Bayesian LMG Implementation on a random intercept model and on a repeated measurement model with an unstructured covariance matrix.  
 
-The extenstion of the LMG formula in the Bayesian framework presented in chapter is restricted to models where the conditional variance formula can easily be applied to get the explained variance of the submodel from the regression parameters of the full model. The focus is on the fixed predictors and not on the random effects. Using the conditional variance formula to get the explained variance of the fixed predictors of the submodels should be applicable in the marginal models, where only the fixed effects are modelled anyway. In the mixed model framework the conditional variance formula is applicable to models including only random intercepts and the focus lies in the explained variance of the fixed predictors. For random-slope models there are atleast some difficulties involved, if it is possible at all the get the expalined variance of the submodel. This chapter shows a  random intercept model and a repeated measurement model with an unstructured covariance matrix.  
-
-The first example concerns a simple random intercept model with time varying predictors.  
 
 \section{random intercept model}
-
-Different $\Rtwo$ metrics exist for linear mixed models. The variance of a random intercept model with regression parameter $\bbeta$ can be written as
+The first example concerns a simple random intercept model with time-varying predictors.  Different $\Rtwo$ metrics exist for linear mixed models. The variance of a random intercept model with regression parameter $\bbeta$ can be written as
 
       \begin{align} 
-        \var(y) = \sigma_{f}^2  + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2, 
+        \var(y) = \sigma_{f}^2  + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2, \label{eq:var.t.ri} 
         \end{align}
 
-where $\sigma_{f}^2 = \var(\X \bbeta) = \bbeta^\top \bSigma_{\X \X}  \bbeta$ , $\sigma_{\alpha}^2 $ is the random intercept and $\sigma_{\epsilon}^2$ is the error term. 
+where $\sigma_{f}^2 = \var(\X \bbeta) = \bbeta^\top \bSigma_{\X \X}  \bbeta$ , $\sigma_{\alpha}^2 $ is the random intercept and $\sigma_{\epsilon}^2$ is the error term \citep{Nakagawa2013}. 
 
-An $\Rtwo$ that is guaranteed to be positive can be defined as
-
-   \begin{align} 
-\Rtwo_{\text{LMM}} = \frac{\sigma_{f}^2}{\sigma_{f}^2 + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2},
-\end{align}
-
-Referenz Naka, Snyder.... It is theoretical possible that the $\Rtwo_{\text{LMM}}$ decreases when adding predictors. This may be problematic for the LMG metric, because of violation of the non-negative property. This should rarely be the case with real data. The $\Rtwo$ can not decrease when adding predictor by using the conditional variance formula on the full model to calculate the $\Rtwo$ of the submodels. In the Bayesian framework we would the sample from the posterior distributions of the parameters. 
-
-The total variance of the full can be calculated as in equation 6 or by using the samples of the random intercept for each subject directly. The same total variance is then used for one sample of the posterior. (In a repeated measure study we often have within and between subject predictors. If we use the total variance of the full model the random intercept is fitted including all predictors. If a between subject predictor is excluded (e.g. Sex) and we would fit a new random intercept model, the random intercept parameter will in addition explain the variance that was explained by the excluded predictor. In other words it means that the model with the exluded between subject predictor will explain almost as much as the model where the predictor is included when each time a new model and therefore a new random intercept term is fitted in each model. 
-
-When using the conditional variance formula for the $\Rtwo$ of the submodels, it only takes into account the explained variance of the fixed predictors. )
-
-
-In repeated measurement studies the focus is often in within subject changes. The between subject variance estimated with the random intercept term may not be so important. The more important question may be how much the fixed predictors explain compared to the within subject error, which is
+An $\Rtwo$ that is guaranteed to be positive is defined in \cite{Nakagawa2013} as
 
    \begin{align} 
-\Rtwo_{\text{repeated}} = \frac{\sigma_{f}^2}{\sigma_{f}^2  + \sigma_{\epsilon}^2},
+\Rtwo_{\text{LMM}} = \frac{\sigma_{f}^2}{\sigma_{f}^2 + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2}.
 \end{align}
 
-The square root of this term is known under the name correlation within subjects by ref(bland Altman 1995). Although in the paper the subject term is fitted as a factor. If we are interested in the within subject effects we can use the model including only the between subject predictor as the null model.
 
-The following example shows a simple random intercept model with time-varying predictors. The main question is which within subject predictors are the most important ones. The between subject variance is of lower importance. 
+ It is theoretically possible that the $\Rtwo_{\text{LMM}}$ decreases when adding predictors \citep{Nakagawa2013}.  By adding predictors $\sigma_{f}^2$  should always increase and  $\sigma_{\epsilon}^2$  decrease. However, the $\sigma_{\alpha}^2$ may also increase a little bit and the total $\Rtwo$ may then be a little bit lower. The $\Rtwo$ can not decrease by using the conditional variance formula on the full model to calculate the $\Rtwo$ of the submodels, because the total variance is fixed. The results should be the same, as if we would fit a new model by maximum likelihood for each submodel and  compare the explained variance of the fixed effects to the explained variance of the full model.  In the Bayesian framework, the conditional variance formula is needed to account for the interdepdence of the submodels to each other. The total variance of the full model can be calculated as  $\var(y) = \var(\X \bbeta + \Z b) + \sigma^2$ or by using samples of $\sigma_{\alpha}^2$ as in \eqref{eq:var.t.ri}. The error term could again be sampled or calculated as in \eqref{rtwoGelman}. In the following examples, \eqref{eq:var.t.ri} is used and  $\sigma_{\alpha}^2$ and $\sigma_{\epsilon}^2$ are sampled from their posterior distribution.
 
-The data are simulated from the following regression setting with $m = 4$ timepoints,
+In repeated measurement studies, the focus is often in within-subject changes. The between-subject variance, estimated with the random intercept term, is of minor importance. The more important question may be, how much variance the fixed predictors explain, compared to the within subject error, which is
 
-\begin{align} 
-&Y_{i,j} \sim \mathcal{N}(\beta_{0}+x_{1_{i,j}} \beta_{1}+x_{2_{i,j}} \beta_{2}+x_{3_{i,j}} \beta_{3}+x_{4_{i,j}} \beta_{4} + \alpha_{i}, \, \sigma^2), \qquad i = 1, \dots, n \qquad j = 1, \dots, m
-\end{align} 
+   \begin{align} 
+\Rtwo_{\text{repeated}} = \frac{\sigma_{f}^2}{\sigma_{f}^2  + \sigma_{\epsilon}^2}, \label{rtwo.repeated}
+\end{align}
 
-where $\beta_{1} = 1$, $\beta_{2} = 1$,  $\beta_{3} = 2$ , $\beta_{4}=2$, $\sigma^2 = 1$, $\alpha_{i} \sim \mathcal{N}(0, \sigma_{\alpha}^2)$, $\X \sim \mathcal{N}(\0, \bSigma)$.
+The square root of this term is known under the name correlation within subjects in \cite{Bland1995}. Often, there are between-subject and within-subject predictors in a model. If we are interested in the within-subject effect, we can use a model including only the between-subject predictors as the null-model.
 
-The following R code is used to simulate the data:
+The following example shows a simple random intercept model with time-varying predictors. The main question is which within-subject predictors are the most important ones. The between-subject variance is of minor importance. 
 
+The data are simulated from the following regression setting with $m = 4$ timepoints and $n = 20$ number of subjects ,
 
+\begin{align*} 
+Y_{i,j} \sim \mathcal{N}(\beta_{0}+x_{1_{i,j}} \beta_{1}+x_{2_{i,j}} \beta_{2}+x_{3_{i,j}} \beta_{3}+x_{4_{i,j}} \beta_{4} + \alpha_{i}, \, \sigma^2), \qquad &i = 1, \dots, n \\  &j = 1, \dots, m
+\end{align*} 
 
-<<'simdata.repeated', cache=TRUE>>=
+where $\beta_{1} = 1 \,$,  $\beta_{2} = 1 \,$,   $\beta_{3} = 2 \,$  $\beta_{4}=2 \,$, $\sigma^2 = 1 \, $, $\alpha_{i} \sim \mathcal{N}(0, \sigma_{\alpha}^2) \,$, $\X \sim \mathcal{N}(\0, \bSigma)$.
+
+The R code can be found in the appendix.
+
+<<'simdata.repeated', include=FALSE, cache=TRUE>>=
 
 sub<- 1:20
 subi <- rnorm(20, 0, 4)
@@ -343,16 +344,24 @@ y<- x1*b1 +x2*b2 +x3*b3+  x4*b4 + subi+ rnorm(80, 0, 0.1)
 
 df <- data.frame(y=y, x1 = x1, x2=x2, x3 = x3, x4 = x4, sub = rep(sub,4))
 
+
+@
+
+<<'.repeated.plot.ri', cache=TRUE, echo = FALSE, fig.cap='Individual trajectories of simulated random intercept model'>>=
 p <- ggplot(data = df, aes(x = t, y = y, group = sub))
 p + geom_line()
 
 @
 
 
-The $\Rtwo$ of the submodels were first calculated according to the formula in equation ...,. The random intercept effect is not of interest. We see that most of the within subject variance is explained by the predictors. The credible intervals are very narrow. For the information about the between subject varinace we can look at the random intercept variance directly. In the second part the random intercept is included in the total variance calculation and the calculation of the $\Rtwo$ values. We see that there is a large between subject variance in this dataset. The LMG values including the between subject variance are much lower. The credible intervals are also much wider, because the uncertainty about the between subject variance is also included. In my opinion we can get more useful infromation from separating the between and within variance components when it is easy possible. Note that we assumed non stochastic predictors otherwise the credible intervals would be larger. In general it seems more reasonable to assume stochastic time-varying predictors. The variance could then be estimated by non-parameteric bootstrap, resampling whole subjects (all repeated measurements of a subject).
+The random intercept effect is of minor interest. The $\Rtwo$ of the models is calculated according to the formula of repeated measure correlation \eqref{rtwo.repeated}.  Most of the within-subject variance is explained by the predictors (Table~\ref{tbl:repeatedcormod}). The credible intervals are very narrow. For information about the between-subject variance term, we can look at the posterior distribution of the random intercept variance term.
+
+In the second part, the random intercept is directly included in the total variance calculation of the $\Rtwo$ values. There is a large between-subject variance in this simulated dataset (Table~\ref{tbl:repeatedcormod.tot}). The LMG values including the between subject variance are  therefore much lower. The credible intervals are as well much wider, because the uncertainty about the between-subject variance is included. 
+
+In my opinion we can get more useful information from separating the between-subject and within-subject variance components in this simple case. Note that we assumed non stochastic predictors. Otherwise, the credible intervals would be larger. In general, it seems more reasonable to assume stochastic time-varying predictors. The variance could then be estimated by non-parameteric bootstrap, resampling whole subjects (all repeated measurements of a subject).
 
 
-<<'simdata.repeated.mod', cache=TRUE>>=
+<<'simdata.repeated.mod', include=FALSE, cache=TRUE>>=
 
 fit <- stan_glmer(y ~ x1+x2+x3+x4 + (1|sub) ,
 									data = df, 
@@ -363,59 +372,102 @@ post.sample.r <- post.sample[,c(2:5,(ncol(post.sample)-1):ncol(post.sample))]
 
 df.rtwos <- rtwos.ri.r(df[,2:5], post.sample.r)
 
+LMG.Vals.I<-matrix(0, 4, dim(df.rtwos)[2])
 
-LMG.Vals<-matrix(0, 4, dim(df.rtwos)[2])
+LMG.Vals.J<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.T<-matrix(0, 4, dim(df.rtwos)[2])
+
 
 for(i in 1:dim(df.rtwos)[2]){
-	
-	gofn<-df.rtwos[,i]
-	
-	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
-	
-	LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  
+  gofn<-df.rtwos[,i]
+  
+  obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
+  
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.J[,i]=obj.Gelman$IJ[,2]
+	LMG.Vals.T[,i]=obj.Gelman$IJ[,3]
 }
 
-# posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
+varnames <- row.names(obj.Gelman$IJ)
 
+
+@
+
+
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{clll}
+  \toprule
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:repeatedcormod}
+\end{table}
+
+
+<<'simdata.repeated.modtot', include=FALSE, cache=TRUE>>=
 
 # explained compared to total variance
 
 df.rtwos <- rtwos.ri.a(df[,2:5], post.sample)
 
-LMG.Vals<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.I<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.J<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.T<-matrix(0, 4, dim(df.rtwos)[2])
+
 
 for(i in 1:dim(df.rtwos)[2]){
-	
-	gofn<-df.rtwos[,i]
-	
-	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
-	
-	LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  
+  gofn<-df.rtwos[,i]
+  
+  obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
+  
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.J[,i]=obj.Gelman$IJ[,2]
+	LMG.Vals.T[,i]=obj.Gelman$IJ[,3]
 }
-
-# posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
-
 @
+
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{clll}
+  \toprule
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:repeatedcormod.tot}
+\end{table}
+
+
 
 \section{marginal  model}
 
-The next example concerns a repeated measurement model with an unstructured covariance error structure. The data are generated from the following model:
+The next example concerns a repeated measurement model with time-varying predictors and an unstructured error covariance matrix. The data are generated from the following model:
 
 \begin{align} 
 &Y_{i} \sim \mathcal{N}(\X_{i} \bbeta, \bSigma), \qquad i = 1, \dots, n
 \end{align} 
 
-where $\bSigma$ represents an unstructured error covariance matrix.
+where $\bSigma$ represents an unstructured error covariance matrix, $\X_{i}$ represents the predictor matrix of size $m \times p$ of subject $i$.
 
-In the variance calculation we need to take into account that we do not have just one $\sigma^2$ parameter, but a covariance matrix $\bSigma$. The diagonal elements of $\bSigma$ represent the variance of each timepoint. The sum of the diagonal elements of $\bSigma$ represents the variance for a whole subject. When there are no missing timepoints in each subject, we can  take the mean of $\diag(\bSigma)$ to make the formula compatiable with the $\bbeta^\top \bSigma_{\X \X}  \bbeta$ of equation .... resulting in the total variance term
+In the variance calculation we need to take into account that we do not have just one $\sigma^2$ parameter, but a covariance matrix $\bSigma$. The diagonal elements of $\bSigma$ represent the variance of each timepoint. The sum of the diagonal elements of $\bSigma$ represents the variance for a whole subject. We can  take the mean of $\diag(\bSigma)$ to make the formula compatiable with the $\bbeta^\top \bSigma_{\X \X}  \bbeta$ of \eqref{rtwoused}, resulting in the total variance term
 
       \begin{align} 
         \var(\Y) = \bbeta^\top \bSigma_{\X \X}  \bbeta + \text{mean}(\diag(\bSigma)),
@@ -423,7 +475,7 @@ In the variance calculation we need to take into account that we do not have jus
 
 The following R-code is used to generate the data:
 
-<<'simdata.repeated.unstruct'>>=
+<<'simdata.repeated.unstruct', include=FALSE>>=
 
 sub<- 1:20
 subi <- rnorm(20, 0, 1)
@@ -456,7 +508,6 @@ Sig[4,3] <- 8
 Sig[1,2] <- 4
 Sig[2,1] <-4
 
-Sig
 
 error <- mvrnorm(20, u, Sig)
 
@@ -467,9 +518,6 @@ t <- c(rep(1, 20), rep(2, 20), rep(3, 20), rep(4, 20))
 df <- data.frame(y=y, x1 = x1, x2=x2 , x3 = x3, x4 = x4, sub = rep(sub,4), t =t)
 
 
-
-p <- ggplot(data = df, aes(x = t, y = y, group = sub))
-p + geom_line()
 
 
 
@@ -486,8 +534,14 @@ N = 20 #subjects
 M = 4 # repeated measures
 @
 
+<<'simdata.repeated.unstruct.plot', echo=FALSE, fig.cap='Individual trajectories of simulated data with unstructured error covariance matrix'>>=
+p <- ggplot(data = df, aes(x = t, y = y, group = sub))
+p + geom_line()
 
-<<'simdata.repeated.unstruct.mod'>>=
+@
+
+
+<<'simdata.repeated.unstruct.mod', tidy =TRUE, include = FALSE>>=
 
 
 #--------------------------------------------
@@ -517,49 +571,61 @@ beta4      ~ dnorm(0,0.001)
 
 writeLines( modelString , con="Jags-MultivariateNormal-model.txt" )
 
-model <- jags.model(textConnection(modelString), 
-										data = list(Y=Y,N=N,M=M,x1 = x1, x2 = x2, x3 = x3, x4 = x4, 	zRscal = ncol(Y) ,  # for dwish prior
-																zRmat = diag(x=1,nrow=ncol(Y)) ),
-										n.chains=3)
+model <- jags.model(
+	textConnection(modelString), data = list(Y=Y,N=N,M=M,x1 = x1, x2 = x2, x3 = x3, x4 = x4,zRscal = ncol(Y) , zRmat = diag(x=1,nrow=ncol(Y)) ), n.chains=3)
 
-samp <- coda.samples(model, 
-										 variable.names=c("beta1",'beta2', 'beta3', 'beta4' ,"Sigma"), 
-										 n.iter=20000, progress.bar="none")
+samp <- coda.samples(model, variable.names=c("beta1",'beta2', 'beta3', 'beta4' ,"Sigma"), n.iter=20000, progress.bar="none")
 
 summary(samp)
 
 #LMG calculations
 
-samp <- coda.samples(model, 
-										 variable.names=c("beta1",'beta2', 'beta3', 'beta4' ,"Sigma[1,1]","Sigma[2,2]","Sigma[3,3]","Sigma[4,4]"), 
+samp <- coda.samples(model, variable.names=c("beta1",'beta2', 'beta3', 'beta4' ,"Sigma[1,1]","Sigma[2,2]","Sigma[3,3]","Sigma[4,4]"), 
 										 n.iter=20000, thin=20, progress.bar="none")
 
 post.sample <- samp[[1]][,c(5:8, 1:4)] 
 
 df.rtwos <- rtwos.marg(df[,2:5], post.sample, 4) # 4 repeated measures
 
-LMG.Vals<-matrix(0, 4, dim(df.rtwos)[2])
+LMG.Vals.I<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.J<-matrix(0, 4, dim(df.rtwos)[2])
+
+LMG.Vals.T<-matrix(0, 4, dim(df.rtwos)[2])
+
 
 for(i in 1:dim(df.rtwos)[2]){
-	
-	gofn<-df.rtwos[,i]
-	
-	obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
-	
-	LMG.Vals[,i]=obj.Gelman$IJ[,1]
+  
+  gofn<-df.rtwos[,i]
+  
+  obj.Gelman<-partition(gofn, pcan = 4, var.names = names(df[,2:5]))
+  
+  LMG.Vals.I[,i]=obj.Gelman$IJ[,1]
+  LMG.Vals.J[,i]=obj.Gelman$IJ[,2]
+	LMG.Vals.T[,i]=obj.Gelman$IJ[,3]
 }
 
-# posterior LMG distribution of each variable
-quantile(LMG.Vals[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals[4,], c(0.025, 0.5, 0.975))
+
 
 @
 
+The individual trajectories are shown in Figure~\ref{fig:simdata.repeated.unstruct.plot}. The resulting LMG values of the predictors are shown in Table \ref{tbl:repeated.unstructured}.
 
-
-
+\begin{table}[h]
+\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\centering
+\begin{tabular}{clll}
+  \toprule
+  \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
+  \hline
+\Sexpr{varnames[1]} & \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[1,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[2]} & \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[3]} & \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))[3]})  \\ 
+\Sexpr{varnames[4]} & \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))[3]})  & \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))[3]})   & \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[2]} (\Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[1]}, \Sexpr{quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))[3]})  \\ 
+   \bottomrule
+\end{tabular}
+\label{tbl:repeated.unstructured}
+\end{table}
 
 
 

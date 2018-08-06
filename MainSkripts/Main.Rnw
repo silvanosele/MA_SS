@@ -74,6 +74,13 @@ June 2018
 @
 
 \cleardoublepage
+
+\appendix
+\chapter{Formula}
+<<all-code-appendix, ref.label=all_labels(), echo=TRUE, eval=FALSE, tidy=TRUE>>=
+@
+
+
 \phantomsection
 
 

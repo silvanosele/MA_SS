@@ -69,18 +69,17 @@
 
 \chapter{Examples}
 
-In the following section the Bayesian LMG implementation is presented on two examples. The first examples simulates data, the second examples uses empirical data.
+The following chapter presents the Bayesian LMG implementation on two examples. Simulated data is used for the first example. Empirical data is used for the second example.
 
 \section{Simulated Data}
 
 We assume a simple model for the first example: 
 
 \begin{align*} 
-&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \sigma^2),& \\ & \beta_{1} = 0.5, \beta_{2} = 1,  \beta_{3} = 2 , \beta_{4}=0, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
+&Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \, \sigma^2),& \\ & \beta_{1} = 0.5, , \beta_{2} = 1, \, \beta_{3} = 2 , \, \beta_{4}=0, \, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
 \end{align*} 
 
-
-The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients to obtain the dependent variable. A standard normal distributed error is added. Fifty observations were sampled.
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled.
 
 The following Code was used to simulate the data :
 
@@ -89,11 +88,10 @@ The following Code was used to simulate the data :
 \begin{alltt}
 \hlstd{x1} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{); x2} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
 \hlstd{x3} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{); x4} \hlkwb{<-} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
-\hlcom{#b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8}
-\hlstd{b1} \hlkwb{<-} \hlnum{1}\hlstd{; b2} \hlkwb{<-} \hlnum{1}\hlstd{; b3} \hlkwb{<-} \hlnum{1}\hlstd{; b4} \hlkwb{<-} \hlnum{1}
+\hlstd{b1} \hlkwb{<-} \hlnum{0.5}\hlstd{; b2} \hlkwb{<-} \hlnum{1}\hlstd{; b3} \hlkwb{<-} \hlnum{2}\hlstd{; b4} \hlkwb{<-} \hlnum{0.8}
+\hlcom{#b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1}
 
 \hlstd{y} \hlkwb{<-} \hlstd{b1}\hlopt{*}\hlstd{x1} \hlopt{+} \hlstd{x2}\hlopt{*}\hlstd{b2} \hlopt{+} \hlstd{b3}\hlopt{*}\hlstd{x3} \hlopt{+} \hlstd{b4}\hlopt{*}\hlstd{x4} \hlopt{+} \hlkwd{rnorm}\hlstd{(}\hlnum{50}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{)}
-
 
 \hlstd{df} \hlkwb{<-} \hlkwd{data.frame}\hlstd{(}\hlkwc{y} \hlstd{= y,} \hlkwc{x1} \hlstd{= x1,} \hlkwc{x2} \hlstd{= x2,} \hlkwc{x3} \hlstd{= x3,} \hlkwc{x4} \hlstd{= x4)}
 \end{alltt}
@@ -101,11 +99,11 @@ The following Code was used to simulate the data :
 \end{knitrout}
 
 
-The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters.  A burn-in periode of 1000, a sample size of 20000 and a thining of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
+The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters. These default priors are called weakly informative priors, because they take into account the order of magnitude of the variables by using variance of the observed data. Information about these priors can be found in \cite{stanM2017}. A burn-in period of 1000, a sample size of 20000 and a thinning of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
 
 For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The resulting $\Rtwo$ values of the first few posterior samples is shown in Table~\ref{tab:simdata.postsample3}.  The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
 
-The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or nonstochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
+The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or non-stochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
 
 
 
@@ -120,16 +118,16 @@ The \texttt{hier.part} package is used to calculate the LMG value for each poste
 \toprule
   & x1 & x2 & x3 & x4 & sigma\\
 \midrule
-sample 1 & 0.932 & 1.022 & 0.658 & 1.38 & 1.074\\
-sample 2 & 1.207 & 1.123 & 0.769 & 1.05 & 0.880\\
-sample 3 & 1.416 & 0.994 & 0.768 & 1.21 & 0.905\\
-sample 4 & 1.186 & 1.445 & 0.729 & 1.37 & 1.039\\
-sample 5 & 1.414 & 0.931 & 0.718 & 1.06 & 1.089\\
-sample 6 & 1.678 & 1.233 & 1.158 & 1.38 & 1.079\\
-sample 7 & 1.314 & 1.076 & 0.578 & 1.09 & 1.281\\
-sample 8 & 1.332 & 1.576 & 1.128 & 1.44 & 1.205\\
-sample 9 & 1.294 & 1.007 & 0.722 & 1.51 & 0.859\\
-sample 10 & 1.345 & 1.288 & 0.744 & 1.30 & 0.969\\
+sample 1 & 0.555 & 1.023 & 1.99 & 0.835 & 1.103\\
+sample 2 & 0.283 & 1.153 & 2.19 & 0.679 & 1.143\\
+sample 3 & 0.571 & 1.131 & 2.03 & 0.877 & 1.026\\
+sample 4 & 0.455 & 1.231 & 2.00 & 0.925 & 1.266\\
+sample 5 & 0.600 & 0.908 & 1.90 & 0.700 & 0.991\\
+sample 6 & 0.730 & 1.018 & 2.03 & 0.401 & 1.266\\
+sample 7 & 0.363 & 1.029 & 1.84 & 0.619 & 1.145\\
+sample 8 & 0.296 & 0.805 & 1.77 & 0.599 & 1.290\\
+sample 9 & 0.177 & 0.812 & 1.61 & 0.376 & 1.406\\
+sample 10 & 0.694 & 1.018 & 1.72 & 1.028 & 1.192\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -147,21 +145,21 @@ sample 10 & 1.345 & 1.288 & 0.744 & 1.30 & 0.969\\
   & sample 1 & sample 2 & sample 3 & sample 4 & sample 5 & sample 6\\
 \midrule
 none & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
-x1 & 0.068 & 0.130 & 0.191 & 0.080 & 0.197 & 0.165\\
-x2 & 0.109 & 0.149 & 0.080 & 0.204 & 0.068 & 0.082\\
-x3 & 0.004 & 0.013 & 0.007 & 0.002 & 0.006 & 0.033\\
-x4 & 0.474 & 0.346 & 0.409 & 0.401 & 0.325 & 0.362\\
-x1 x2 & 0.222 & 0.351 & 0.336 & 0.352 & 0.327 & 0.308\\
-x1 x3 & 0.084 & 0.170 & 0.227 & 0.092 & 0.231 & 0.243\\
-x1 x4 & 0.509 & 0.436 & 0.547 & 0.448 & 0.473 & 0.480\\
-x2 x3 & 0.123 & 0.180 & 0.098 & 0.217 & 0.083 & 0.135\\
-x2 x4 & 0.585 & 0.497 & 0.491 & 0.608 & 0.394 & 0.446\\
-x3 x4 & 0.494 & 0.379 & 0.435 & 0.414 & 0.346 & 0.425\\
-x1 x2 x3 & 0.268 & 0.446 & 0.413 & 0.403 & 0.399 & 0.445\\
-x1 x2 x4 & 0.654 & 0.647 & 0.684 & 0.709 & 0.597 & 0.616\\
-x1 x3 x4 & 0.545 & 0.499 & 0.608 & 0.475 & 0.528 & 0.592\\
-x2 x3 x4 & 0.625 & 0.558 & 0.535 & 0.644 & 0.430 & 0.538\\
-all & 0.731 & 0.777 & 0.796 & 0.788 & 0.697 & 0.796\\
+x1 & 0.055 & 0.023 & 0.057 & 0.041 & 0.067 & 0.081\\
+x2 & 0.055 & 0.059 & 0.069 & 0.080 & 0.048 & 0.055\\
+x3 & 0.639 & 0.687 & 0.640 & 0.580 & 0.667 & 0.637\\
+x4 & 0.068 & 0.040 & 0.072 & 0.076 & 0.053 & 0.014\\
+x1 x2 & 0.099 & 0.075 & 0.114 & 0.109 & 0.104 & 0.122\\
+x1 x3 & 0.681 & 0.702 & 0.684 & 0.610 & 0.719 & 0.702\\
+x1 x4 & 0.125 & 0.064 & 0.131 & 0.118 & 0.123 & 0.096\\
+x2 x3 & 0.750 & 0.806 & 0.770 & 0.722 & 0.769 & 0.747\\
+x2 x4 & 0.126 & 0.102 & 0.144 & 0.159 & 0.104 & 0.071\\
+x3 x4 & 0.705 & 0.725 & 0.709 & 0.653 & 0.718 & 0.650\\
+x1 x2 x3 & 0.778 & 0.812 & 0.798 & 0.738 & 0.805 & 0.794\\
+x1 x2 x4 & 0.171 & 0.118 & 0.190 & 0.190 & 0.161 & 0.139\\
+x1 x3 x4 & 0.748 & 0.741 & 0.755 & 0.685 & 0.772 & 0.716\\
+x2 x3 x4 & 0.819 & 0.847 & 0.843 & 0.799 & 0.823 & 0.762\\
+all & 0.848 & 0.854 & 0.873 & 0.817 & 0.861 & 0.809\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -188,10 +186,10 @@ all & 0.731 & 0.777 & 0.796 & 0.788 & 0.697 & 0.796\\
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.145 (0.061, 0.248)  & -0.036 (-0.054, -0.017)   & 0.109 (0.035, 0.208)  \\ 
-x2 & 0.196 (0.102, 0.31)  & -0.054 (-0.07, -0.036)   & 0.14 (0.06, 0.25)  \\ 
-x3 & 0.067 (0.02, 0.14)  & -0.05 (-0.077, -0.02)   & 0.016 (\ensuremath{1.987\times 10^{-4}}, 0.065)  \\ 
-x4 & 0.346 (0.228, 0.478)  & 0.006 (-0.006, 0.017)   & 0.351 (0.234, 0.483)  \\ 
+x1 & 0.039 (0.007, 0.094)  & 0.012 (0.004, 0.019)   & 0.051 (0.012, 0.113)  \\ 
+x2 & 0.083 (0.03, 0.164)  & -0.022 (-0.032, -0.013)   & 0.06 (0.015, 0.133)  \\ 
+x3 & 0.618 (0.497, 0.714)  & -0.02 (-0.031, -0.008)   & 0.598 (0.472, 0.697)  \\ 
+x4 & 0.064 (0.014, 0.134)  & -0.001 (-0.002, \ensuremath{-3.301\times 10^{-4}})   & 0.063 (0.014, 0.133)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1}
@@ -208,10 +206,10 @@ x4 & 0.346 (0.228, 0.478)  & 0.006 (-0.006, 0.017)   & 0.351 (0.234, 0.483)  \\
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-x1 & 0.139 (0.065, 0.246)  & 0.145 (0.061, 0.248)  \\ 
-x2 & 0.18 (0.089, 0.29)  & 0.196 (0.102, 0.31)   \\ 
-x3 & 0.275 (0.169, 0.407)  & 0.067 (0.02, 0.14)  \\ 
-x4 & 0.152 (0.071, 0.26) & 0.346 (0.228, 0.478)  \\ 
+x1 & 0.092 (0.046, 0.157)  & 0.039 (0.007, 0.094)  \\ 
+x2 & 0.109 (0.062, 0.177)  & 0.083 (0.03, 0.164)   \\ 
+x3 & 0.636 (0.548, 0.723)  & 0.618 (0.497, 0.714)  \\ 
+x4 & 0.03 (0.007, 0.072) & 0.064 (0.014, 0.134)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1relamip}
@@ -220,7 +218,7 @@ x4 & 0.152 (0.071, 0.26) & 0.346 (0.228, 0.478)  \\
 \FloatBarrier
 
 
-In the example the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence the posterior distributions of the regression paramters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can use this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference abouth the covariance matrix in a Bayesian way. As an alternative nonparametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the nonparametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge of the covariance matrix. For stochastic predictors the uncertainty about the covariance matrix is reflected in the larger credible intervals compared to nonstochastic predictors. Even when we would knew the exact regression parameters, there is alot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
+In this example we know that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. As an alternative non-parametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the non-parametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known, the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge about the covariance matrix. For stochastic predictors, compared to non-stochastic predictors, the uncertainty about the covariance matrix is reflected in the larger credible intervals . Even when we would knew the exact regression parameters, there is a lot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
 
 
 
@@ -237,10 +235,10 @@ In the example the predictor values were sampled from a normal distribution. It 
   & \multicolumn{1}{c}{\textbf{Relaimpo}} & \multicolumn{2}{c}{\textbf{Bayesian framework}} \\ \cmidrule(r){2-2}\cmidrule(l){3-4}
  \textbf{Variable} &  & \multicolumn{1}{c}{nonparameteric bootstrap}& \multicolumn{1}{c}{covariance inference} \\
  \midrule
-x1 & 0.139 (0.042, 0.267)  & 0.122 (0.044, 0.243) &  0.138 (0.043, 0.3) \\ 
-x2 & 0.18 (0.073, 0.293)  & 0.211 (0.086, 0.368)  & 0.181 (0.078, 0.322) \\ 
-x3 & 0.275 (0.119, 0.444)  & 0.066 (0.018, 0.198)  & 0.086 (0.029, 0.202) \\ 
-x4 & 0.152 (0.058, 0.294) & 0.33 (0.201, 0.499) & 0.341 (0.174, 0.534) \\ 
+x1 & 0.092 (0.02, 0.221)  & 0.047 (0.005, 0.144) &  0.078 (0.018, 0.17) \\ 
+x2 & 0.109 (0.026, 0.241)  & 0.15 (0.055, 0.279)  & 0.156 (0.052, 0.273) \\ 
+x3 & 0.636 (0.452, 0.757)  & 0.554 (0.395, 0.71)  & 0.561 (0.442, 0.66) \\ 
+x4 & 0.03 (0.008, 0.11) & 0.034 (0.008, 0.097) & 0.033 (0.011, 0.103) \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1relaimpstoch}
@@ -255,12 +253,14 @@ x4 & 0.152 (0.058, 0.294) & 0.33 (0.201, 0.499) & 0.341 (0.174, 0.534) \\
 \clearpage
 
 \section{Empirical Data}
-In the following section the LMG analysis is applied on a popular empirical subset of a dataset containing test scores of pupils (N = 301) from the ref study. This subset of the data was used in ref(nimon) to present commonality analysis (another variance decomposition technique) in the R-package ref and in ref. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general information (general),  sentence comprehension (sentence) ,  word classification (wordc), and  word meaning (wordm) (Table~\ref{table:hs.data}). The aim of the regression analysis example from ref was to determine the strength of association between verbal ability and paragraph comprehension. The LMG metric may provide us some useful information about the importance of each predictor in the model. 
-An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may conclude that the \textit{non-significant} predictors (general information and word classification), are not important in the model. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefor provide us some new information about the importance of each predictor. 
+In the following section, the Bayesian LMG implementation is applied on an empirical dataset containing test scores of pupils (N = 301) from a study by \cite{Holzinger1939} available in the R package \texttt{MBESS} \citep{MBESS}. This dataset was used in \cite{Nimon2008} to present commonality analysis, which is another variance decomposition technique. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general-information (general),  sentence-comprehension (sentence) ,  word-classification (wordc), and  word-meaning (wordm) (Table~\ref{table:hs.data}). 
 
-The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficient and the $\sigma^2$ parameter.   A burn-in periode of 20000, a sample size of 20000 and a thining of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The resulting independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seems to be unimportant.  The joint contributions of each predictor is also quite large.
+The aim of the regression analysis  was to determine the strength of association between verbal ability and paragraph comprehension.  
+An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may wrongly conclude, that there is little association between the \textit{non-significant} predictors (general information and word classification) and paragraph comprehension. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefore provide us some new information about the importance of each predictor. 
 
-For comparison purposes, the LMG metric was additionaly calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~tbl:empirical.relaimp.comp). Assuming stochastich or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (tbl:empirical.relaimp.comp.stoch). 
+The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficients and the $\sigma^2$ parameter. A burn-in period of 20000, a sample size of 20000 and a thinning of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The  independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seem to be unimportant.  The joint contributions of each predictor is quite large.
+
+For comparison purposes, the LMG metric was additionally calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~\ref{tbl:empirical.relaimp.comp}). Assuming stochastic or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (Table\ref{tbl:empirical.relaimp.comp.stoch}). 
 
 
 
@@ -294,7 +294,7 @@ For comparison purposes, the LMG metric was additionaly calculated with the \tex
 
 
 % latex table generated in R 3.4.3 by xtable 1.8-2 package
-% Thu Aug  2 15:34:24 2018
+% Mon Aug  6 18:29:06 2018
 \begin{table}[!h]
 \centering
 \caption{Regression of paragraph comprehension on verbal tests.} 
@@ -324,16 +324,16 @@ Intercept & 0.071 & from -1.17 to 1.31 & 0.91 \\
 \toprule
   & general & sentence & wordc & wordm & sigma\\
 \midrule
-sample 1 & 0.020 & 0.286 & 0.041 & 0.144 & 2.25\\
-sample 2 & 0.035 & 0.281 & 0.057 & 0.129 & 2.22\\
-sample 3 & 0.021 & 0.261 & 0.070 & 0.150 & 2.12\\
-sample 4 & 0.029 & 0.254 & 0.109 & 0.121 & 2.12\\
-sample 5 & 0.039 & 0.211 & 0.054 & 0.145 & 2.22\\
-sample 6 & 0.049 & 0.230 & 0.047 & 0.127 & 2.03\\
-sample 7 & 0.034 & 0.330 & 0.012 & 0.132 & 2.12\\
-sample 8 & 0.045 & 0.287 & 0.022 & 0.103 & 2.06\\
-sample 9 & 0.036 & 0.260 & 0.014 & 0.170 & 2.21\\
-sample 10 & 0.018 & 0.280 & 0.080 & 0.149 & 2.26\\
+sample 1 & 0.041 & 0.270 & 0.014 & 0.113 & 2.18\\
+sample 2 & 0.036 & 0.243 & 0.010 & 0.166 & 2.09\\
+sample 3 & 0.043 & 0.295 & -0.007 & 0.103 & 2.28\\
+sample 4 & 0.024 & 0.240 & 0.051 & 0.192 & 2.19\\
+sample 5 & 0.050 & 0.297 & 0.009 & 0.099 & 2.28\\
+sample 6 & 0.027 & 0.259 & 0.040 & 0.157 & 2.09\\
+sample 7 & 0.029 & 0.265 & 0.023 & 0.156 & 2.11\\
+sample 8 & 0.017 & 0.259 & 0.026 & 0.168 & 2.18\\
+sample 9 & 0.036 & 0.250 & 0.073 & 0.123 & 2.00\\
+sample 10 & 0.004 & 0.269 & 0.059 & 0.163 & 2.10\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -351,21 +351,21 @@ sample 10 & 0.018 & 0.280 & 0.080 & 0.149 & 2.26\\
   & sample 1 & sample 2 & sample 3 & sample 4 & sample 5 & sample 6\\
 \midrule
 none & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
-general & 0.408 & 0.448 & 0.441 & 0.453 & 0.438 & 0.486\\
-sentence & 0.534 & 0.554 & 0.558 & 0.561 & 0.498 & 0.549\\
-wordc & 0.324 & 0.355 & 0.370 & 0.411 & 0.333 & 0.358\\
-wordm & 0.486 & 0.496 & 0.522 & 0.498 & 0.495 & 0.519\\
-general sentence & 0.561 & 0.592 & 0.592 & 0.599 & 0.548 & 0.605\\
-general wordc & 0.452 & 0.496 & 0.498 & 0.528 & 0.478 & 0.525\\
-general wordm & 0.518 & 0.543 & 0.558 & 0.547 & 0.537 & 0.577\\
-sentence wordc & 0.545 & 0.570 & 0.578 & 0.595 & 0.517 & 0.567\\
-sentence wordm & 0.595 & 0.613 & 0.629 & 0.618 & 0.577 & 0.622\\
-wordc wordm & 0.527 & 0.549 & 0.576 & 0.578 & 0.537 & 0.568\\
-general sentence wordc & 0.564 & 0.597 & 0.600 & 0.616 & 0.553 & 0.609\\
-general sentence wordm & 0.598 & 0.621 & 0.633 & 0.627 & 0.588 & 0.637\\
-general wordc wordm & 0.539 & 0.568 & 0.588 & 0.593 & 0.556 & 0.597\\
-sentence wordc wordm & 0.598 & 0.620 & 0.637 & 0.638 & 0.585 & 0.629\\
-all & 0.600 & 0.625 & 0.639 & 0.642 & 0.592 & 0.640\\
+general & 0.426 & 0.455 & 0.407 & 0.449 & 0.433 & 0.448\\
+sentence & 0.520 & 0.537 & 0.508 & 0.541 & 0.527 & 0.554\\
+wordc & 0.299 & 0.312 & 0.271 & 0.348 & 0.298 & 0.343\\
+wordm & 0.462 & 0.542 & 0.433 & 0.559 & 0.446 & 0.534\\
+general sentence & 0.558 & 0.583 & 0.541 & 0.583 & 0.566 & 0.592\\
+general wordc & 0.455 & 0.482 & 0.428 & 0.493 & 0.459 & 0.490\\
+general wordm & 0.511 & 0.578 & 0.482 & 0.588 & 0.504 & 0.569\\
+sentence wordc & 0.527 & 0.545 & 0.511 & 0.557 & 0.533 & 0.567\\
+sentence wordm & 0.574 & 0.627 & 0.551 & 0.640 & 0.571 & 0.633\\
+wordc wordm & 0.497 & 0.568 & 0.462 & 0.595 & 0.484 & 0.573\\
+general sentence wordc & 0.559 & 0.583 & 0.541 & 0.587 & 0.566 & 0.595\\
+general sentence wordm & 0.583 & 0.634 & 0.560 & 0.644 & 0.583 & 0.638\\
+general wordc wordm & 0.523 & 0.587 & 0.490 & 0.606 & 0.516 & 0.588\\
+sentence wordc wordm & 0.576 & 0.628 & 0.552 & 0.645 & 0.572 & 0.636\\
+all & 0.584 & 0.634 & 0.560 & 0.647 & 0.583 & 0.640\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -391,10 +391,10 @@ all & 0.600 & 0.625 & 0.639 & 0.642 & 0.592 & 0.640\\
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-general & 0.13 (0.106, 0.161)  & 0.299 (0.263, 0.334)   & 0.429 (0.37, 0.495)  \\ 
-sentence & 0.205 (0.163, 0.243)  & 0.327 (0.296, 0.358)   & 0.533 (0.469, 0.593)  \\ 
-wordc & 0.095 (0.074, 0.125)  & 0.238 (0.202, 0.273)   & 0.333 (0.277, 0.392)  \\ 
-wordm & 0.176 (0.142, 0.211)  & 0.315 (0.281, 0.344)   & 0.492 (0.426, 0.546)  \\ 
+general & 0.13 (0.105, 0.16)  & 0.299 (0.258, 0.333)   & 0.429 (0.364, 0.489)  \\ 
+sentence & 0.203 (0.165, 0.245)  & 0.328 (0.293, 0.355)   & 0.532 (0.465, 0.588)  \\ 
+wordc & 0.096 (0.073, 0.128)  & 0.24 (0.2, 0.275)   & 0.336 (0.273, 0.401)  \\ 
+wordm & 0.176 (0.138, 0.214)  & 0.315 (0.278, 0.344)   & 0.492 (0.421, 0.55)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.ijt}
@@ -409,10 +409,10 @@ wordm & 0.176 (0.142, 0.211)  & 0.315 (0.281, 0.344)   & 0.492 (0.426, 0.546)  \
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-general & 0.131 (0.105, 0.162)  & 0.13 (0.106, 0.161)  \\ 
-sentence & 0.206 (0.17, 0.246)  & 0.205 (0.163, 0.243)   \\ 
-wordc & 0.096 (0.074, 0.126)  & 0.095 (0.074, 0.125)  \\ 
-wordm & 0.178 (0.145, 0.214) & 0.176 (0.142, 0.211)  \\ 
+general & 0.131 (0.106, 0.161)  & 0.13 (0.105, 0.16)  \\ 
+sentence & 0.206 (0.168, 0.251)  & 0.203 (0.165, 0.245)   \\ 
+wordc & 0.096 (0.073, 0.125)  & 0.096 (0.073, 0.128)  \\ 
+wordm & 0.178 (0.141, 0.219) & 0.176 (0.138, 0.214)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.relaimp.comp}
@@ -430,10 +430,10 @@ wordm & 0.178 (0.145, 0.214) & 0.176 (0.142, 0.211)  \\
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-general & 0.131 (0.104, 0.164)  &  0.131 (0.104, 0.163)  \\ 
-sentence & 0.206 (0.169, 0.248)  &  0.205 (0.162, 0.245)   \\ 
-wordc & 0.096 (0.074, 0.126)  &  0.093 (0.067, 0.124)  \\ 
-wordm & 0.178 (0.143, 0.22) &  0.172 (0.137, 0.208) \\ 
+general & 0.131 (0.106, 0.163)  &  0.127 (0.092, 0.16)  \\ 
+sentence & 0.206 (0.171, 0.246)  &  0.204 (0.163, 0.249)   \\ 
+wordc & 0.096 (0.075, 0.128)  &  0.097 (0.07, 0.128)  \\ 
+wordm & 0.178 (0.144, 0.218) &  0.175 (0.136, 0.214) \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.relaimp.comp.stoch}

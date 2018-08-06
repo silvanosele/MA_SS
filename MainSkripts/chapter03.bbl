@@ -1,13 +1,33 @@
 \begin{thebibliography}{}
 
+\bibitem[Holzinger and Swineford, 1939]{Holzinger1939}
+Holzinger, K.~J. and Swineford, F. (1939).
+\newblock {A study in factor analysis: The stability of a bi-factor solution}.
+\newblock {\em Supplementary Educational Monographs}, {\bf48},  1--91.
+
+\bibitem[Kelley, 2017]{MBESS}
+Kelley, K. (2017).
+\newblock Mbess (version 4.0.0 and higher) [computer software and manual].
+\newblock R package version 4.0.0 and higher.
+
 \bibitem[Link and Eaton, 2012]{Link2012}
 Link, W.~A. and Eaton, M.~J. (2012).
 \newblock {On thinning of chains in MCMC}.
 \newblock {\em Methods in Ecology and Evolution}, {\bf3},  112--115.
 
+\bibitem[Nimon {\it et~al.}, 2008]{Nimon2008}
+Nimon, K., Lewis, M., Kane, R., and Haynes, R.~M. (2008).
+\newblock {An R package to compute commonality coefficients in the multiple
+  regression case: An introduction to the package and a practical example}.
+\newblock {\em Behavior Research Methods}, {\bf40},  457--466.
+
 \bibitem[{Stan Development Team}, 2016]{rstanarm}
 {Stan Development Team} (2016).
 \newblock rstanarm: {Bayesian} applied regression modeling via {Stan}.
 \newblock R package version 2.13.1.
+
+\bibitem[{Stan Development Team}, 2017]{stanM2017}
+{Stan Development Team} (2017).
+\newblock {\em Stan Modeling Language: User's Guide and Reference Manual}.
 
 \end{thebibliography}
