@@ -14,19 +14,27 @@ opts_chunk$set(
 ) 
 @
 
-\chapter{Other variable importance metrics in the Bayesian framework}
+\chapter{Discussion and Conclusion}
 
-Different variable importance metrics exist. The conditional variance formula allowed us to calculate the $\Rtwo$ of the submodels from the posterior sample of the full model. The focus of this master thesis was on the LMG formula. For each posterior sample the LMG formula can be applied for the submodels of each posterior sample. A lot of the variable importance metrics are based on the $\Rtwo$ of the full model compared to the submodels. Instead of the LMG formula we could as well have used another variable importance metric after we have calculated the $\Rtwo$ of all the submodels. Commonality and dominance analysis seem to be interesting extensions of the LMG framework. Both provide besides the LMG information some other information about the variance decomposition of the predictors. The relaimpo package provides some more bootstrap options like pariwise differences that could also be easily transfered to the Bayesian framework. 
+\section{Other variable importance metrics in the Bayesian framework}
 
-
+Different variable importance metrics exist \citep{Gromping2015}. The focus of this master thesis was on the LMG formula.  A lot of variable importance metrics are based on the $\Rtwo$ of the full model compared to the submodels. Instead of the LMG formula, another variable importance metric could as well be used on the $\Rtwo$ of all  submodels for each posterior sample. Commonality analysis \citep{Nimon2008} and dominance analysis \citep{Gromping2015} seem to be interesting variance decomposition metrics. Both provide some extensions to the LMG framework. Different options exist further for the description of the LMG distribution. The \texttt{relaimpo} package provides for example some more bootstrap options, like pairwise differences, that could easily be transferred to the Bayesian framework. 
  
 \section{Conclusion}
 
-The Bayesian framworks provides us with a nice option to include the uncertainty about parameters. Posterior distributions of the parameters allow us to calculate a distribution of $\Rtwo$ values for each model. Using  the conditional variance formula allowd us to calculate the $\Rtwo$ of all the submodels from the posterior parameter distributions of the full model. Instead of fitting $2^
-{p-1}$ models, only the full model needs to be fitted. Doing it this way has some nice properties. The interdependence of the submodels to each other is respected. The $\Rtwo$ of the submodels does not decrease when adding predictors. The non-negativity of the shares is therefore respected in the LMG formula. This property of using the conditional variance formula is also interesting when the LMG formula is applied to random intercept models fitted by maximum likelihood. 
+The Bayesian frameworks provides the option to include the uncertainty about parameters.  Using  the conditional variance formula allows to calculate the $\Rtwo$ of all the submodels from the posterior parameter distributions of the full model. Instead of fitting $2^{p}-1$ models, only the full model needs to be fitted. The interdependence of the submodels to each other is then automatically respected. The $\Rtwo$ of the submodels does not decrease when adding predictors. The important property of non-negativity shares is then respected in the Bayesian framework.
 
-A disadventage about calculating the $\Rtwo$ of all the submodels with the conditional variance formula  seems to be the restriction to the linear model. Although this may be a topic of further research.
+A disadvantage about calculating the $\Rtwo$ of all the submodels with the conditional variance formula seems to be the restriction to the linear model. Although this may be a topic of further research. A further disadvantage of the Bayesian framework compared to the classical LMG implementation, are the higher computational costs. For non-stochastic predictors, the calculations are possible in a reasonable amount of time. Parallel computing could be used to speed up the calculations. For stochastic predictors, the computation times will be much higher than in the classical framework.
 
-Assuming non-stochastic or stochastic predictors can have a big impact on the the uncertainty of the explained variance and the LMG values. Although the posterior regression parameter distribtuions is the same in both cases (under some assumptions described in chapter ...) the explainened variance of a model is directly dependent on the covarinace matrix. Inference about the covariance of the predictors $\X$ is therefore an important part when stochastic predictors are assumed. However, this does in general not seem to be an easy problem. Non-parametric bootstrap provides a practical solution. 
+Assuming non-stochastic or stochastic predictors can have a big impact in small samples on the the uncertainty of the explained variance and the LMG values. Although the posterior regression parameter distributions is the same in both cases (under some assumptions described in chapter 2), the explained variance of a model is directly dependent on the covariance matrix. Inference about the covariance of the predictors $\X$ is therefore an important part when stochastic predictors are assumed. However, this does in general not seem to be an easy problem. Non-parametric bootstrap provides a practical solution in the Bayesian framework. 
+
+ When the sample size is large enough the classical and the Bayesian framework should lead to very similar values. The Bayesian framework allows to include prior information, that may especially be relevant for small sample sizes. The credible interval of the Bayesian framework, compared to the confidence intervals, may further be easier to interpret in the mathematically correct way.
+ 
+A lot of studies are concerned with within-subject changes. The extension of the LMG formula to those kind of problems is not straightforward. It is depending on the complexity of the data. However, for the simple random intercept model the extension seems to be easily possible when the focus is on the fixed effects. In the Bayesian and maximum likelihood framework it seems reasonable to compare only the explained variance of the fixed effects of the submodels against the total variance, containing $\sigma_{f}^2 + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2$. Otherwise, there may be problems with the non-negativity property of the shares. 
+
+
+
+
+
 
 

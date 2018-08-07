@@ -1,0 +1,15 @@
+\begin{thebibliography}{}
+
+\bibitem[Gr{\"{o}}mping, 2015]{Gromping2015}
+Gr{\"{o}}mping, U. (2015).
+\newblock {Variable importance in regression models}.
+\newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
+  {\bf7},  137--152.
+
+\bibitem[Nimon {\it et~al.}, 2008]{Nimon2008}
+Nimon, K., Lewis, M., Kane, R., and Haynes, R.~M. (2008).
+\newblock {An R package to compute commonality coefficients in the multiple
+  regression case: An introduction to the package and a practical example}.
+\newblock {\em Behavior Research Methods}, {\bf40},  457--466.
+
+\end{thebibliography}
