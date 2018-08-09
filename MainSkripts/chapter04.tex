@@ -66,6 +66,12 @@
 
 
 
+
+
+
+
+
+
 \chapter{Extension to longitudinal data}
 
 In the following chapter some extensions of the LMG formula beyond the simple linear regression model are shown. The focus is on repeated measurements models. These models extend the simple linear regression by allowing intra-subject correlation between repeated measures.
@@ -114,8 +120,13 @@ where $\beta_{1} = 1 \,$,  $\beta_{2} = 1 \,$,   $\beta_{3} = 2 \,$  $\beta_{4}=
 
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/ch04_fig_repeated_plot_ri-1} \caption[Individual trajectories of simulated random intercept model]{Individual trajectories of simulated random intercept model}\label{fig:.repeated.plot.ri}
+\definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{figure}
+
+{\centering \includegraphics[width=\textwidth-3cm]{figure/ch04_fig_repeated_plot_ri-1} 
+
+}
+
+\caption[Individual trajectories of simulated random intercept model]{Individual trajectories of simulated random intercept model}\label{fig:.repeated.plot.ri}
 \end{figure}
 
 
@@ -132,6 +143,8 @@ In my opinion we can get more useful information from separating the between-sub
 
 
 
+
+
 \begin{table}[h]
 \caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
 \centering
@@ -139,10 +152,10 @@ In my opinion we can get more useful information from separating the between-sub
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.202 (0.2, 0.203)  & 0.525 (0.523, 0.526)   & 0.727 (0.723, 0.73)  \\ 
-x2 & 0.21 (0.208, 0.211)  & 0.538 (0.536, 0.539)   & 0.747 (0.744, 0.751)  \\ 
-x3 & 0.297 (0.296, 0.299)  & 0.658 (0.658, 0.658)   & 0.955 (0.954, 0.957)  \\ 
-x4 & 0.291 (0.29, 0.292)  & 0.651 (0.65, 0.651)   & 0.942 (0.94, 0.943)  \\ 
+x1 & 0.196 (0.195, 0.198)  & 0.499 (0.497, 0.5)   & 0.695 (0.691, 0.698)  \\ 
+x2 & 0.195 (0.194, 0.197)  & 0.489 (0.487, 0.491)   & 0.684 (0.681, 0.688)  \\ 
+x3 & 0.304 (0.303, 0.306)  & 0.649 (0.648, 0.649)   & 0.953 (0.951, 0.955)  \\ 
+x4 & 0.304 (0.302, 0.305)  & 0.647 (0.647, 0.647)   & 0.951 (0.949, 0.952)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeatedcormod}
@@ -158,10 +171,10 @@ x4 & 0.291 (0.29, 0.292)  & 0.651 (0.65, 0.651)   & 0.942 (0.94, 0.943)  \\
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.108 (0.046, 0.172)  & 0.238 (0.116, 0.35)   & 0.346 (0.163, 0.522)  \\ 
-x2 & 0.089 (0.046, 0.127)  & 0.229 (0.116, 0.329)   & 0.318 (0.162, 0.456)  \\ 
-x3 & 0.113 (0.06, 0.161)  & 0.272 (0.139, 0.391)   & 0.385 (0.199, 0.551)  \\ 
-x4 & 0.115 (0.061, 0.163)  & 0.27 (0.137, 0.387)   & 0.385 (0.199, 0.55)  \\ 
+x1 & 0.043 (0.018, 0.093)  & 0.117 (0.019, 0.241)   & 0.159 (0.04, 0.333)  \\ 
+x2 & 0.067 (0.03, 0.113)  & 0.146 (0.06, 0.256)   & 0.212 (0.091, 0.367)  \\ 
+x3 & 0.093 (0.042, 0.156)  & 0.186 (0.076, 0.327)   & 0.279 (0.12, 0.481)  \\ 
+x4 & 0.097 (0.045, 0.161)  & 0.186 (0.075, 0.328)   & 0.282 (0.122, 0.486)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeatedcormod.tot}
@@ -188,8 +201,13 @@ In the variance calculation we need to take into account that we do not have jus
 
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{figure}
-\includegraphics[width=\maxwidth]{figure/ch04_figsimdata_repeated_unstruct_plot-1} \caption[Individual trajectories of simulated data with unstructured error covariance matrix]{Individual trajectories of simulated data with unstructured error covariance matrix}\label{fig:simdata.repeated.unstruct.plot}
+\definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{figure}
+
+{\centering \includegraphics[width=\textwidth-3cm]{figure/ch04_figsimdata_repeated_unstruct_plot-1} 
+
+}
+
+\caption[Individual trajectories of simulated data with unstructured error covariance matrix]{Individual trajectories of simulated data with unstructured error covariance matrix}\label{fig:simdata.repeated.unstruct.plot}
 \end{figure}
 
 
@@ -207,10 +225,10 @@ The individual trajectories are shown in Figure~\ref{fig:simdata.repeated.unstru
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.141 (0.113, 0.165)  & 0.362 (0.302, 0.408)   & 0.503 (0.418, 0.572)  \\ 
-x2 & 0.136 (0.11, 0.162)  & 0.351 (0.289, 0.399)   & 0.487 (0.399, 0.56)  \\ 
-x3 & 0.205 (0.169, 0.235)  & 0.441 (0.368, 0.492)   & 0.646 (0.537, 0.727)  \\ 
-x4 & 0.209 (0.172, 0.241)  & 0.442 (0.369, 0.494)   & 0.652 (0.543, 0.731)  \\ 
+x1 & 0.157 (0.132, 0.18)  & 0.386 (0.331, 0.423)   & 0.544 (0.465, 0.603)  \\ 
+x2 & 0.166 (0.137, 0.192)  & 0.394 (0.34, 0.431)   & 0.56 (0.479, 0.622)  \\ 
+x3 & 0.218 (0.183, 0.24)  & 0.488 (0.418, 0.525)   & 0.705 (0.602, 0.762)  \\ 
+x4 & 0.219 (0.188, 0.242)  & 0.489 (0.421, 0.527)   & 0.709 (0.609, 0.768)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeated.unstructured}

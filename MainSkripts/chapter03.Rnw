@@ -10,36 +10,34 @@ library(knitr); library(hier.part); library(rstanarm);  library(GGally); library
 
 opts_chunk$set(
     fig.path='figure/ch03_fig', 
-    self.contained=FALSE,
-    cache=TRUE
+               echo=TRUE, message=FALSE,
+               fig.width=7, fig.height=7,  
+               out.width='\\textwidth-3cm',
+               message=FALSE, fig.align='center',
+               background="gray98", tidy=FALSE, #tidy.opts=list(width.cutoff=60),
+               cache=TRUE
 ) 
 
 options(digits =3)
-#function to calculate R2 data frame
+
+@
+
+<<'LMGfunction',include=FALSE, tidy=TRUE>>=
+
 rtwos<-function(X, post.sample){
   # X: Predictor data as data frame
   # post.sample: posterior sample as matrix (M[sample_i,]), last position should be sigma paramater. 
-  
   X <- cov(X) #covariance matrix
-  
   #Prepare data frame and rownames by using the combn() function
-  
   lst <- list()
-  
   pcan <- dim(X)[2]
   n <- (2^pcan)-1
-  
   for (i in 1:pcan){
     lst[[i]] <- combn(pcan,i)
   }
-  
   var.names <- character(length = 0)
-  
   v<- rownames(X)
-  
-  for(i in 1:length(lst))
-  {
-    
+  for(i in 1:length(lst)){
     for (j in 1:ncol(lst[[i]])){
       cur<- lst[[i]][,j]
       name <- paste0(v[-cur])
@@ -47,53 +45,39 @@ rtwos<-function(X, post.sample){
       var.names <- c(var.names, name)
     }
   }
-  
   var.names<-c(rev(var.names), 'all')
-  
   var.names[1]<-'none'
-  
   size <- nrow(post.sample)  # how many samples
-  
   sig.posi <- ncol(post.sample)
-  
   df.Rtwos<-data.frame(matrix(0,n+1,size))
-  
   row.names(df.Rtwos) <- var.names
-  
-  ########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
-  
+  #fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional variance formula.
   v <- 1:dim(X)[2]
-  
   for (s in 1:size){
-    
     sample.s <- post.sample[s,-sig.posi]
-    
     Vtot <- sample.s%*%X%*%sample.s  #total explained variance
-    
     count=n  
-    
-    for(i in 1:(length(lst)-1))
-    {
-      
+    for(i in 1:(length(lst)-1)){
       for (j in 1:ncol(lst[[i]])){
         cur <- lst[[i]][,j]
         set <- v[-cur]
-        matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
-        var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+        matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance formula
+        var.explain<- sample.s[cur]%*%matr%*%sample.s[cur] 
         df.Rtwos[count,s] <- Vtot - var.explain  
         count=count-1
       }
     }
-    
     df.Rtwos[n+1,s] <- Vtot
-    
-    df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot+post.sample[s,sig.posi]^2) #total variance + sigma^2 (post sample[s])
+    df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot+post.sample[s,sig.posi]^2) 
   }
-  
   return(df.Rtwos)
 }
 
+@
 
+<<'LMGfunction.boot',include=FALSE, tidy=TRUE>>=
+
+#helper function to calculate covariance bootstrap sample
 
 bootcov <- function(df, boot.n){
 	len <- nrow(df)
@@ -111,10 +95,11 @@ bootcov <- function(df, boot.n){
 
 
 #Function that includes uncertainty about stochastic predictors by bootstrapping using bootcov
-#n is the number of bootstrap samples it should calculate
+# boot.n is the number of bootstrap samples
 # takes boot.n times longer to calculate. 
+
 rtwos.boot<-function(df, post.sample, boot.n){
-	# X: Predictor data as data frame
+	# df: Predictor data as data frame
 	# post.sample: posterior sample as matrix (M[sample_i,]), last position should be sigma paramater. 
 	
 	X <- cov(df) #covariance matrix
@@ -166,7 +151,7 @@ rtwos.boot<-function(df, post.sample, boot.n){
 		
 		X <- boot.M[,,b]
 	
-	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional variance formula.
 	
 	for (s in 1:size){
 		
@@ -182,8 +167,8 @@ rtwos.boot<-function(df, post.sample, boot.n){
 			for (j in 1:ncol(lst[[i]])){
 				cur <- lst[[i]][,j]
 				set <- v[-cur]
-				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
-				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance 
+				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur] 
 				df.Rtwos[count,s,b] <- Vtot - var.explain  
 				count=count-1
 			}
@@ -191,18 +176,23 @@ rtwos.boot<-function(df, post.sample, boot.n){
 		
 		df.Rtwos[n+1,s,b] <- Vtot
 		
-		df.Rtwos[,s,b] <- df.Rtwos[,s,b]/c(Vtot+post.sample[s,sig.posi]^2) #total variance + sigma^2 (post sample[s])
+		df.Rtwos[,s,b] <- df.Rtwos[,s,b]/c(Vtot+post.sample[s,sig.posi]^2)
 	}
 	
 	}
 	return(df.Rtwos)
 }
 
+@
 
-#Function to include samples of the predictor covariance matrix.
+<<'LMGfunction.covm',include=FALSE, tidy=TRUE>>=
+
+#Function to include samples of the predictor covariance matrix
+#boot.n = number of samples
+#covm = posterior sample of covariance matrix
 
 rtwos.covm<-function(df, post.sample, covm, boot.n){
-	# X: Predictor data as data frame
+	# df: Predictor data as data frame
 	# post.sample: posterior sample as matrix (M[sample_i,]), last position should be sigma paramater. 
 	
 	X <- cov(df) #covariance matrix
@@ -269,8 +259,8 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 				for (j in 1:ncol(lst[[i]])){
 					cur <- lst[[i]][,j]
 					set <- v[-cur]
-					matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
-					var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+					matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance 
+					var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  
 					df.Rtwos[count,s,b] <- Vtot - var.explain  
 					count=count-1
 				}
@@ -278,7 +268,7 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 			
 			df.Rtwos[n+1,s,b] <- Vtot
 			
-			df.Rtwos[,s,b] <- df.Rtwos[,s,b]/c(Vtot+post.sample[s,sig.posi]^2) #total variance + sigma^2 (post sample[s])
+			df.Rtwos[,s,b] <- df.Rtwos[,s,b]/c(Vtot+post.sample[s,sig.posi]^2) 
 		}
 		
 	}
@@ -290,26 +280,22 @@ rtwos.covm<-function(df, post.sample, covm, boot.n){
 
 \chapter{Examples}
 
-The following chapter presents the Bayesian LMG implementation on two examples. Simulated data is used for the first example. Empirical data is used for the second example.
+The following chapter presents the Bayesian LMG implementation by two examples. Simulated data is used for the first example. Empirical data is used for the second example.
 
 \section{Simulated Data}
 
 We assume a simple model for the first example: 
-
 \begin{align*} 
 &Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \, \sigma^2),& \\ & \beta_{1} = 0.5, , \beta_{2} = 1, \, \beta_{3} = 2 , \, \beta_{4}=0, \, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
 \end{align*} 
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled. The data generating R-code~\ref{r03:simdata.ex1} can be found in the Appendix.
 
-The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled.
-
-The following Code was used to simulate the data :
-
-<<'simudata.example'>>=
+<<'simudata.example', include=FALSE>>=
 
 x1 <- rnorm(50, 0, 1); x2 <- rnorm(50, 0, 1)
 x3 <- rnorm(50, 0, 1); x4 <- rnorm(50, 0, 1)
-b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8
-#b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1
+#b1 <- 0.5; b2 <- 1; b3 <- 2; b4 <- 0.8
+b1 <- 1; b2 <- 1; b3 <- 1; b4 <- 1
 
 y <- b1*x1 + x2*b2 + b3*x3 + b4*x4 + rnorm(50, 0, 1) 
 
@@ -318,11 +304,13 @@ df <- data.frame(y = y, x1 = x1, x2 = x2, x3 = x3, x4 = x4)
 @
 
 
-The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters. These default priors are called weakly informative priors, because they take into account the order of magnitude of the variables by using variance of the observed data. Information about these priors can be found in \cite{stanM2017}. A burn-in period of 1000, a sample size of 20000 and a thinning of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
+The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters. The exact command can be found in R-code~\ref{r03:model.ex1} These default priors are called 'weakly informative priors', because they take into account the order of magnitude of the variables by using the variance of the observed data. Information about these priors can be found in \cite{stanM2017}. A burn-in period of 20000, a sample size of 20000, and a thinning of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
 
-For each posterior sample of the parameters the $\Rtwo$ value is calculated. The $\Rtwo$ of the submodels is then calculated by the conditional variance formula for each posterior sample. The resulting $\Rtwo$ values of the first few posterior samples is shown in Table~\ref{tab:simdata.postsample3}.  The thinning makes sense in this case to reduce the computational burden and still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
+For each posterior sample of the parameters, the $\Rtwo$ value was calculated. The $\Rtwo$ of the submodels was then calculated by the conditional variance formula for each posterior sample. The R-code is found in \ref{r03:LMG}. The resulting $\Rtwo$ values of the first few posterior samples are shown in Table~\ref{tab:simdata.postsample3}.  The thinning is reasonable in this case to reduce the computational burden and to still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
 
-The \texttt{hier.part} package is used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the predictor-only model (T). Assuming stochastic or non-stochastic regressors has an influence on the uncertainty. First, non-stochastic regressors are assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework are very similar to the bootstrap confidence intervals assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
+The \texttt{hier.part} package was used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table~\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the model containing only the predictor itself (T). Assuming stochastic or non-stochastic regressors has an influence on the uncertainty of the LMG values. 
+
+At first, non-stochastic regressors were assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework were very similar to the bootstrap confidence intervals, assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
 
 
 
@@ -359,7 +347,7 @@ kable(df.rtwos[,1:6], format = 'latex', booktabs=TRUE, linesep = c("", "", "", "
 @
 
 
-<<'simdata.LMG', cache=FALSE, include=FALSE>>=
+<<'simdata.LMG', cache=FALSE, include=FALSE, tidy=TRUE>>=
 
 # prepare data frame for LMG values
 
@@ -390,15 +378,6 @@ quantile(LMG.Vals.I[2,], c(0.025, 0.5, 0.975))
 quantile(LMG.Vals.I[3,], c(0.025, 0.5, 0.975))
 quantile(LMG.Vals.I[4,], c(0.025, 0.5, 0.975))
 
-quantile(LMG.Vals.J[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.J[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.J[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.J[4,], c(0.025, 0.5, 0.975))
-
-quantile(LMG.Vals.T[1,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.T[2,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.T[3,], c(0.025, 0.5, 0.975))
-quantile(LMG.Vals.T[4,], c(0.025, 0.5, 0.975))
 
 # some example how it could be displayed
 dat <- data.frame(t(LMG.Vals.I))
@@ -424,6 +403,11 @@ ci <- as.matrix(ci)
 ci <- matrix(as.numeric(ci), 4 , 3)
 colnames(ci) <- c('LMG', 'l.b', 'u.b')
 rownames(ci) <- c('X1', 'X2', 'X3', 'X4')
+
+
+@
+
+<<'simdata.LMG.sto', cache=FALSE, include=FALSE>>=
 
 #Code assuming stochastic predictors
 run.stochastic<-boot.relimp(fit, fixed=FALSE)
@@ -484,7 +468,9 @@ pairs.chart
 \FloatBarrier
 
 
-In this example we know that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. As an alternative non-parametric bootstrap was used for inference about the covariance matrix. Both approaches resulted in very similar LMG values. Using the default priors further resulted in very similar LMG values as the non-parametric bootstrap option of the relaimpo package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix resulted in very similar LMG values. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known, the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge about the covariance matrix. For stochastic predictors, compared to non-stochastic predictors, the uncertainty about the covariance matrix is reflected in the larger credible intervals . Even when we would knew the exact regression parameters, there is a lot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
+In this example, we know, that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. As an alternative, non-parametric bootstrap was used for inference about the covariance matrix. 
+
+Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix produced  very similar LMG distributions. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known, the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge about the covariance matrix. Using the default priors further produced very similar LMG distribution as using the non-parametric bootstrap option of the \texttt{relaimpo} package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. For stochastic predictors, in contrast to non-stochastic predictors, the uncertainty about the covariance matrix is reflected in the larger credible intervals. Even when the exact regression parameters were known, there would a lot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
 
 <<'simdata.LMG.boot', include=FALSE, cache =TRUE>>=
 
@@ -536,7 +522,7 @@ cor(dat.b)
 
 
 
-<<'simdata.LMG.cov', include=FALSE, cache=TRUE>>=
+<<'simdata.LMG.cov', include=FALSE, cache=TRUE, tidy=TRUE>>=
 
 zy = df[,2:5]
 
@@ -544,20 +530,13 @@ zy = df[,2:5]
 # In the following example we know that the $\X$ are coming from a normal distribution. The covariance matrix of the distribution is estimated in aBayesian way. The package Jags is used.
 #----------------------------------------------------------------------------
 
-# Load some functions used below:
-# Install the ellipse package if not already:
-# Standardize the data:
-
-#zy = apply(y,2,function(yVec){(yVec-mean(yVec))/sd(yVec)})
 # Assemble data for sending to JAGS:
 dataList = list(
 	zy = zy ,
 	Ntotal =  nrow(zy) ,
 	Nvar = ncol(zy) ,
-	# Include original data info for transforming to original scale:
-	# For wishart (dwish) prior on inverse covariance matrix:
 	zRscal = ncol(zy) ,  # for dwish prior
-	zRmat = diag(x=1,nrow=ncol(zy))  # Rmat = diag(apply(y,2,var))
+	zRmat = diag(x=1,nrow=ncol(zy))  
 )
 
 # Define the model:
@@ -721,14 +700,14 @@ cov.shrink(df[,2:5])
 \clearpage
 
 \section{Empirical Data}
-In the following section, the Bayesian LMG implementation is applied on an empirical dataset containing test scores of pupils (N = 301) from a study by \cite{Holzinger1939} available in the R package \texttt{MBESS} \citep{MBESS}. This dataset was used in \cite{Nimon2008} to present commonality analysis, which is another variance decomposition technique. Scores from a paragraph comprehension test (paragrap) was predicted by four verbal tests:  general-information (general),  sentence-comprehension (sentence) ,  word-classification (wordc), and  word-meaning (wordm) (Table~\ref{table:hs.data}). 
+In the following section, the Bayesian LMG implementation is applied on an empirical dataset containing test scores of pupils (N = 301) from a study by \cite{Holzinger1939} available in the R package \texttt{MBESS} \citep{MBESS}. This dataset was used in \cite{Nimon2008} to present commonality analysis, which is another variance decomposition technique. Scores from a paragraph comprehension test (paragrap) were predicted by four verbal tests:  general-information (general),  sentence-comprehension (sentence) ,  word-classification (wordc), and  word-meaning (wordm) (Table~\ref{table:hs.data}). 
 
-The aim of the regression analysis  was to determine the strength of association between verbal ability and paragraph comprehension.  
-An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results of the paragraph comprehension scores on the verbal test scores are shown Table~\ref{tbl:empirical.reg}). A novice researcher may wrongly conclude, that there is little association between the \textit{non-significant} predictors (general information and word classification) and paragraph comprehension. Given the other predictors are already included in the model, the predictors seem not to provide us much information about the expected paragraph comprehension ability. However, we can not conclude out of this regression table, that the association between any of these \textit{non-significant} predictors and the dependent variable is unimportant. We see in Figure~\ref{fig:empi.lmg.plot} that the correlations between the predictors is rather high. The LMG metric may therefore provide us some new information about the importance of each predictor. 
+The aim of the regression analysis was to determine the  association between verbal ability and paragraph comprehension.  
+An overview of the data is shown in Figure~\ref{fig:empi.lmg.plot}. The regression results are shown in Table~\ref{tbl:empirical.reg}). A novice researcher may wrongly conclude, that there is little association between the "non-significant" predictors (general information and word-classification) and paragraph comprehension. Given the other predictors are already included in the model, the predictors seem not to provide  much information about the expected paragraph comprehension ability. However, it should not be concluded from this regression table, that the association between any of these "non-significant" predictors and the dependent variable is unimportant. As shown in Figure~\ref{fig:empi.lmg.plot}, the correlations between the predictors are rather high. The LMG metric may therefore provide new information about the importance of each predictor. 
 
-The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficients and the $\sigma^2$ parameter. A burn-in period of 20000, a sample size of 20000 and a thinning of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of of these posterior samples is shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The  independent component (I), joint contribution (J) and total explained variance in a predictor-only model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by the LMG metric. However, none of the predictors seem to be unimportant.  The joint contributions of each predictor is quite large.
+The Bayesian regression model was fitted in \texttt{rstanarm}. The default priors were used for the regression coefficients and the $\sigma^2$ parameter. A burn-in period of 20000, a sample size of 20000, and a thinning of 20 resulted in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:empirical.data.postsample2}. The resulting $\Rtwo$ of these posterior samples are shown in Table~\ref{tab:empirical.data.postsample3}. The LMG values were calculated by using \texttt{hier.part}. The  independent component (I), joint contribution (J), and total explained variance in a one-predictor model (T) are shown in Table~\ref{tbl:empirical.ijt}. Sentence-comprehension and word-meaning seem to be the most important predictors by applying the LMG metric. However, none of the predictors seem to be unimportant.  The joint contributions of each predictor were quite large.
 
-For comparison purposes, the LMG metric was additionally calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} are almost identical to the credible intervals of the Bayesian framework (Table~\ref{tbl:empirical.relaimp.comp}). Assuming stochastic or non-stochastic predictors would also result in almost identical uncertainty estimates with such a large sample size (Table\ref{tbl:empirical.relaimp.comp.stoch}). 
+For comparison purposes, the LMG metric was additionally calculated with the \texttt{relaimpo} package using parametric bootstrapping. The confidence intervals of  \texttt{relaimpo} were almost identical to the credible intervals of the Bayesian framework (Table~\ref{tbl:empirical.relaimp.comp}). Assuming stochastic or non-stochastic predictors resulted also in almost identical uncertainty estimates with such a large sample size (Table\ref{tbl:empirical.relaimp.comp.stoch}). 
 
 
 
@@ -982,3 +961,7 @@ cor(dat.b)
 \end{tabular}
 \label{tbl:empirical.relaimp.comp.stoch}
 \end{table}
+
+
+
+

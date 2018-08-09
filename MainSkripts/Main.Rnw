@@ -8,21 +8,6 @@
 \DeclareGraphicsExtensions{.pdf,.png}
 \setcounter{tocdepth}{1}
 
-\thispagestyle{empty}
-\begin{center}
-\vspace*{6cm}{\bfseries\Huge
-  $p$-values:\\[5mm] their use, abuse and proper use \\[5mm]
-  illustrated with seven facets 
-}
-\vfill
-\rm
-
-\LARGE
-M\"axli Musterli\\[12mm]
-
-\normalsize
-Version \today
-\end{center}
 \newpage
 \thispagestyle{empty}~
 \newpage
@@ -37,7 +22,8 @@ Version \today
 \addcontentsline{toc}{chapter}{\bfseries{Preface}}
 \thispagestyle{plain}\markboth{Preface}{Preface}
 
-Howdy!
+
+\textit{Wenns scheisse l\"auft, l\"aufts scheisse!} Kahn O.
 
 \bigskip
 
@@ -70,15 +56,67 @@ June 2018
 <<'child-chapter05', child='chapter05.Rnw'>>=
 @
 
-<<'child-chapter06', child='chapter06.Rnw'>>=
-@
 
 \cleardoublepage
 
 \appendix
-\chapter{Formula}
-<<all-code-appendix, ref.label=all_labels(), echo=TRUE, eval=FALSE, tidy=TRUE>>=
-@
+
+
+\chapter{Some additional notes}
+
+The eror term in the by \cite{Gelman2017} proposed definition of the $\Rtwo$ is defined as $\var(\sum_{i=1}^{n}e^s_{n})$. I think we could also use $ \sum(y - \hat{y}^s)^2/(n-1) $ as an estimate for the error. For the maximum likelihood estimate $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $. This is because the mean of the residuals is 0. When  samples of the posterior parameters are used, the mean of the residuals is not excatly zero. $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $ is than a little bit bigger than $\var(y_{i} - \hat{y_{i}}). $ In practice the values should only differ by a very small amount. We do not expect the errors to have a systematic bias. However, the residuals are just a sample of the error. The mean of the residuals must not be excatly 0 when the samples of the posteriors are used for the regression coefficients.   
+
+
+
+\section{Code used in chapter 3}
+The data of the first example of chapter 3 were generated with R-Code~\ref{r03:simdata.ex1}
+
+\clearpage
+
+
+\begin{codeenv}
+
+\captionof{rcode}{Data generation of example 1 chapter 3}\label{r03:simdata.ex1}
+
+<<r03:simdata.ex1, ref.label='simudata.example', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+
+\end{codeenv}
+
+\vspace{15mm}
+
+\begin{codeenv}
+\caption{Bayesian regression model for example 1}\label{r03:model.ex1}
+<<r03:model.ex1, ref.label='simdata.postsample', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+
+\vspace{15mm}
+
+
+\begin{codeenv}
+\caption{Function to get $\Rtwo$ from posterior samples of the full model}\label{r03:LMG}
+<<r03:LMG, ref.label='LMGfunction', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+
+\vspace{15mm}
+
+\begin{codeenv}
+\caption{Bayesian regression model for example 1}\label{r03:LMG.boot}
+<<r03:LMG.boot, ref.label='LMGfunction.boot', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+
+\vspace{15mm}
+
+
+\begin{codeenv}
+
+\caption{Bayesian regression model for example 1}\label{r03:LMG.covm}
+<<r03:LMG.covm, ref.label='LMGfunction.covm', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
 
 
 \phantomsection

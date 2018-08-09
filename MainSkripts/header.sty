@@ -88,6 +88,31 @@
 
 %%%%%%%%
 
+% New floats, similar to RF script, as requested.
+% see also http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#placement
+\floatstyle{ruled}
+\newfloat{rchunk}{thp}{lop}[chapter]
+\floatname{rchunk}{\kern8pt\raisebox{-1.5mm}[4mm]{\,}R-Code}
+\captionsetup[rchunk]{margin=0pt}
+
+\newcommand{\rchunklong}[2]{%
+\bigskip%
+%\hrule\captionof{rchunk}{#2}\label{r#1}
+\hrule\captionsetup{type=rchunk}\caption{#2}\label{#1}
+\vspace*{-10.5pt}\hrule\vspace*{1mm}}
+% from sta111
+%\vbox{\hrule\nobreak\captionof{rchunk}{#2}\label{r#1}
+%\vspace*{-10.5pt}\nobreak\hrule\nobreak\vspace*{-8.5pt}\nobreak%
+%}}
+
+\usepackage{caption}
+
+\DeclareCaptionType{rcode}[R-Code][List of rcode]
+\newenvironment{codeenv}{\hrule\captionsetup{type=rcode}
+ \vspace*{-20.5pt}\hrule\vspace*{1mm}}{}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % now math stuff and other details...
 \usepackage{amsmath,amsthm,amssymb}

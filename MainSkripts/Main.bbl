@@ -18,6 +18,11 @@ Chevan, A. and Sutherland, M. (1991).
 \newblock {Hierarchical partitioning}.
 \newblock {\em American Statistician}, {\bf45},  90--96.
 
+\bibitem[Fitzmaurice {\it et~al.}, 2011]{Fitzmaurice2011}
+Fitzmaurice, G.~M., Laird, N.~M., and Ware, J.~H. (2011).
+\newblock {\em {Applied longitudinal analysis}}.
+\newblock Wiley.
+
 \bibitem[Gelman {\it et~al.}, 2017]{Gelman2017}
 Gelman, A., Goodrich, B., Gabry, J., and Ali, I. (2017).
 \newblock {R-squared for Bayesian regression models *}.

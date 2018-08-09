@@ -9,12 +9,20 @@ library(knitr); library(ggplot2); library(rjags);  library(MASS); library(hier.p
 
 opts_chunk$set(
     fig.path='figure/ch04_fig', 
-    self.contained=FALSE,
-    cache=FALSE
+               echo=TRUE, message=FALSE,
+               fig.width=8, fig.height=4,  
+               out.width='\\textwidth-3cm',
+               message=FALSE, fig.align='center',
+               background="gray98", tidy=FALSE, #tidy.opts=list(width.cutoff=60),
+               cache=TRUE
+    
 ) 
+options(width=74)
 
 options(digits =3)
+@
 
+<<'rtwo.ri.r',include=FALSE, tidy=TRUE>>=
 
 #function to calculate R2 data frame from random intercept model
 # rtwos for repeated measurement
@@ -67,7 +75,7 @@ rtwos.ri.r<-function(X, post.sample){
 	
 	
 	
-	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional variance formula.
 	
 	v <- 1:dim(X)[2]
 
@@ -85,7 +93,7 @@ rtwos.ri.r<-function(X, post.sample){
 			for (j in 1:ncol(lst[[i]])){
 				cur <- lst[[i]][,j]
 				set <- v[-cur]
-				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
+				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance formula
 				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
 				df.Rtwos[count,s] <- Vtot - var.explain  
 				count=count-1
@@ -100,7 +108,9 @@ rtwos.ri.r<-function(X, post.sample){
 	return(df.Rtwos)
 }
 
+@
 
+<<'rtwo.ri.r.a',include=FALSE, tidy=TRUE>>=
 
 rtwos.ri.a<-function(X, post.sample){
 	# X: Predictor data as data frame
@@ -148,7 +158,7 @@ rtwos.ri.a<-function(X, post.sample){
 	
 	row.names(df.Rtwos) <- var.names
 	
-	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional variance formula.
 	
 	  v <- 1:dim(X)[2]
 
@@ -166,8 +176,8 @@ rtwos.ri.a<-function(X, post.sample){
 			for (j in 1:ncol(lst[[i]])){
 				cur <- lst[[i]][,j]
 				set <- v[-cur]
-				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
-				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance formula
+				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  
 				df.Rtwos[count,s] <- Vtot - var.explain  
 				count=count-1
 			}
@@ -175,13 +185,16 @@ rtwos.ri.a<-function(X, post.sample){
 		
 		df.Rtwos[n+1,s] <- Vtot
 		
-		df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot+post.sample[s,sig.posi]^2 +post.sample[s,subj.posi]^2 ) #total variance + sigma^2 + random intercept variance
+		df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot+post.sample[s,sig.posi]^2 +post.sample[s,subj.posi]^2 ) 
+		#total variance + sigma^2 + random intercept variance
 	}
 	
 	return(df.Rtwos)
 }
 
+@
 
+<<'rtwo.marg',include=FALSE, tidy=TRUE>>=
 
 rtwos.marg<-function(X, post.sample, m){
 	
@@ -228,7 +241,7 @@ rtwos.marg<-function(X, post.sample, m){
 	
 	row.names(df.Rtwos) <- var.names
 	
-	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional expectation formula.
+	########### fill in R^2 matrix, use posterior samples and calculate submodels according to the conditional variance formula.
 	v <- 1:dim(X)[2]
 
 	
@@ -246,8 +259,8 @@ rtwos.marg<-function(X, post.sample, m){
 			for (j in 1:ncol(lst[[i]])){
 				cur <- lst[[i]][,j]
 				set <- v[-cur]
-				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional expectation formula, how much variance is explained by the predictors that are not included in the model and that is not explained by other predictors
-				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  #multiply by parameter sample
+				matr <- X[cur, cur] - X[cur, set]%*%solve(X[set, set])%*%X[set, cur]  #conditional variance formula
+				var.explain<- sample.s[cur]%*%matr%*%sample.s[cur]  
 				df.Rtwos[count,s] <- Vtot - var.explain  
 				count=count-1
 			}
@@ -255,7 +268,8 @@ rtwos.marg<-function(X, post.sample, m){
 		
 		df.Rtwos[n+1,s] <- Vtot
 		
-		df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot + sum(post.sample[s,sig.posi] )) #total variance + sigma^2 + random intercept variance
+		df.Rtwos[,s] <- df.Rtwos[,s]/c(Vtot + sum(post.sample[s,sig.posi] )) 
+		#total explained variance + diag(SIGMA)
 	}
 	
 	return(df.Rtwos)
@@ -364,6 +378,10 @@ In my opinion we can get more useful information from separating the between-sub
 fit <- stan_glmer(y ~ x1+x2+x3+x4 + (1|sub) ,
 									data = df, 
 									chains = 4, cores = 4)
+
+@
+
+<<'simdata.repeated.mods', include=FALSE, cache=TRUE>>=
 
 post.sample <- as.matrix(fit)
 post.sample.r <- post.sample[,c(2:5,(ncol(post.sample)-1):ncol(post.sample))]
