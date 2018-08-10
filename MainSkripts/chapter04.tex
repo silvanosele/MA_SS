@@ -74,12 +74,13 @@
 
 \chapter{Extension to longitudinal data}
 
-In the following chapter some extensions of the LMG formula beyond the simple linear regression model are shown. The focus is on repeated measurements models. These models extend the simple linear regression by allowing intra-subject correlation between repeated measures.
+Some extensions of the LMG formula beyond the simple linear regression model are shown in the following chapter. The focus is on repeated measures model. These models extend the simple linear regression by allowing intra-subject correlation between repeated measures.
 
-The dependence of within-subject measurements can be modeled by including random effects (mixed model) or by assuming correlated errors within a subject (marginal model). A mixed model can be extended by including a random slope per subject, allowing for less restrictive longitudinal shapes. The marginal approach can get more freedom by different specified covariance matrices of the error terms. An unstructured covariance matrix, where no restriction are imposed, allows for the most freedom. However, depending on the number of repeated measurements and the sample size the covariance matrix can get too large to make reasonable inference about it \citep{Fitzmaurice2011}. 
+The dependence of within-subject measurements can be modeled by including random effects (mixed model) or by assuming correlated errors within a subject (marginal model). A mixed model can be extended by including a random slope per subject, allowing for less restrictive longitudinal shapes. Different covariance matrices of the error terms allow for less restrictions in the marginal approach. An unstructured covariance matrix, where no restriction are imposed, allows for the most freedom in the error term. However, depending on the number of repeated measurements and the sample size, the covariance matrix can get too large to make reasonable inference about it \citep{Fitzmaurice2011}. 
 
-The extension of the LMG formula in the Bayesian framework to longitudinal models is restricted to models where the conditional variance formula can  be applied to get the explained variance of the submodel from the regression parameters of the full model. The focus is therefore on the fixed predictors and not on the random effects. The conditional variance formula can be used in the marginal models, where only the fixed effects are modeled anyway. In the mixed model framework, the conditional variance formula is applicable to random intercepts models. For random-slope models there are at least some difficulties involved, if it is possible at all, to get the explained variance of the submodel. This chapter shows the Bayesian LMG Implementation on a random intercept model and on a repeated measurement model with an unstructured covariance matrix.  
+The extension of the LMG formula in the Bayesian framework applied to longitudinal models is restricted to models where the conditional variance formula can  be applied to get the explained variance of the submodel from the regression parameters of the full-model. Therefore, the focus is on the fixed predictors, but not on the random effects. The conditional variance formula can be used in the marginal models, because only the fixed effects are modeled anyway. In the mixed model framework, the conditional variance formula is applicable to random intercept models. For random-slope models, there are at least some difficulties involved - if it is possible at all - to get the explained variance of the submodels. 
 
+In this chapter, the Bayesian LMG Implementation is shown on a random intercept model and on a repeated measurement model with an unstructured covariance matrix.  
 
 \section{Random intercept model}
 The first example concerns a simple random intercept model with time-varying predictors.  Different $\Rtwo$ metrics exist for linear mixed models. The variance of a random intercept model with regression parameter $\bbeta$ can be written as
@@ -88,7 +89,7 @@ The first example concerns a simple random intercept model with time-varying pre
         \var(y) = \sigma_{f}^2  + \sigma_{\alpha}^2 + \sigma_{\epsilon}^2, \label{eq:var.t.ri} 
         \end{align}
 
-where $\sigma_{f}^2 = \var(\X \bbeta) = \bbeta^\top \bSigma_{\X \X}  \bbeta$ , $\sigma_{\alpha}^2 $ is the variance of the random intercept and $\sigma_{\epsilon}^2$ represents the error variance \citep{Nakagawa2013}. 
+where $\sigma_{f}^2 = \var(\X \bbeta) = \bbeta^\top \bSigma_{\X \X}  \bbeta$ , $\sigma_{\alpha}^2 $ is the variance of the random intercept, and $\sigma_{\epsilon}^2$ represents the error variance \citep{Nakagawa2013}. 
 
 An $\Rtwo$ that is guaranteed to be positive is defined in \cite{Nakagawa2013} as
 
@@ -97,19 +98,19 @@ An $\Rtwo$ that is guaranteed to be positive is defined in \cite{Nakagawa2013} a
 \end{align}
 
 
- It is theoretically possible that the $\Rtwo_{\text{LMM}}$ decreases when adding predictors \citep{Nakagawa2013}.  By adding predictors $\sigma_{f}^2$  should always increase and  $\sigma_{\epsilon}^2$  decrease. However, the $\sigma_{\alpha}^2$ may also increase a little bit and the total $\Rtwo$ may then be a little bit lower. The $\Rtwo$ can not decrease by using the conditional variance formula on the full model to calculate the $\Rtwo$ of the submodels, because the total variance is fixed. The results should be the same, as if we would fit a new model by maximum likelihood for each submodel and  compare the explained variance of the fixed effects to the explained variance of the full model.  In the Bayesian framework, the conditional variance formula is needed to account for the interdependence of the submodels to each other. The total variance of the full model can be calculated as  $\var(y) = \var(\X \bbeta + \Z b) + \sigma^2$ or by using samples of $\sigma_{\alpha}^2$ as in \eqref{eq:var.t.ri}. The error term could again be sampled or calculated as in \eqref{rtwoGelman}. In the following examples, \eqref{eq:var.t.ri} is used and  $\sigma_{\alpha}^2$ and $\sigma_{\epsilon}^2$ are sampled from their posterior distribution.
+Theoretically, it is possible that the $\Rtwo_{\text{LMM}}$ decreases when adding predictors \citep{Nakagawa2013}.  By adding predictors, $\sigma_{f}^2$  should always increase and  $\sigma_{\epsilon}^2$  should decrease. However, the $\sigma_{\alpha}^2$ may also increase minimally and the total $\Rtwo$ may then be minimally lower. The $\Rtwo$ can not decrease by using the conditional variance formula on the full-model to calculate the $\Rtwo$ of the submodels, because the total variance is fixed. Equal results should be obtained, by fitting a new model by maximum likelihood for each submodel and by comparing the explained variance of the fixed effects to the total variance of the full-model.  In the Bayesian framework, the conditional variance formula is necessary to account for the mutual interdependence of the submodels. The total variance of the full-model can be calculated as  $\var(y) = \var(\X \bbeta + \Z b) + \sigma^2$ or by using samples of $\sigma_{\alpha}^2$ as in definition \eqref{eq:var.t.ri}. The error term could again be sampled or calculated as in definition \eqref{eq:rtwoGelman}. In the following examples, definition \eqref{eq:var.t.ri} was used,  $\sigma_{\alpha}^2$ and $\sigma_{\epsilon}^2$ were sampled from their posterior distribution.
 
-In repeated measurement studies, the focus is often in within-subject changes. The between-subject variance, estimated with the random intercept term, is of minor importance. The more important question may be, how much variance the fixed predictors explain, compared to the within subject error, which is
+In repeated measures studies, the focus is often on within-subject changes. The between-subject variance, estimated with the random intercept term, is of minor importance. The important question is, how much variance the fixed predictors do explain, compared to the variance of the within subject error, which is
 
    \begin{align} 
-\Rtwo_{\text{repeated}} = \frac{\sigma_{f}^2}{\sigma_{f}^2  + \sigma_{\epsilon}^2}, \label{rtwo.repeated}
+\Rtwo_{\text{repeated}} = \frac{\sigma_{f}^2}{\sigma_{f}^2  + \sigma_{\epsilon}^2}, \label{eq:rtwo.repeated}
 \end{align}
 
-The square root of this term is known under the name correlation within subjects in \cite{Bland1995}. Often, there are between-subject and within-subject predictors in a model. If we are interested in the within-subject effect, we can use a model including only the between-subject predictors as the null-model.
+The square root of this term is known under the name \textit{correlation within subjects} in \cite{Bland1995}. Often, there are between-subject and within-subject predictors in a model. If the interest lies in the within-subject effects,  a model including only the between-subject predictors can be used as the null-model.
 
 The following example shows a simple random intercept model with time-varying predictors. The main question is which within-subject predictors are the most important ones. The between-subject variance is of minor importance. 
 
-The data are simulated from the following regression setting with $m = 4$ timepoints and $n = 20$ number of subjects ,
+The data are simulated from the following regression setting with $m = 4$ timepoints and $n = 20$ number of subjects (see Appendix~\ref{r04:simdatri} for R-code),
 
 \begin{align*} 
 Y_{i,j} \sim \mathcal{N}(\beta_{0}+x_{1_{i,j}} \beta_{1}+x_{2_{i,j}} \beta_{2}+x_{3_{i,j}} \beta_{3}+x_{4_{i,j}} \beta_{4} + \alpha_{i}, \, \sigma^2), \qquad &i = 1, \dots, n \\  &j = 1, \dots, m
@@ -126,18 +127,18 @@ where $\beta_{1} = 1 \,$,  $\beta_{2} = 1 \,$,   $\beta_{3} = 2 \,$  $\beta_{4}=
 
 }
 
-\caption[Individual trajectories of simulated random intercept model]{Individual trajectories of simulated random intercept model}\label{fig:.repeated.plot.ri}
+\caption[Individual trajectories of simulated random intercept model]{Individual trajectories of simulated random intercept model.}\label{fig:.repeated.plot.ri}
 \end{figure}
 
 
 \end{knitrout}
 
 
-The random intercept effect is of minor interest. The $\Rtwo$ of the models is calculated according to the formula of repeated measure correlation \eqref{rtwo.repeated}.  Most of the within-subject variance is explained by the predictors (Table~\ref{tbl:repeatedcormod}). The credible intervals are very narrow. For information about the between-subject variance term, we can look at the posterior distribution of the random intercept variance term.
+ The random intercept effect was of minor interest. The $\Rtwo$ of the models was calculated according to the formula of repeated measure correlation \eqref{eq:rtwo.repeated}. The R-code of the odel and the function can be found in the Appendix (\ref{r04:model.ri} and \ref{r04:LMG.ri}). Most of the within-subject variance was explained by the predictors (Table~\ref{tbl:repeatedcormod}). The credible intervals were very small. For information about the between-subject variance term, we can look at the posterior distribution of the random intercept variance term.
 
-In the second part, the random intercept is directly included in the total variance calculation of the $\Rtwo$ values. There is a large between-subject variance in this simulated dataset (Table~\ref{tbl:repeatedcormod.tot}). The LMG values including the between subject variance are  therefore much lower. The credible intervals are as well much wider, because the uncertainty about the between-subject variance is included. 
+Next, the random intercept was directly included in the total variance calculation of the $\Rtwo$ values. There was a large between-subject variance in this simulated dataset (Table~\ref{tbl:repeatedcormod.tot}). Therefore, the LMG values including the between subject variance were much lower. The credible intervals were as well much larger, because the uncertainty about the between-subject variance was included. 
 
-In my opinion we can get more useful information from separating the between-subject and within-subject variance components in this simple case. Note that we assumed non stochastic predictors. Otherwise, the credible intervals would be larger. In general, it seems more reasonable to assume stochastic time-varying predictors. The variance could then be estimated by non-parametric bootstrap, resampling whole subjects (all repeated measurements of a subject).
+In my opinion, we can get more useful information from separating the between-subject variance from the within-subject variance components in this simple case. Note, that we assumed non-stochastic predictors. Otherwise, the credible intervals were larger. In general, it seems more reasonable to assume stochastic time-varying predictors. The variance could then be estimated by non-parametric bootstrap, resampling whole subjects (all repeated measurements of a subject).
 
 
 
@@ -146,16 +147,16 @@ In my opinion we can get more useful information from separating the between-sub
 
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor model}
 \centering
 \begin{tabular}{clll}
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.196 (0.195, 0.198)  & 0.499 (0.497, 0.5)   & 0.695 (0.691, 0.698)  \\ 
-x2 & 0.195 (0.194, 0.197)  & 0.489 (0.487, 0.491)   & 0.684 (0.681, 0.688)  \\ 
-x3 & 0.304 (0.303, 0.306)  & 0.649 (0.648, 0.649)   & 0.953 (0.951, 0.955)  \\ 
-x4 & 0.304 (0.302, 0.305)  & 0.647 (0.647, 0.647)   & 0.951 (0.949, 0.952)  \\ 
+x1 & 0.189 (0.187, 0.19)  & 0.467 (0.465, 0.468)   & 0.655 (0.652, 0.659)  \\ 
+x2 & 0.19 (0.188, 0.191)  & 0.471 (0.469, 0.472)   & 0.661 (0.657, 0.664)  \\ 
+x3 & 0.311 (0.31, 0.312)  & 0.633 (0.632, 0.633)   & 0.944 (0.942, 0.945)  \\ 
+x4 & 0.31 (0.309, 0.311)  & 0.634 (0.634, 0.634)   & 0.944 (0.943, 0.946)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeatedcormod}
@@ -165,16 +166,16 @@ x4 & 0.304 (0.302, 0.305)  & 0.647 (0.647, 0.647)   & 0.951 (0.949, 0.952)  \\
 
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values,   J~=~joint~contribution, Total~=~total explained variance in one-predictor model}
 \centering
 \begin{tabular}{clll}
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.043 (0.018, 0.093)  & 0.117 (0.019, 0.241)   & 0.159 (0.04, 0.333)  \\ 
-x2 & 0.067 (0.03, 0.113)  & 0.146 (0.06, 0.256)   & 0.212 (0.091, 0.367)  \\ 
-x3 & 0.093 (0.042, 0.156)  & 0.186 (0.076, 0.327)   & 0.279 (0.12, 0.481)  \\ 
-x4 & 0.097 (0.045, 0.161)  & 0.186 (0.075, 0.328)   & 0.282 (0.122, 0.486)  \\ 
+x1 & 0.037 (0.019, 0.068)  & 0.079 (-0.011, 0.185)   & 0.112 (0.023, 0.251)  \\ 
+x2 & 0.066 (0.031, 0.108)  & 0.137 (0.055, 0.234)   & 0.204 (0.086, 0.341)  \\ 
+x3 & 0.104 (0.051, 0.165)  & 0.182 (0.075, 0.309)   & 0.287 (0.127, 0.473)  \\ 
+x4 & 0.114 (0.057, 0.178)  & 0.186 (0.077, 0.314)   & 0.301 (0.137, 0.491)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeatedcormod.tot}
@@ -184,15 +185,15 @@ x4 & 0.097 (0.045, 0.161)  & 0.186 (0.075, 0.328)   & 0.282 (0.122, 0.486)  \\
 
 \section{Marginal  model}
 
-The next example concerns a repeated measurement model with time-varying predictors and an unstructured error covariance matrix. The data are generated from the following model:
+The next example is about a repeated measurement model with time-varying predictors and an unstructured error covariance matrix. The data are generated from the following model
 
 \begin{align} 
-&Y_{i} \sim \mathcal{N}(\X_{i} \bbeta, \bSigma), \qquad i = 1, \dots, n
+&Y_{i} \sim \mathcal{N}(\X_{i} \bbeta, \bSigma), \qquad i = 1, \dots, n ,
 \end{align} 
 
 where $\bSigma$ represents an unstructured error covariance matrix, $\X_{i}$ represents the predictor matrix of size $m \times p$ of subject $i$.
 
-In the variance calculation we need to take into account that we do not have just one $\sigma^2$ parameter, but a covariance matrix $\bSigma$. The diagonal elements of $\bSigma$ represent the variance of each timepoint. The sum of the diagonal elements of $\bSigma$ represents the variance for a whole subject. We can  take the mean of $\diag(\bSigma)$ to make the formula compatible with the $\bbeta^\top \bSigma_{\X \X}  \bbeta$ of \eqref{rtwoused}, resulting in the total variance term
+The R-code of the data generation can be found in Appendix~\ref{r04:rmarg.data}. In the variance calculation, it is necessary to take into account that there is not just one $\sigma^2$ parameter, but a covariance matrix $\bSigma$. The diagonal elements of $\bSigma$ represent the variance of each timepoint. The sum of the diagonal elements of $\bSigma$ represents the variance for a whole subject. The mean can be taken of $\diag(\bSigma)$ to make the formula compatible with the $\bbeta^\top \bSigma_{\X \X}  \bbeta$ of \eqref{eq:rtwoused}, resulting in the total variance term
 
       \begin{align} 
         \var(\Y) = \bbeta^\top \bSigma_{\X \X}  \bbeta + \text{mean}(\diag(\bSigma)),
@@ -207,7 +208,7 @@ In the variance calculation we need to take into account that we do not have jus
 
 }
 
-\caption[Individual trajectories of simulated data with unstructured error covariance matrix]{Individual trajectories of simulated data with unstructured error covariance matrix}\label{fig:simdata.repeated.unstruct.plot}
+\caption[Individual trajectories of simulated data with unstructured error covariance matrix]{Individual trajectories of simulated data with unstructured error covariance matrix.}\label{fig:simdata.repeated.unstruct.plot}
 \end{figure}
 
 
@@ -216,19 +217,19 @@ In the variance calculation we need to take into account that we do not have jus
 
 
 
-The individual trajectories are shown in Figure~\ref{fig:simdata.repeated.unstruct.plot}. The resulting LMG values of the predictors are shown in Table \ref{tbl:repeated.unstructured}.
+The individual trajectories are shown in Figure~\ref{fig:simdata.repeated.unstruct.plot}. The R-code for the model and LMG implementation can be found in Appendix (\ref{r04:model.unstruct} and  \ref{r04:LMG.rmarg}). The resulting LMG values of the predictors are shown in Table~\ref{tbl:repeated.unstructured}.
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor model}
 \centering
 \begin{tabular}{clll}
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.157 (0.132, 0.18)  & 0.386 (0.331, 0.423)   & 0.544 (0.465, 0.603)  \\ 
-x2 & 0.166 (0.137, 0.192)  & 0.394 (0.34, 0.431)   & 0.56 (0.479, 0.622)  \\ 
-x3 & 0.218 (0.183, 0.24)  & 0.488 (0.418, 0.525)   & 0.705 (0.602, 0.762)  \\ 
-x4 & 0.219 (0.188, 0.242)  & 0.489 (0.421, 0.527)   & 0.709 (0.609, 0.768)  \\ 
+x1 & 0.154 (0.127, 0.174)  & 0.409 (0.337, 0.456)   & 0.563 (0.462, 0.63)  \\ 
+x2 & 0.155 (0.126, 0.178)  & 0.39 (0.322, 0.433)   & 0.544 (0.448, 0.609)  \\ 
+x3 & 0.213 (0.177, 0.237)  & 0.481 (0.401, 0.532)   & 0.695 (0.582, 0.768)  \\ 
+x4 & 0.206 (0.172, 0.228)  & 0.486 (0.404, 0.536)   & 0.692 (0.58, 0.764)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:repeated.unstructured}

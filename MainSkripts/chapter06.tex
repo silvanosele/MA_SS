@@ -69,22 +69,22 @@
 
 \chapter{Appendix}
 
-he eror term in the by \cite{Gelman2017} proposed definition of the $\Rtwo$ is defined as $\var(\sum_{i=1}^{n}e^s_{n})$. I think we could also use $ \sum(y - \hat{y}^s)^2/(n-1) $ as an estimate for the error. For the maximum likelihood estimate $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $. This is because the mean of the residuals is 0. When  samples of the posterior parameters are used, the mean of the residuals is not excatly zero. $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $ is than a little bit bigger than $\var(y_{i} - \hat{y_{i}}). $ In practice the values should only differ by a very small amount. We do not expect the errors to have a systematic bias. However, the residuals are just a sample of the error. The mean of the residuals must not be excatly 0 when the samples of the posteriors are used for the regression coefficients.   
+The error term in the by \cite{Gelman2017} proposed definition of the $\Rtwo$ is defined as $\var(\sum_{i=1}^{n}e^s_{n})$. I think we could also use $ \sum(y - \hat{y}^s)^2/(n-1) $ as an estimate for the error. For the maximum likelihood estimate $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $. This is because the mean of the residuals is 0. When  samples of the posterior parameters are used, the mean of the residuals is not excatly zero. $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $ is than a little bit bigger than $\var(y_{i} - \hat{y_{i}}). $ In practice the values should only differ by a very small amount. We do not expect the errors to have a systematic bias. However, the residuals are just a sample of the error. The mean of the residuals must not be excatly 0 when the samples of the posteriors are used for the regression coefficients.   
+
+\section{Abstract}
+
+Quantifying the importance of predictors in regression has been an active area of research for a long time \citep{Gromping2015}. The variance decomposition metric \textit{LMG} provides useful information about possible associations between the variables. The LMG metric is implemented in the R packages \texttt{hier.part} and \texttt{relaimpo}. Bayesian methods gained high popularity in many applied research areas in recent years.  
+
+This master thesis shows how the LMG metric can be applied to a linear regression model that is fitted in the Bayesian framework. The LMG metric requires calculation of $\Rtwo$ for all the possible submodels. The conditional variance formula can be applied to calculate the $\Rtwo$ values of the submodels from the posterior samples of the model containing all predictors. The mutual interdependence of the submodels is then respected for each posterior sample.
+
+The implementation of the LMG metric in the Bayesian framework is presented on simulated and on empirical data. Using weakly informative priors resulted in very similar LMG values as the values obtained by using bootstrap in \texttt{relaimpo}. 
+
+Some possible extension of the LMG metric to repeated measures studies are additionally presented. There are certain difficulties involved in quantifying the $\Rtwo$ in longitudinal data. However,  the extension seems to be reasonably possible for the simple random intercept model and marginal models.  
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{set_parent}\hlstd{(}\hlstr{'Main.Rnw'}\hlstd{)}
-\hlkwd{library}\hlstd{(knitr)}
-\hlstd{opts_chunk}\hlopt{$}\hlkwd{set}\hlstd{(}
-    \hlkwc{fig.path}\hlstd{=}\hlstr{'figure/ch06_fig'}\hlstd{,}
-    \hlkwc{self.contained}\hlstd{=}\hlnum{FALSE}\hlstd{,}
-    \hlkwc{cache}\hlstd{=}\hlnum{TRUE}
-\hlstd{)}
-\end{alltt}
-\end{kframe}
-\end{knitrout}
+
+
+
 \bibliographystyle{mywiley} 
 \bibliography{biblio}
 \end{document}

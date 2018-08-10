@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  9 AUG 2018 19:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.16)  10 AUG 2018 23:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -939,17 +939,23 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 6.
 File: t1cmss.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 ) [0
 
-{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1]) [2
-] (./Main.toc)
-\tf@toc=\write5
-\openout5 = `Main.toc'.
+{/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1])
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 67.
 
-
-[1
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+) [1
 
 ] [2
 
-] [3] [4
+]
+(./Main.toc)
+\tf@toc=\write5
+\openout5 = `Main.toc'.
+
+ [3] [4
+
+] [5] [6
 
 ]
 Chapter 1.
@@ -959,31 +965,40 @@ Chapter 1.
 
 ]
 Chapter 2.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 156.
-
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [3]
+[3]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 161.
+(hyperref)                removing `math shift' on input line 169.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 161.
+(hyperref)                removing `superscript' on input line 169.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 161.
+(hyperref)                removing `math shift' on input line 169.
 
-[4] [5] [6] [7] [8]
+[4]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 211.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 211.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 211.
+
+[5] [6] [7] [8]
 Chapter 3.
-<figure/ch03_figsimdata_LMG_plot-1.pdf, id=305, 505.89pt x 505.89pt>
+<figure/ch03_figsimdata_LMG_plot-1.pdf, id=325, 505.89pt x 505.89pt>
 File: figure/ch03_figsimdata_LMG_plot-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figsimdata_LMG_plot-1.pdf>
 Package pdftex.def Info: figure/ch03_figsimdata_LMG_plot-1.pdf used on input li
-ne 456.
+ne 458.
 (pdftex.def)             Requested size: 369.94295pt x 369.95276pt.
 
 
@@ -997,25 +1012,25 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 ] [10] [11 <./figure/ch03_figsimdata_LMG_plot-1.pdf>] [12
 
 ]
-Overfull \hbox (1.25262pt too wide) in paragraph at lines 542--543
+Overfull \hbox (1.25262pt too wide) in paragraph at lines 544--545
 \T1/cmr/m/n/10.95 information (gen-eral), sentence-comprehension (sen-tence) , 
 word-classification (wordc), and word-
  []
 
-<figure/ch03_figunnamed-chunk-1-1.pdf, id=358, 505.89pt x 505.89pt>
+<figure/ch03_figunnamed-chunk-1-1.pdf, id=383, 505.89pt x 505.89pt>
 File: figure/ch03_figunnamed-chunk-1-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figunnamed-chunk-1-1.pdf>
 Package pdftex.def Info: figure/ch03_figunnamed-chunk-1-1.pdf used on input lin
-e 575.
+e 577.
 (pdftex.def)             Requested size: 369.94295pt x 369.95276pt.
 
-<figure/ch03_figempi_lmg_plot-1.pdf, id=359, 505.89pt x 505.89pt>
+<figure/ch03_figempi_lmg_plot-1.pdf, id=384, 505.89pt x 505.89pt>
 File: figure/ch03_figempi_lmg_plot-1.pdf Graphic file (type pdf)
 
 <use figure/ch03_figempi_lmg_plot-1.pdf>
 Package pdftex.def Info: figure/ch03_figempi_lmg_plot-1.pdf used on input line 
-672.
+674.
 (pdftex.def)             Requested size: 369.94295pt x 369.95276pt.
 
 
@@ -1032,17 +1047,14 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 ] [14 <./figure/ch03_figunnamed-chunk-1-1.pdf>] [15 <./figure/ch03_figempi_lmg_
 plot-1.pdf>] [16]
 Chapter 4.
-
-LaTeX Warning: Reference `rtwoGelman' on page 17 undefined on input line 780.
-
 [17
 
-] <figure/ch04_fig_repeated_plot_ri-1.pdf, id=424, 578.16pt x 289.08pt>
+] <figure/ch04_fig_repeated_plot_ri-1.pdf, id=452, 578.16pt x 289.08pt>
 File: figure/ch04_fig_repeated_plot_ri-1.pdf Graphic file (type pdf)
 
 <use figure/ch04_fig_repeated_plot_ri-1.pdf>
 Package pdftex.def Info: figure/ch04_fig_repeated_plot_ri-1.pdf used on input l
-ine 805.
+ine 808.
 (pdftex.def)             Requested size: 369.94295pt x 184.97086pt.
 
 
@@ -1052,17 +1064,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [18]
-
-LaTeX Warning: Reference `rtwoused' on page 19 undefined on input line 875.
-
-
-<figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf, id=439, 578.16pt x 289.08
+<figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf, id=473, 578.16pt x 289.08
 pt>
 File: figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf Graphic file (type pd
 f)
  <use figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf>
 Package pdftex.def Info: figure/ch04_figsimdata_repeated_unstruct_plot-1.pdf us
-ed on input line 886.
+ed on input line 889.
 (pdftex.def)             Requested size: 369.94295pt x 184.97086pt.
 
 
@@ -1075,127 +1083,227 @@ Chapter 5.
 
 ] [22]
 Appendix A.
-[23
-
-
-]
 Package hyperref Info: bookmark level for unknown rcode defaults to 0 on input 
 line 973.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 978.
- [24
+[23
+
 
 ]
-Overfull \hbox (27.5609pt too wide) in paragraph at lines 1154--1154
+Underfull \vbox (badness 2080) detected at line 1070
+ []
+
+
+Underfull \vbox (badness 1466) has occurred while \output is active []
+
+ [24]
+Overfull \hbox (27.5609pt too wide) in paragraph at lines 1133--1133
 []        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
 amples and calculate submodels[][] 
  []
 
 
-Overfull \hbox (25.66032pt too wide) in paragraph at lines 1180--1180
+Overfull \hbox (25.66032pt too wide) in paragraph at lines 1151--1151
 []            []\T1/cmtt/m/n/10.95 df.Rtwos[, s, b][] []<-[] []df.Rtwos[, s, b]
 [][]/[][]c[][](Vtot[] []+[] []post.sample[s, sig.posi][][]^[][]2[][])[][] 
  []
 
 [25]
-Underfull \vbox (badness 10000) detected at line 1187
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1187
- []
-
-[26]
-Overfull \hbox (27.5609pt too wide) in paragraph at lines 1254--1254
+Overfull \hbox (27.5609pt too wide) in paragraph at lines 1203--1203
 []        []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior s
 amples and calculate submodels[][] 
  []
 
 
-Overfull \hbox (25.66032pt too wide) in paragraph at lines 1280--1280
+Overfull \hbox (25.66032pt too wide) in paragraph at lines 1221--1221
 []            []\T1/cmtt/m/n/10.95 df.Rtwos[, s, b][] []<-[] []df.Rtwos[, s, b]
 [][]/[][]c[][](Vtot[] []+[] []post.sample[s, sig.posi][][]^[][]2[][])[][] 
  []
 
+[26]
+Overfull \hbox (599.05637pt too wide) in paragraph at lines 1241--1241
+[][]\T1/cmtt/m/it/10.95 # In the following example we know that the $\X$ are co
+ming from a normal distribution. The covariance matrix of the distribution is e
+stimated in aBayesian way. The package Jags is used.[][] 
+ []
+
+
+Overfull \hbox (370.82095pt too wide) in paragraph at lines 1275--1275
+[]                                                                             
+                   []\T1/cmtt/m/n/10.95 data[][]=dataList ,[] []n.chains[][]=nC
+hain ,[] []n.adapt[][]=nAdapt )[][] 
+ []
+
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 127
+8.
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+Overfull \hbox (342.5291pt too wide) in paragraph at lines 1278--1278
+[]                                                                             
+                                   []\T1/cmtt/m/n/10.95 variable.names[][]=[][]
+c[][]([][]\TS1/cmtt/m/n/10.95 '\T1/cmtt/m/n/10.95 zCovMat\TS1/cmtt/m/n/10.95 '[
+][]\T1/cmtt/m/n/10.95 ) ,[][] 
+ []
+
+
+Overfull \hbox (438.7214pt too wide) in paragraph at lines 1279--1279
+[]                                                                             
+                                   []\T1/cmtt/m/n/10.95 n.iter[][]=nStepToSave[
+][]/[][]nChain[][]*[][]nThin ,[] []thin[][]=nThin )[][] 
+ []
+
+
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 1301--1301
+[]                []\T1/cmtt/m/n/10.95 obj.Gelman[][]<-[][]partition[][](gofn,[
+] []pcan[] []=[] []4[][],[] []var.names[] []=[] []names[][](df[,[][]2[][]:[][]5
+[][]]))[][] 
+ []
+
 [27]
-Underfull \vbox (badness 10000) detected at line 1287
+Underfull \vbox (badness 10000) detected at line 1314
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1287
+Underfull \vbox (badness 10000) detected at line 1314
  []
 
-[28] (./Main.bbl (./Main.brf)
+[28] [29]
+Overfull \hbox (4.92741pt too wide) in paragraph at lines 1417--1417
+[]    []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior sampl
+es and calculate submodels[][] 
+ []
+
+
+Overfull \hbox (123.7532pt too wide) in paragraph at lines 1430--1430
+[]                []\T1/cmtt/m/n/10.95 var.explain[] []<-[] []sample.s[cur][] [
+]%*%[] []matr[] []%*%[] []sample.s[cur][]  []\T1/cmtt/m/it/10.95 #multiply by p
+arameter sample[][] 
+ []
+
+
+Overfull \hbox (219.94551pt too wide) in paragraph at lines 1436--1436
+[]        []\T1/cmtt/m/n/10.95 df.Rtwos[, s][] []<-[] []df.Rtwos[, s][][]/[][]c
+[][](Vtot[] []+[] []post.sample[s, sig.posi][][]^[][]2[][])[]  []\T1/cmtt/m/it/
+10.95 #total variance + sigma^2 (post sample[s])[][] 
+ []
+
+[30
+
+] [31]
+Overfull \hbox (316.13782pt too wide) in paragraph at lines 1533--1533
+[]    []\T1/cmtt/m/n/10.95 sig.posi[] []<-[] [](([][]ncol[][](post.sample)[] []
+-[] [](m[] []-[] []1[][]))[][]:[][]ncol[][](post.sample))[]  []\T1/cmtt/m/it/10
+.95 # second last position sigma, last position random intercept variance[][] 
+ []
+
+
+Overfull \hbox (4.92741pt too wide) in paragraph at lines 1536--1536
+[]    []\T1/cmtt/m/it/10.95 ########### fill in R^2 matrix, use posterior sampl
+es and calculate submodels[][] 
+ []
+
+[32]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [33]
+Overfull \hbox (20.00195pt too wide) in paragraph at lines 1600--1600
+[]    []\T1/cmtt/m/n/10.95 M[] []= M,[] []x1[] []= x1,[] []x2[] []= x2,[] []x3[
+] []= x3,[] []x4[] []= x4,[] []zRscal[] []=[] []ncol[][](Y),[] []zRmat[] []=[] 
+[]diag[][]([][]x[] []=[] []1[][],[][] 
+ []
+
+
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 1603--1603
+[][]\T1/cmtt/m/n/10.95 samp[] []<-[] []coda.samples[][](model,[] []variable.nam
+es[] []=[] []c[][]([][]"beta1"[][],[] []"beta2"[][],[] []"beta3"[][],[] []"beta
+4"[][],[][] 
+ []
+
+
+Overfull \hbox (8.68521pt too wide) in paragraph at lines 1611--1611
+[][]\T1/cmtt/m/n/10.95 samp[] []<-[] []coda.samples[][](model,[] []variable.nam
+es[] []=[] []c[][]([][]"beta1"[][],[] []"beta2"[][],[] []"beta3"[][],[] []"beta
+4"[][],[][] 
+ []
+
+
+Underfull \vbox (badness 2865) detected at line 1637
+ []
+
+
+Underfull \vbox (badness 1661) has occurred while \output is active []
+
+ [34]
+(./Main.bbl (./Main.brf)
 \tf@brf=\write6
 \openout6 = `Main.brf'.
 
- [29] [30
+ [35] [36
 
-] [31]) [32]
+] [37]) [38]
 
 Package caption Warning: Unused \captionsetup[rchunk] on input line 96.
 See the caption package documentation for explanation.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1306.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1306.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1658.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1658.
 (./Main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1306.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1306.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1658.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1658.
 
 Package rerunfilecheck Info: File `Main.out' has not changed.
-(rerunfilecheck)             Checksum: 0E972028022BF203DFB003E6719ED60C;1223.
+(rerunfilecheck)             Checksum: 4DCAC16B1812956452799BEB71256704;1374.
 Package rerunfilecheck Info: File `Main.brf' has not changed.
-(rerunfilecheck)             Checksum: 38282E84FC75A0C5D41EF32AF4D89BC8;1864.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1306.
+(rerunfilecheck)             Checksum: 50D088489129336D657128F801EAD7EF;2019.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1658.
  ) 
 Here is how much of TeX's memory you used:
- 20531 strings out of 492995
- 373292 string characters out of 6132703
- 445641 words of memory out of 5000000
- 23679 multiletter control sequences out of 15000+600000
- 40693 words of font info for 107 fonts, out of 8000000 for 9000
+ 20576 strings out of 492995
+ 374163 string characters out of 6132703
+ 450425 words of memory out of 5000000
+ 23701 multiletter control sequences out of 15000+600000
+ 43556 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,19n,43p,10436b,866s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texli
-ve/2017/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/201
-7/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2017/te
-xmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texm
-f-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-di
-st/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist
-/fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texlive/2017/texmf-dist/f
-onts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2017/texmf-dist/fon
-ts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2017/texmf-dist/fonts
-/type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
-ype1/public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/typ
-e1/public/cm-super/sftt1095.pfb>
-Output written on Main.pdf (39 pages, 1414412 bytes).
+ 38i,19n,43p,10436b,909s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
+}{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr
+/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
+/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texliv
+e/2017/texmf-dist/fonts/type1/public/cm-super/sfbi1095.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/cm-super/sfrm0900.pfb></usr/local/texlive/2017/texmf-dis
+t/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/
+fonts/type1/public/cm-super/sfsl1095.pfb></usr/local/texlive/2017/texmf-dist/fo
+nts/type1/public/cm-super/sfss1000.pfb></usr/local/texlive/2017/texmf-dist/font
+s/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/
+type1/public/cm-super/sfsx1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/ty
+pe1/public/cm-super/sfti1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/public/cm-super/sftt1095.pfb>
+Output written on Main.pdf (46 pages, 1444327 bytes).
 PDF statistics:
- 685 PDF objects out of 1000 (max. 8388607)
- 597 compressed objects within 6 object streams
- 126 named destinations out of 1000 (max. 500000)
- 178 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 757 PDF objects out of 1000 (max. 8388607)
+ 661 compressed objects within 7 object streams
+ 141 named destinations out of 1000 (max. 500000)
+ 194 words of extra memory for PDF output out of 10000 (max. 10000000)
 

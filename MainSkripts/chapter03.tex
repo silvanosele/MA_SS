@@ -83,18 +83,18 @@ We assume a simple model for the first example:
 \begin{align*} 
 &Y_{i} \sim \mathcal{N}(\beta_{0}+x_{1} \beta_{1}+x_{2} \beta_{2}+x_{3} \beta_{3}+x_{4} \beta_{4}, \, \sigma^2),& \\ & \beta_{1} = 0.5, , \beta_{2} = 1, \, \beta_{3} = 2 , \, \beta_{4}=0, \, \sigma^2 = 1 & \\ & \X_{1}, \X_{2},\X_{3},\X_{4} \sim \mathcal{N}(0, 1) 
 \end{align*} 
-The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled. The data generating R-code~\ref{r03:simdata.ex1} can be found in the Appendix.
+The values of the four predictors are sampled from a standard normal distribution. These values are then multiplied by the regression coefficients. A standard normal distributed error is added to obtain the dependent variable. Fifty observations were sampled. The data generating R-code can be found in the Appendix~\ref{r03:simdata.ex1}.
 
 
 
 
 The model is fitted using the \texttt{rstanarm} package \citep{rstanarm} with the default priors for the regression and $\sigma^2$ parameters. The exact command can be found in R-code~\ref{r03:model.ex1} These default priors are called 'weakly informative priors', because they take into account the order of magnitude of the variables by using the variance of the observed data. Information about these priors can be found in \cite{stanM2017}. A burn-in period of 20000, a sample size of 20000, and a thinning of 20 were chosen, resulting in a posterior sample size of 1000. The first few posterior samples are shown in Table~\ref{tab:simdata.postsample2}. 
 
-For each posterior sample of the parameters, the $\Rtwo$ value was calculated. The $\Rtwo$ of the submodels was then calculated by the conditional variance formula for each posterior sample. The R-code is found in \ref{r03:LMG}. The resulting $\Rtwo$ values of the first few posterior samples are shown in Table~\ref{tab:simdata.postsample3}.  The thinning is reasonable in this case to reduce the computational burden and to still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
+For each posterior sample of the parameters, the $\Rtwo$ value was calculated. The $\Rtwo$ of the submodels was then calculated by the conditional variance formula for each posterior sample. The R-code is found in Appendix \ref{r03:LMG}. The resulting $\Rtwo$ values of the first few posterior samples are shown in Table~\ref{tab:simdata.postsample3}.  The thinning is reasonable in this case to reduce the computational burden and to still obtain an appropriate posterior of the $\Rtwo$ values \citep{Link2012}. 
 
 The \texttt{hier.part} package was used to calculate the LMG value for each posterior sample. The LMG posteriors are shown in Table~\ref{tbl:nonstochEx1} . The independent component (I) represents the LMG value. The joint contribution (J) represents the difference from the independent component to the explained variance of the model containing only the predictor itself (T). Assuming stochastic or non-stochastic regressors has an influence on the uncertainty of the LMG values. 
 
-At first, non-stochastic regressors were assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure ~ \ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework were very similar to the bootstrap confidence intervals, assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
+At first, non-stochastic regressors were assumed. The resulting LMG values and joint contributions with a 95\% credible interval are shown in Table~\ref{tbl:nonstochEx1}. An option to display the resulting LMG distribution is shown in Figure~\ref{fig:simdata.LMG.plot}.  Using the default weakly informative priors, the LMG distributions obtained from the Bayesian framework were very similar to the bootstrap confidence intervals, assuming non-stochastic predictors of the LMG estimates obtained from the \texttt{relaimpo} package, as shown in Table~\ref{tbl:nonstochEx1relamip}. 
 
 
 
@@ -103,22 +103,22 @@ At first, non-stochastic regressors were assumed. The resulting LMG values and j
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{table}
 
-\caption{\label{tab:simdata.postsample2}Samples from the posterior distributions of the regression parameters}
+\caption{\label{tab:simdata.postsample2}Samples from the posterior distributions of the regression parameters.}
 \centering
 \begin{tabular}[t]{lrrrrr}
 \toprule
   & x1 & x2 & x3 & x4 & sigma\\
 \midrule
-sample 1 & 1.34 & 1.073 & 0.670 & 0.991 & 0.877\\
-sample 2 & 1.07 & 1.396 & 0.937 & 0.999 & 1.055\\
-sample 3 & 1.17 & 1.141 & 0.699 & 1.188 & 0.877\\
-sample 4 & 1.29 & 1.064 & 0.640 & 1.136 & 1.012\\
-sample 5 & 1.00 & 1.124 & 0.859 & 1.569 & 0.819\\
-sample 6 & 0.99 & 1.102 & 0.599 & 1.127 & 1.035\\
-sample 7 & 1.26 & 0.904 & 0.702 & 1.437 & 1.115\\
-sample 8 & 1.22 & 1.128 & 0.552 & 1.421 & 0.924\\
-sample 9 & 1.28 & 0.954 & 0.661 & 1.088 & 0.931\\
-sample 10 & 1.09 & 1.057 & 0.865 & 1.475 & 0.984\\
+sample 1 & 0.686 & 1.131 & 0.927 & 0.883 & 1.238\\
+sample 2 & 0.765 & 1.095 & 1.104 & 0.802 & 0.909\\
+sample 3 & 0.655 & 0.804 & 1.091 & 0.771 & 1.205\\
+sample 4 & 0.661 & 1.073 & 1.058 & 0.639 & 1.270\\
+sample 5 & 0.864 & 0.808 & 0.951 & 0.876 & 1.024\\
+sample 6 & 1.038 & 0.788 & 0.691 & 0.931 & 0.945\\
+sample 7 & 1.013 & 0.816 & 0.768 & 0.793 & 1.188\\
+sample 8 & 0.603 & 0.783 & 0.889 & 0.708 & 0.955\\
+sample 9 & 1.055 & 0.947 & 0.683 & 1.173 & 1.075\\
+sample 10 & 1.196 & 0.826 & 0.630 & 0.862 & 1.071\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -129,28 +129,28 @@ sample 10 & 1.09 & 1.057 & 0.865 & 1.475 & 0.984\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{table}
 
-\caption{\label{tab:simdata.postsample3}$ \Rtwo$ for all submodels for the first six posterior samples}
+\caption{\label{tab:simdata.postsample3}$ \Rtwo$ for all submodels for the first six posterior samples.}
 \centering
 \begin{tabular}[t]{lrrrrrr}
 \toprule
   & sample 1 & sample 2 & sample 3 & sample 4 & sample 5 & sample 6\\
 \midrule
 none & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
-x1 & 0.351 & 0.213 & 0.253 & 0.296 & 0.155 & 0.196\\
-x2 & 0.397 & 0.467 & 0.431 & 0.380 & 0.398 & 0.422\\
-x3 & 0.081 & 0.117 & 0.078 & 0.067 & 0.100 & 0.057\\
-x4 & 0.078 & 0.083 & 0.138 & 0.110 & 0.251 & 0.145\\
-x1 x2 & 0.649 & 0.597 & 0.597 & 0.588 & 0.488 & 0.543\\
-x1 x3 & 0.400 & 0.299 & 0.304 & 0.337 & 0.230 & 0.233\\
-x1 x4 & 0.534 & 0.377 & 0.504 & 0.517 & 0.525 & 0.443\\
-x2 x3 & 0.503 & 0.615 & 0.533 & 0.469 & 0.525 & 0.501\\
-x2 x4 & 0.434 & 0.503 & 0.509 & 0.440 & 0.570 & 0.506\\
-x3 x4 & 0.178 & 0.222 & 0.239 & 0.196 & 0.386 & 0.223\\
-x1 x2 x3 & 0.721 & 0.716 & 0.672 & 0.648 & 0.593 & 0.601\\
-x1 x2 x4 & 0.760 & 0.684 & 0.756 & 0.728 & 0.748 & 0.698\\
-x1 x3 x4 & 0.601 & 0.484 & 0.575 & 0.574 & 0.630 & 0.497\\
-x2 x3 x4 & 0.553 & 0.667 & 0.629 & 0.543 & 0.726 & 0.601\\
-all & 0.844 & 0.817 & 0.846 & 0.802 & 0.875 & 0.770\\
+x1 & 0.158 & 0.229 & 0.193 & 0.177 & 0.267 & 0.324\\
+x2 & 0.235 & 0.222 & 0.117 & 0.201 & 0.131 & 0.146\\
+x3 & 0.172 & 0.277 & 0.290 & 0.234 & 0.261 & 0.183\\
+x4 & 0.196 & 0.178 & 0.162 & 0.116 & 0.205 & 0.235\\
+x1 x2 & 0.399 & 0.458 & 0.314 & 0.385 & 0.404 & 0.477\\
+x1 x3 & 0.249 & 0.383 & 0.368 & 0.312 & 0.399 & 0.390\\
+x1 x4 & 0.370 & 0.425 & 0.371 & 0.306 & 0.493 & 0.583\\
+x2 x3 & 0.486 & 0.598 & 0.480 & 0.521 & 0.466 & 0.393\\
+x2 x4 & 0.388 & 0.360 & 0.251 & 0.287 & 0.303 & 0.344\\
+x3 x4 & 0.364 & 0.450 & 0.448 & 0.346 & 0.461 & 0.413\\
+x1 x2 x3 & 0.552 & 0.689 & 0.549 & 0.587 & 0.590 & 0.584\\
+x1 x2 x4 & 0.565 & 0.611 & 0.462 & 0.481 & 0.595 & 0.696\\
+x1 x3 x4 & 0.454 & 0.570 & 0.537 & 0.434 & 0.616 & 0.642\\
+x2 x3 x4 & 0.628 & 0.722 & 0.602 & 0.597 & 0.624 & 0.578\\
+all & 0.704 & 0.826 & 0.681 & 0.671 & 0.764 & 0.790\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -171,23 +171,23 @@ all & 0.844 & 0.817 & 0.846 & 0.802 & 0.875 & 0.770\\
 
 }
 
-\caption[Posterior distribution of LMG values]{Posterior distribution of LMG values.}\label{fig:simdata.LMG.plot}
+\caption[LMG distributions of the predictors]{LMG distributions of the predictors.}\label{fig:simdata.LMG.plot}
 \end{figure}
 
 
 \end{knitrout}
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor model.}
 \centering
 \begin{tabular}{clll}
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-x1 & 0.235 (0.145, 0.337)  & 0.01 (-0.009, 0.029)   & 0.245 (0.15, 0.351)  \\ 
-x2 & 0.31 (0.199, 0.411)  & 0.066 (0.051, 0.079)   & 0.376 (0.256, 0.482)  \\ 
-x3 & 0.104 (0.041, 0.187)  & -0.008 (-0.014, -0.002)   & 0.096 (0.035, 0.178)  \\ 
-x4 & 0.161 (0.085, 0.254)  & -0.027 (-0.042, -0.013)   & 0.133 (0.064, 0.228)  \\ 
+x1 & 0.21 (0.108, 0.325)  & 0.054 (0.032, 0.076)   & 0.263 (0.149, 0.393)  \\ 
+x2 & 0.15 (0.064, 0.253)  & -0.011 (-0.023, \ensuremath{3.77\times 10^{-5}})   & 0.138 (0.056, 0.239)  \\ 
+x3 & 0.187 (0.09, 0.293)  & 0.037 (0.014, 0.06)   & 0.225 (0.113, 0.352)  \\ 
+x4 & 0.187 (0.087, 0.304)  & 0.013 (0.005, 0.02)   & 0.2 (0.093, 0.316)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1}
@@ -197,17 +197,17 @@ x4 & 0.161 (0.085, 0.254)  & -0.027 (-0.042, -0.013)   & 0.133 (0.064, 0.228)  \
 
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor only model.}
 \centering
 \begin{tabular}{cll}
    \toprule
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-x1 & 0.241 (0.152, 0.339)  & 0.235 (0.145, 0.337)  \\ 
-x2 & 0.318 (0.223, 0.431)  & 0.31 (0.199, 0.411)   \\ 
-x3 & 0.107 (0.046, 0.185)  & 0.104 (0.041, 0.187)  \\ 
-x4 & 0.166 (0.097, 0.262) & 0.161 (0.085, 0.254)  \\ 
+x1 & 0.223 (0.136, 0.334)  & 0.21 (0.108, 0.325)  \\ 
+x2 & 0.154 (0.072, 0.267)  & 0.15 (0.064, 0.253)   \\ 
+x3 & 0.197 (0.103, 0.306)  & 0.187 (0.09, 0.293)  \\ 
+x4 & 0.193 (0.101, 0.316) & 0.187 (0.087, 0.304)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1relamip}
@@ -216,7 +216,7 @@ x4 & 0.166 (0.097, 0.262) & 0.161 (0.085, 0.254)  \\
 \FloatBarrier
 
 
-In this example, we know, that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. As an alternative, non-parametric bootstrap was used for inference about the covariance matrix. 
+In this example, we know, that the predictor values were sampled from a normal distribution. It would therefore be more reasonable to assume stochastic predictors. Under the assumption of weak exogeinity and conditional independence, the posterior distributions of the regression parameters $\bbeta$ are valid for non-stochastic and stochastic predictors. However, the uncertainty about the LMG values needs to include the uncertainty about the covariance matrix. If we know the distribution of the predictors we can incorporate this information and obtain the posterior distribution of the covariance matrix. The package \texttt{Jags} was used for inference about the covariance matrix in a Bayesian way. The R-code of the covariance inference can be found in Appendix~\ref{r03:covminf} and the R-code to get the $\Rtwo$ values can be found in Appendix~\ref{r03:LMG.covm}. As an alternative, non-parametric bootstrap was used for inference about the covariance matrix. The R-code of the adapted LMG function can be found in Appendix~\ref{r03:LMG.boot}.
 
 Using the bootstrap samples of the covariance matrix or samples from the posterior covariance matrix produced  very similar LMG distributions. Bootstrap seems to be a valuable option for stochastic predictors when the distribution of the predictors is unknown. Even when the distribution is known, the difference seems to be tiny. A benefit of going the full Bayesian way is that we can also include prior knowledge about the covariance matrix. Using the default priors further produced very similar LMG distribution as using the non-parametric bootstrap option of the \texttt{relaimpo} package. Table~\ref{tbl:nonstochEx1relaimpstoch} shows the LMG values of these approaches. For stochastic predictors, in contrast to non-stochastic predictors, the uncertainty about the covariance matrix is reflected in the larger credible intervals. Even when the exact regression parameters were known, there would a lot of uncertainty in the LMG values caused by the uncertainty about the covariance matrix. 
 
@@ -235,10 +235,10 @@ Using the bootstrap samples of the covariance matrix or samples from the posteri
   & \multicolumn{1}{c}{\textbf{Relaimpo}} & \multicolumn{2}{c}{\textbf{Bayesian framework}} \\ \cmidrule(r){2-2}\cmidrule(l){3-4}
  \textbf{Variable} &  & \multicolumn{1}{c}{nonparameteric bootstrap}& \multicolumn{1}{c}{covariance inference} \\
  \midrule
-x1 & 0.241 (0.125, 0.392)  & 0.242 (0.139, 0.356) &  0.248 (0.137, 0.408) \\ 
-x2 & 0.318 (0.187, 0.429)  & 0.288 (0.164, 0.423)  & 0.302 (0.186, 0.416) \\ 
-x3 & 0.107 (0.022, 0.249)  & 0.092 (0.031, 0.186)  & 0.099 (0.033, 0.192) \\ 
-x4 & 0.166 (0.075, 0.28) & 0.176 (0.088, 0.301) & 0.161 (0.058, 0.269) \\ 
+x1 & 0.223 (0.132, 0.33)  & 0.226 (0.103, 0.371) &  0.225 (0.095, 0.367) \\ 
+x2 & 0.154 (0.065, 0.275)  & 0.138 (0.055, 0.248)  & 0.14 (0.045, 0.254) \\ 
+x3 & 0.197 (0.072, 0.331)  & 0.192 (0.074, 0.323)  & 0.199 (0.093, 0.326) \\ 
+x4 & 0.193 (0.076, 0.325) & 0.166 (0.058, 0.345) & 0.204 (0.083, 0.323) \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:nonstochEx1relaimpstoch}
@@ -270,7 +270,7 @@ For comparison purposes, the LMG metric was additionally calculated with the \te
 
 \begin{table}
 \centering
-\caption{Variable description}
+\caption{Variable description of empirical data set}
 \begin{tabular}{l l}
   \toprule			
   Variable Name & Description  \\   \midrule  
@@ -290,7 +290,7 @@ For comparison purposes, the LMG metric was additionally calculated with the \te
 
 }
 
-\caption[Test scores from Holzinger and Swineford's  (1939) Study]{Test scores from Holzinger and Swineford's  (1939) Study. N=301}\label{fig:unnamed-chunk-1}
+\caption[Test scores from Holzinger and Swineford's  (1939) Study]{Test scores from Holzinger and Swineford's  (1939) Study. N=301.}\label{fig:unnamed-chunk-1}
 \end{figure}
 
 
@@ -299,7 +299,7 @@ For comparison purposes, the LMG metric was additionally calculated with the \te
 
 
 % latex table generated in R 3.4.3 by xtable 1.8-2 package
-% Thu Aug  9 19:21:45 2018
+% Fri Aug 10 22:49:28 2018
 \begin{table}[!h]
 \centering
 \caption{Regression of paragraph comprehension on verbal tests.} 
@@ -323,22 +323,22 @@ Intercept & 0.071 & from -1.17 to 1.31 & 0.91 \\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{table}
 
-\caption{\label{tab:empirical.data.postsample2}Samples from the posterior distributions of the regression parameters}
+\caption{\label{tab:empirical.data.postsample2}Samples from the posterior distributions of the regression parameters.}
 \centering
 \begin{tabular}[t]{lrrrrr}
 \toprule
   & general & sentence & wordc & wordm & sigma\\
 \midrule
-sample 1 & 0.035 & 0.251 & 0.047 & 0.133 & 2.06\\
-sample 2 & 0.036 & 0.235 & 0.049 & 0.155 & 2.24\\
-sample 3 & 0.050 & 0.268 & 0.036 & 0.150 & 2.15\\
-sample 4 & 0.014 & 0.254 & 0.054 & 0.141 & 2.32\\
-sample 5 & 0.026 & 0.318 & 0.022 & 0.130 & 2.25\\
-sample 6 & 0.039 & 0.260 & 0.070 & 0.116 & 2.12\\
-sample 7 & 0.063 & 0.239 & 0.039 & 0.091 & 2.27\\
-sample 8 & 0.035 & 0.305 & 0.037 & 0.136 & 2.13\\
-sample 9 & 0.051 & 0.284 & 0.009 & 0.137 & 2.19\\
-sample 10 & 0.072 & 0.246 & 0.010 & 0.107 & 2.21\\
+sample 1 & 0.015 & 0.312 & -0.010 & 0.159 & 2.07\\
+sample 2 & 0.003 & 0.256 & 0.069 & 0.173 & 2.20\\
+sample 3 & 0.029 & 0.308 & 0.022 & 0.179 & 2.10\\
+sample 4 & 0.017 & 0.264 & 0.145 & 0.097 & 1.97\\
+sample 5 & 0.051 & 0.262 & 0.008 & 0.134 & 2.05\\
+sample 6 & 0.048 & 0.253 & 0.004 & 0.129 & 2.24\\
+sample 7 & 0.031 & 0.339 & 0.045 & 0.117 & 2.18\\
+sample 8 & 0.008 & 0.300 & 0.064 & 0.120 & 2.13\\
+sample 9 & 0.047 & 0.250 & 0.007 & 0.166 & 2.08\\
+sample 10 & 0.039 & 0.237 & 0.034 & 0.158 & 2.23\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -349,28 +349,28 @@ sample 10 & 0.072 & 0.246 & 0.010 & 0.107 & 2.21\\
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.98, 0.98, 0.98}\color{fgcolor}\begin{table}
 
-\caption{\label{tab:empirical.data.postsample3}$ \Rtwo$ for all submodels for the first six posterior samples}
+\caption{\label{tab:empirical.data.postsample3}$ \Rtwo$ for all submodels for the first six posterior samples.}
 \centering
 \begin{tabular}[t]{lrrrrrr}
 \toprule
   & sample 1 & sample 2 & sample 3 & sample 4 & sample 5 & sample 6\\
 \midrule
 none & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000\\
-general & 0.456 & 0.442 & 0.494 & 0.373 & 0.416 & 0.460\\
-sentence & 0.551 & 0.518 & 0.571 & 0.488 & 0.552 & 0.555\\
-wordc & 0.350 & 0.335 & 0.355 & 0.310 & 0.314 & 0.373\\
-wordm & 0.512 & 0.510 & 0.544 & 0.452 & 0.479 & 0.493\\
-general sentence & 0.593 & 0.563 & 0.624 & 0.512 & 0.578 & 0.598\\
-general wordc & 0.499 & 0.481 & 0.531 & 0.419 & 0.453 & 0.513\\
-general wordm & 0.558 & 0.549 & 0.597 & 0.479 & 0.517 & 0.547\\
-sentence wordc & 0.567 & 0.534 & 0.584 & 0.501 & 0.559 & 0.576\\
-sentence wordm & 0.619 & 0.597 & 0.648 & 0.548 & 0.604 & 0.612\\
-wordc wordm & 0.559 & 0.550 & 0.586 & 0.494 & 0.517 & 0.555\\
-general sentence wordc & 0.597 & 0.567 & 0.627 & 0.517 & 0.579 & 0.605\\
-general sentence wordm & 0.628 & 0.606 & 0.661 & 0.550 & 0.607 & 0.623\\
-general wordc wordm & 0.579 & 0.568 & 0.613 & 0.503 & 0.534 & 0.577\\
-sentence wordc wordm & 0.625 & 0.603 & 0.653 & 0.553 & 0.605 & 0.623\\
-all & 0.631 & 0.609 & 0.663 & 0.554 & 0.608 & 0.630\\
+general & 0.416 & 0.396 & 0.477 & 0.446 & 0.483 & 0.435\\
+sentence & 0.568 & 0.528 & 0.601 & 0.586 & 0.559 & 0.505\\
+wordc & 0.294 & 0.346 & 0.349 & 0.461 & 0.323 & 0.288\\
+wordm & 0.524 & 0.514 & 0.575 & 0.482 & 0.525 & 0.475\\
+general sentence & 0.590 & 0.552 & 0.639 & 0.615 & 0.611 & 0.551\\
+general wordc & 0.444 & 0.455 & 0.515 & 0.553 & 0.509 & 0.458\\
+general wordm & 0.550 & 0.535 & 0.611 & 0.533 & 0.579 & 0.523\\
+sentence wordc & 0.570 & 0.546 & 0.610 & 0.635 & 0.567 & 0.511\\
+sentence wordm & 0.636 & 0.606 & 0.684 & 0.629 & 0.631 & 0.570\\
+wordc wordm & 0.546 & 0.558 & 0.609 & 0.596 & 0.558 & 0.503\\
+general sentence wordc & 0.590 & 0.560 & 0.640 & 0.646 & 0.611 & 0.551\\
+general sentence wordm & 0.637 & 0.607 & 0.689 & 0.635 & 0.644 & 0.582\\
+general wordc wordm & 0.559 & 0.563 & 0.625 & 0.607 & 0.589 & 0.531\\
+sentence wordc wordm & 0.636 & 0.613 & 0.686 & 0.663 & 0.633 & 0.571\\
+all & 0.637 & 0.613 & 0.689 & 0.664 & 0.644 & 0.582\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -387,7 +387,7 @@ all & 0.631 & 0.609 & 0.663 & 0.554 & 0.608 & 0.630\\
 
 }
 
-\caption[LMG posterior distribution of different verbal ability tests]{LMG posterior distribution of different verbal ability tests}\label{fig:empi.lmg.plot}
+\caption[LMG distributions of the different verbal ability predictors]{LMG distributions of the different verbal ability predictors.}\label{fig:empi.lmg.plot}
 \end{figure}
 
 
@@ -395,16 +395,16 @@ all & 0.631 & 0.609 & 0.663 & 0.554 & 0.608 & 0.630\\
 
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor only model.}
 \centering
 \begin{tabular}{clll}
   \toprule
   \multicolumn{1}{c}{\textbf{Variable}} & \multicolumn{1}{c}{\textbf{I}} &\multicolumn{1}{c}{\textbf{J}} & \multicolumn{1}{c}{\textbf{Total}} \\
   \hline
-general & 0.13 (0.104, 0.159)  & 0.299 (0.258, 0.332)   & 0.429 (0.363, 0.489)  \\ 
-sentence & 0.203 (0.166, 0.246)  & 0.327 (0.291, 0.356)   & 0.532 (0.467, 0.589)  \\ 
-wordc & 0.095 (0.074, 0.127)  & 0.239 (0.201, 0.277)   & 0.334 (0.275, 0.401)  \\ 
-wordm & 0.177 (0.141, 0.215)  & 0.315 (0.279, 0.344)   & 0.491 (0.423, 0.551)  \\ 
+general & 0.13 (0.104, 0.159)  & 0.298 (0.259, 0.332)   & 0.428 (0.363, 0.487)  \\ 
+sentence & 0.203 (0.164, 0.243)  & 0.327 (0.294, 0.359)   & 0.531 (0.467, 0.594)  \\ 
+wordc & 0.096 (0.072, 0.127)  & 0.24 (0.199, 0.276)   & 0.336 (0.272, 0.402)  \\ 
+wordm & 0.176 (0.142, 0.215)  & 0.315 (0.284, 0.344)   & 0.493 (0.431, 0.552)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.ijt}
@@ -412,17 +412,17 @@ wordm & 0.177 (0.141, 0.215)  & 0.315 (0.279, 0.344)   & 0.491 (0.423, 0.551)  \
 
 
 \begin{table}[h]
-\caption{Variance decomposition for non-stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for non-stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor only model}
 \centering
 \begin{tabular}{cll}
    \toprule
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-general & 0.131 (0.106, 0.162)  & 0.13 (0.104, 0.159)  \\ 
-sentence & 0.206 (0.165, 0.248)  & 0.203 (0.166, 0.246)   \\ 
-wordc & 0.096 (0.074, 0.127)  & 0.095 (0.074, 0.127)  \\ 
-wordm & 0.178 (0.143, 0.217) & 0.177 (0.141, 0.215)  \\ 
+general & 0.131 (0.105, 0.163)  & 0.13 (0.104, 0.159)  \\ 
+sentence & 0.206 (0.17, 0.248)  & 0.203 (0.164, 0.243)   \\ 
+wordc & 0.096 (0.074, 0.124)  & 0.096 (0.072, 0.127)  \\ 
+wordm & 0.178 (0.143, 0.219) & 0.176 (0.142, 0.215)  \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.relaimp.comp}
@@ -433,17 +433,17 @@ wordm & 0.178 (0.143, 0.217) & 0.177 (0.141, 0.215)  \\
 
 
 \begin{table}[h]
-\caption{Variance decomposition for Stochastic predictors. I = LMG values, J = joint contribution, Total = total explained variance in one-predictor only model}
+\caption{Variance decomposition for stochastic predictors. I~=~LMG~values, J~=~joint~contribution, Total~=~total explained variance in one-predictor only model.}
 \centering
 \begin{tabular}{cll}
    \toprule
    &\multicolumn{2}{c}{\textbf{LMG value (95\%-CI)}} \\
  \textbf{Variable} & \multicolumn{1}{c}{Relaimpo} & \textbf{Bayesian framework}  \\
   \hline
-general & 0.131 (0.106, 0.164)  &  0.127 (0.097, 0.16)  \\ 
-sentence & 0.206 (0.17, 0.247)  &  0.202 (0.162, 0.246)   \\ 
-wordc & 0.096 (0.075, 0.124)  &  0.094 (0.066, 0.128)  \\ 
-wordm & 0.178 (0.144, 0.216) &  0.175 (0.138, 0.216) \\ 
+general & 0.131 (0.105, 0.162)  &  0.13 (0.102, 0.161)  \\ 
+sentence & 0.206 (0.168, 0.25)  &  0.204 (0.166, 0.245)   \\ 
+wordc & 0.096 (0.073, 0.127)  &  0.098 (0.071, 0.131)  \\ 
+wordm & 0.178 (0.145, 0.218) &  0.177 (0.14, 0.216) \\ 
    \bottomrule
 \end{tabular}
 \label{tbl:empirical.relaimp.comp.stoch}

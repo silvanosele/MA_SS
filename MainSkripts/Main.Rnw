@@ -8,12 +8,21 @@
 \DeclareGraphicsExtensions{.pdf,.png}
 \setcounter{tocdepth}{1}
 
-\newpage
-\thispagestyle{empty}~
-\newpage
 \pagenumbering{roman}
 
-\thispagestyle{plain}\markboth{Contents}{Contents}
+\chapter*{Abstract}
+\addtocontents{toc}{\protect \vspace*{13.mm}}
+\addcontentsline{toc}{chapter}{\bfseries{Abstract}}
+
+Quantifying the importance of predictors in regression has been an active area of research for a long time \citep{Gromping2015}. The variance decomposition metric \textit{LMG} provides useful information about possible associations between variables. The LMG metric is implemented in the R packages \texttt{hier.part} \citep{Walsh2015} and \texttt{relaimpo} \citep{Gromping2006}. Bayesian methods gained high popularity in many applied research areas in recent years.  
+
+This master thesis shows how the LMG metric can be applied to a linear regression model that is fitted in the Bayesian framework. The LMG metric requires calculation of $\Rtwo$ for the possible submodels. The conditional variance formula can be applied to calculate the $\Rtwo$ values of the submodels from the posterior samples of the model containing all predictors. The mutual interdependence of the submodels is then respected for each posterior sample.
+
+The implementation of the LMG metric in the Bayesian framework is presented on simulated and on empirical data. Using weakly informative priors resulted in very similar LMG values as the values obtained by using bootstrap in \texttt{relaimpo}. 
+
+Some possible extension of the LMG metric to repeated measures studies are additionally presented. There are certain difficulties involved in quantifying the $\Rtwo$ in longitudinal data. However,  the extension seems to be reasonably possible for the simple random intercept model and marginal models.  
+
+
 \tableofcontents
 \setkeys{Gin}{width=.8\textwidth}
 
@@ -23,7 +32,7 @@
 \thispagestyle{plain}\markboth{Preface}{Preface}
 
 
-\textit{Wenns scheisse l\"auft, l\"aufts scheisse!} Kahn O.
+\textit{Wenns scheisse l\"auft, l\"aufts scheisse!} Oliver Kahn
 
 \bigskip
 
@@ -62,17 +71,14 @@ June 2018
 \appendix
 
 
-\chapter{Some additional notes}
+\chapter{Additional notes and R-codes}
 
-The eror term in the by \cite{Gelman2017} proposed definition of the $\Rtwo$ is defined as $\var(\sum_{i=1}^{n}e^s_{n})$. I think we could also use $ \sum(y - \hat{y}^s)^2/(n-1) $ as an estimate for the error. For the maximum likelihood estimate $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $. This is because the mean of the residuals is 0. When  samples of the posterior parameters are used, the mean of the residuals is not excatly zero. $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $ is than a little bit bigger than $\var(y_{i} - \hat{y_{i}}). $ In practice the values should only differ by a very small amount. We do not expect the errors to have a systematic bias. However, the residuals are just a sample of the error. The mean of the residuals must not be excatly 0 when the samples of the posteriors are used for the regression coefficients.   
+The error term in the definition of the $\Rtwo$ proposed by \cite{Gelman2017} is defined as $\var(\sum_{i=1}^{n}e^s_{n})$. I think we could also use $ \sum(y - \hat{y}^s)^2/(n-1) $ as an estimate of the error. By using the maximum likelihood estimate,  $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $,  because the mean of the residuals is 0. When  samples of the posterior parameters are used, the mean of the residuals is not exactly zero. $\var(y_{i} - \hat{y_{i}}) = \sum (y_{i} - \hat{y_{i}})^2/ (n-1) $ is than a little bit larger than $\var(y_{i} - \hat{y_{i}}). $ In practice, the values should only differ by a very small amount. We do not expect the errors to have a systematic bias. However, the residuals are just a sample of the error. The mean of the residuals must not be exactly 0 when the samples of the posteriors are used for the regression coefficients.   
 
 
 
 \section{Code used in chapter 3}
-The data of the first example of chapter 3 were generated with R-Code~\ref{r03:simdata.ex1}
-
-\clearpage
-
+\vspace{15mm}
 
 \begin{codeenv}
 
@@ -86,7 +92,7 @@ The data of the first example of chapter 3 were generated with R-Code~\ref{r03:s
 \vspace{15mm}
 
 \begin{codeenv}
-\caption{Bayesian regression model for example 1}\label{r03:model.ex1}
+\caption{Bayesian regression model for example 1 chapter 3}\label{r03:model.ex1}
 <<r03:model.ex1, ref.label='simdata.postsample', echo=TRUE, eval=FALSE, tidy=TRUE>>=
 	@
 	\end{codeenv}
@@ -103,7 +109,7 @@ The data of the first example of chapter 3 were generated with R-Code~\ref{r03:s
 \vspace{15mm}
 
 \begin{codeenv}
-\caption{Bayesian regression model for example 1}\label{r03:LMG.boot}
+\caption{$\Rtwo$ function for stochastic predictors using bootstrap}\label{r03:LMG.boot}
 <<r03:LMG.boot, ref.label='LMGfunction.boot', echo=TRUE, eval=FALSE, tidy=TRUE>>=
 	@
 	\end{codeenv}
@@ -113,10 +119,80 @@ The data of the first example of chapter 3 were generated with R-Code~\ref{r03:s
 
 \begin{codeenv}
 
-\caption{Bayesian regression model for example 1}\label{r03:LMG.covm}
+\caption{$\Rtwo$ function for stochastic predictors using covariance samples}\label{r03:LMG.covm}
 <<r03:LMG.covm, ref.label='LMGfunction.covm', echo=TRUE, eval=FALSE, tidy=TRUE>>=
 	@
 	\end{codeenv}
+
+\vspace{15mm}
+
+\begin{codeenv}
+
+\caption{Jags code to make inference about covariance matrix}\label{r03:covminf}
+<<r03:covminf, ref.label='simdata.LMG.cov', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+
+	\end{codeenv}
+
+\clearpage 
+
+\section{Code used in chapter 4}
+\vspace{15mm}
+
+\begin{codeenv}
+
+\caption{Data generating code random intercept model}\label{r04:simdatri}
+<<r04:simdatri, ref.label='simdata.repeated', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+
+	\end{codeenv}
+	
+	\vspace{15mm}
+	
+			\begin{codeenv}
+		
+\caption{Marginal model LMG implementation}\label{r04:model.ri}
+<<r04:model.ri, ref.label='simdata.repeated.mod', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+	
+				\vspace{15mm}
+	
+	\begin{codeenv}
+\caption{Rndom intercept LMG implementation}\label{r04:LMG.ri}
+<<r04:LMG.ri, ref.label='rtwo.ri.r', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+	
+	\vspace{15mm}
+	
+			\begin{codeenv}
+		
+\caption{Marginal model data}\label{r04:rmarg.data}
+<<r04:LMG.rmarg.data, ref.label='simdata.repeated.unstruct', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+	
+		\vspace{15mm}
+
+		\begin{codeenv}
+		
+\caption{Marginal model LMG implementation}\label{r04:LMG.rmarg}
+<<r04:LMG.rmarg, ref.label='rtwo.marg', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+
+			\vspace{15mm}
+
+
+		\begin{codeenv}
+		
+\caption{Marginal model LMG implementation}\label{r04:model.unstruct}
+<<r04:model.unstruct, ref.label='simdata.repeated.unstruct.mod', echo=TRUE, eval=FALSE, tidy=TRUE>>=
+	@
+	\end{codeenv}
+	
+	
 
 
 \phantomsection

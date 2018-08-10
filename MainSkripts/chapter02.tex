@@ -82,15 +82,14 @@ The following notations for the explained variance \eqref{eq:evar} and sequentia
    \end{align} 
    \begin{align} 
      \SVAR(M \mid S) = \EVAR(M \cup S) - \EVAR(S), \label{eq:svar} 
-    \end{align} , where $S$ and $M$ denote disjoint sets of predictors.
+    \end{align} where $S$ and $M$ denote disjoint sets of predictors.
     
    The LMG formula is given below for the first predictor only. Because of exchangeable predictors, this is no loss of generality.  $\Rtwo(S)$ can be written as $\EVAR(S)/\var(Y).$ 
 
    \begin{align} 
      \LMG(1) &= \frac{1}{p!} \sum_{\pi permutation}^{} \SVAR(\{1\} \mid S_{1}(\pi)),   \label{eq:lmgw1}  \\
      &= \frac{1}{p!} \sum_{S \subseteq \{ 2, \dots, p \} }^{} n(S)! \, (p-n(S)-1)! \, \SVAR(\{1\} \mid S) \label{eq:lmgw2}  \\
-     &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \left( \substack {\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)\right)\bigg/ \binom{p-1}{i}  \label{eq:lmgw3}  \\   
-         &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \frac{ \substack{\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)}{\binom{p-1}{i}}, \nonumber \\      
+     &=  \cfrac{1}{p} \sum_{i=0}^{p-1} \left( \substack {\sum\limits_{ S \subseteq \{ 2, \dots, p \}}\\n(S)=1}^{} \ \SVAR(\{1\} \mid S)\right)\bigg/ \binom{p-1}{i}  \label{eq:lmgw3}
    \end{align}
    where $S_{1}(\pi)$ is the set of predecessors of predictor 1.
    
@@ -99,7 +98,7 @@ The following notations for the explained variance \eqref{eq:evar} and sequentia
 \cite{Chevan1991} propose that, instead of only using the variances, an appropriate goodness-of-fit metric can as well be used in the LMG formula. They name their proposal \textit{hierarchical partitioning}. The requirements are simply: an initial measure of fit when no predictor variable is present, a final measure of fit when $N$ predictor variables are present, all intermediate models when various combinations of predictor variables are present. 
   The LMG component of each variable is named \textit{independent component} (I). The sum of the independent components (I) results then in the overall goodness-of-fit metric. The difference between the goodness-of-fit when only the predictor itself is included in the model, compared to its independent component (I), is named the \textit{joint contribution} (J) \citep{Gromping2015}. Hierarchical partitioning is implemented in the \texttt{hier.part} package \citep{Walsh2015}. When  $\Rtwo$ is chosen as the goodness-of-fit measure, the LMG values are calculated. The hierarchical partitioning function of \texttt{hier.part} is used in this master thesis. The hierarchical partitioning function accepts a data frame with the $\Rtwo$ values of all submodels as input. Of note,  the partitioning function of \texttt{hier.part} is only guaranteed to work up to nine predictors and does not work at all for more than twelve predictors.
   
-\section{ Appropriate $\Rtwo$ definitions in the Bayesian framework}
+\section{Appropriate $\Rtwo$ definitions in the Bayesian framework}
 The focus of this master thesis is on the standard linear model. For this model, the most widely used goodness-of-fit metric is $\Rtwo$.  Different formulas for $\Rtwo$ exist \cite{Kvalseth1985}, all leading to the same value when an intercept is included and the model is fitted by maximum likelihood. 
 
 Two commonly used $\Rtwo$ definitions are:
@@ -108,9 +107,7 @@ Two commonly used $\Rtwo$ definitions are:
      R^2 &= 1 - \frac{\sum_{i=1}^{n}(y_{i} - \hat{y_{i}})^2}{\sum_{i=1}^{n}(y_{i}-\bar{y})^2}   \label{eq:rtwo1} \\
      R^2 &= \frac{\sum_{i=1}^{n}(\hat{y_{i}} - \bar{y})^2}{\sum_{i=1}^{n}(y_{i}-\bar{y})^2}, \qquad i = 1,\dots,n,   \label{eq:rtwo2} 
    \end{align} 
-   
 where $\hat{y_{i}} = = \E ({y \mid X_{i}, \hat{\theta}})$.  $\hat{\theta}$ is the maximum likelihood estimate of the regression coefficients.
-
 
 When other estimation methods than maximum likelihood are used, equation~\eqref{eq:rtwo1} can be negative and equation~\eqref{eq:rtwo2}  can be bigger than 1. This is not uncommon in a Bayesian regression setting when samples of the posterior parameter distribution are employed. A model that explains more than 100\% of the variance is nonsense. A negative $\Rtwo$ is also difficult to interpret. A negative $\Rtwo$ may be interpreted as a fit that is worse than the mean of the data. This can make sense for predictive purposes, e.g. when new data from a test set is predicted by leave-one-out crossvalidation \citep{Alexander2015}.  For non predicting purposes, a negative $\Rtwo$ does not make sense. The aim of the LMG formula is to gain some more information about the possible association between variables. A predictor can not explain less than zero variance in the population. To respect the non-negative share property of the LMG formula, the $\Rtwo$ of submodels should not decrease when adding predictors. Both classical $\Rtwo$ definitions seem not to be well suited for the LMG metric in the Bayesian framework.
 
@@ -134,7 +131,7 @@ In the Bayesian framework, the $\sigma^2$ parameter is explicitly modeled in the
     \begin{align} 
         \Rtwo &= \frac{\var(\sum_{i=1}^{n}\hat{y}^s_{i})}{\var(\sum_{i=1}^{n}\hat{y}^s_{i})+\sigma_{s}^2} \nonumber \\ &= \frac{\bbeta_{s}^\top \bSigma_{\X \X}  \bbeta_{s}}{\bbeta_{s}^\top \bSigma_{\X \X}  \bbeta_{s}+\sigma_{s}^2}, \qquad i = 1,\dots,n, \label{eq:rtwoused} 
    \end{align} 
- where $\hat{y}^s_{i}  = E \left({y \mid X_{i}, \theta^s}\right) $,  and $\theta^s, s = 1,\dotsc, S$ are draws from the posterior parameter distribution.
+where $\hat{y}^s_{i}  = E \left({y \mid X_{i}, \theta^s}\right) $,  and $\theta^s, s = 1,\dotsc, S$ are draws from the posterior parameter distribution.
 
 
 The predictors in definition \eqref{eq:rtwoGelman} and definition \eqref{eq:rtwoused} could also be taken as random \citep{Gelman2017}. The predictors are then called stochastic predictors. Using the sample covariance estimate provides then just an estimate of the true covariance structure. With stochastic predictors, there is an additional uncertainty in the $\Rtwo$ formula that can have a large influence on the $\Rtwo$ and the LMG values.
@@ -143,7 +140,7 @@ In practice, definition \eqref{eq:rtwoused} and definition \eqref{eq:rtwoGelman}
 
 The denominator of $\Rtwo$ is no longer fixed in definition \eqref{eq:rtwoGelman} and in definition \eqref{eq:rtwoused}. We can therefore no longer interpret an increase in $\Rtwo$ as an improved fit to a fixed target \citep{Gelman2017}. The unfixed denominator seems to be problematic for the LMG formula in the Bayesian framework. However, in the linear model it is possible to calculate the $\Rtwo$ of all submodels from the parameters of the model inlcuding all predictors (full-model) and the covariance matrix of the predictors. Therefore,  all submodels of a posterior sample are compared to the same fixed value. A possible way to get the $\Rtwo$ of the submodels from the full-model is shown in the next section.
 
-\section{Conditional variance formula}
+\section{Use of conditional variance formula to get $\Rtwo$ of submodels}
 
 
 For two predictors, definition \eqref{eq:vary} simplifies to
@@ -230,10 +227,7 @@ To gain the the $\Rtwo$ value of the submodel, it is necessary to divide the exp
        \begin{align*} 
 \EVAR(\X_{q ,\dotsc, p}) / \var(\Y),   
 \end{align*}
-
 where $\var(\Y)$ is definied as  $\bbeta^\top \bSigma_{\X \X}  \bbeta + \sigma^2$.
-
-
 
 A posterior density distribution is obtained for the regression parameters in the Bayesian regression setting. The LMG formula requires calculation of the $\Rtwo$ values for all $2^p-1$ submodels. Samples from the joint posterior paramters of the full-model are used to calculate the explained variance of the  submodels. For each sample, the  conditional variance formula is used to obtain the $\Rtwo$ of the $2^p-1$ submodels. The non-negative property and the dependence of the parameters from the submodels to each other is then respected for each sample. 
 
@@ -261,7 +255,6 @@ Under the assumption of weak exogeneity and conditional independence, the joint 
        \begin{align*} 
 p(\y, \X \mid \btheta) = p(\y \mid \X, \btheta_{y \mid x}) \, p(\X \mid \btheta_{x}),
    \end{align*}
-
 where $\btheta = (\btheta_{y \mid x}, \btheta_{x})^\top$. 
 
 The weak exogeneity assumption implicates that the whole information about $\y_{i}$ is contained in $x_{i}$ and $\btheta_{y \mid x}$. Knowledge of the parameters $\btheta_{x_{i}}$ provides no additional information about $\y_{i}$.

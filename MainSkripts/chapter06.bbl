@@ -5,4 +5,10 @@ Gelman, A., Goodrich, B., Gabry, J., and Ali, I. (2017).
 \newblock {R-squared for Bayesian regression models *}.
 \newblock Technical report.
 
+\bibitem[Gr{\"{o}}mping, 2015]{Gromping2015}
+Gr{\"{o}}mping, U. (2015).
+\newblock {Variable importance in regression models}.
+\newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
+  {\bf7},  137--152.
+
 \end{thebibliography}
